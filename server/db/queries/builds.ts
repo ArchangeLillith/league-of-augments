@@ -96,8 +96,7 @@ const returnBuild = (user_id: number, champ_name: string): Promise<any[]> =>
           'name', a.name,
           'description', a.description,
           'url', a.url,
-          'tier', a.tier,
-          'tags', a.tags
+          'tier', a.tier
         )
       ) AS augments
     FROM loa_builds b
