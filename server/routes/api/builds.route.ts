@@ -1,7 +1,7 @@
 // builds.route.ts
 import express from "express";
 import db from "../../db";
-import { ChampionName } from "../../../types";
+import { ChampionName } from "../../utils/types";
 
 const router = express.Router();
 

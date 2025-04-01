@@ -4,12 +4,14 @@
 	"version": "0.0.0",
 	"scripts": {
 		"dev": "vite",
-		"build": "tsc -b && vite build",
 		"test": "jest",
 		"test:frontend": "jest --config=jest.frontend.config.ts",
 		"test:backend": "jest --config=jest.backend.config.ts",
 		"lint": "eslint .",
 		"preview": "vite preview",
+		"build": "vite build && npm run build:server",
+		"build:server": "tsc --project tsconfig.server.json",
+		"start": "node dist/server.js",
 		"server": "ts-node --project tsconfig.server.json server/server.ts"
 	},
 	"dependencies": {

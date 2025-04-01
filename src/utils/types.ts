@@ -1,5 +1,3 @@
-import { Augment } from "../../types";
-
 export type user = {
 	id: number;
 	username: string;
@@ -9,6 +7,15 @@ export type Build = {
 	name: string;
 	augments: Augment[];
 	items: number[];
+};
+
+export type Augment = {
+	name: string;
+	augment_id: number;
+	description: string;
+	tier: "Silver" | "Gold" | "Prismatic";
+	url: null | string;
+	tags: string[];
 };
 
 export type UserLoginObject = {

@@ -1,5 +1,5 @@
 import { Query } from "../query";
-import { Augment } from "../../../types";
+import { Augment } from "../../utils/types";
 
 const getAugs = async (
 	champ_name: string,

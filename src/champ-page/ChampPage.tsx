@@ -1,7 +1,7 @@
 import { useContext, useEffect, useRef, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { FaHome } from "react-icons/fa";
-import { Augment } from "../../types";
+import { Augment } from "../utils/types";
 import { fetchAugments } from "../services/fetchAugments";
 import { Build } from "../utils/types";
 import { AuthContext } from "../context/AuthProvider";
