@@ -4,7 +4,7 @@ import Login from "./login-page/Login";
 import HomePage from "./home-page/HomePage";
 
 export const ROUTE_PATHS = {
-	LOGIN: "/login",
+	LOGIN: "/",
 	HOME: "/home",
 	CHAMP_PAGE: "/champ/:champName",
 };
