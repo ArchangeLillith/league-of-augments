@@ -12,7 +12,7 @@ import {
 const HomePage = () => {
 	const [ready, setReady] = useState(false);
 
-	const { authState } = useContext(AuthContext);
+	const { authState, logoutFromAuthState } = useContext(AuthContext);
 	const navigate = useNavigate();
 	const [firstPlace, setFirstPlace] = useState<Champion[]>([]);
 	const [wonWith, setWonWith] = useState<Champion[]>([]);
@@ -74,7 +74,7 @@ const HomePage = () => {
 	};
 
 	const toChampPage = (champ: Champion) => {
-		navigate(`/${champ.name}/`, { state: champ });
+		navigate(`/champ/${champ.name}/`, { state: champ });
 	};
 
 	const handleDragEnd = (result: DropResult) => {
@@ -106,6 +106,12 @@ const HomePage = () => {
 
 		setters[source.droppableId as keyof typeof setters](sourceList);
 		setters[destination.droppableId as keyof typeof setters](destList);
+	};
+
+	const logout = (e: React.MouseEvent<HTMLButtonElement>) => {
+		e.preventDefault();
+		logoutFromAuthState();
+		navigate("/login");
 	};
 
 	const renderCategory = (
@@ -170,6 +176,7 @@ const HomePage = () => {
 						onChange={(e) => setSearchTerm(e.target.value)}
 						className="champ-search-input"
 					/>
+					<button onClick={logout}>Log Out</button>
 					{renderCategory("First Place", "firstPlace", firstPlace)}
 					{renderCategory("Champions Won With", "wonWith", wonWith)}
 					{renderCategory("Champions Played", "played", played)}

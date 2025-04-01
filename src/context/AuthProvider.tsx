@@ -22,19 +22,15 @@ export const AuthContext = createContext<AuthContextType>({
 		champsWanted: [],
 		settings: {},
 	},
-	authLoading: true,
 	setAuthState: () => {},
 	loginToAuthState: async () => {},
 	logoutFromAuthState: () => {},
-	updateUserData: () => {},
 });
 
 const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 	const [authState, setAuthState] = useState<AuthState>(
 		unauthenticatedAuthState
 	);
-
-	const [authLoading, setLoading] = useState(true);
 
 	/**
 	 * The function that handles the auth state to reflect a log in
@@ -78,16 +74,6 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 		storage.removeToken();
 	};
 
-	/**
-	 * Updates the userdata in state for the components to use
-	 * @param userData - The user data to be set in state
-	 */
-	const updateUserData = (userData: Partial<AuthState>) => {
-		setAuthState((prevState) => ({
-			...prevState,
-			...userData,
-		}));
-	};
 
 	//
 	/**
@@ -103,7 +89,6 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 				if (!authState.authenticated) {
 					setAuthState(unauthenticatedAuthState);
 				}
-				setLoading(false); // Only set authLoading to false here
 				return;
 			}
 
@@ -119,12 +104,10 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 	return (
 		<AuthContext.Provider
 			value={{
-				authLoading,
 				authState,
 				setAuthState,
 				loginToAuthState,
 				logoutFromAuthState,
-				updateUserData,
 			}}
 		>
 			{children}

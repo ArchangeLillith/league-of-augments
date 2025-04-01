@@ -117,10 +117,11 @@ const ChampPage = () => {
 				>
 					{saveMessage}
 				</div>
-				<button className="btn-home" onClick={() => navigate("/home")}>
-					<FaHome className="btn-icon" />
-				</button>
+
 				<div className="top-container">
+					<button className="btn-home" onClick={() => navigate("/home")}>
+						<FaHome className="btn-icon" />
+					</button>
 					<img
 						src={`https://ddragon.leagueoflegends.com/cdn/14.6.1/img/champion/${state.image.full}`}
 						alt={championName}

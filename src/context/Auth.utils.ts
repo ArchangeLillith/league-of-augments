@@ -15,11 +15,9 @@ export const unauthenticatedAuthState = {
  */
 export interface AuthContextType {
 	authState: AuthState;
-	authLoading: boolean;
 	setAuthState: React.Dispatch<React.SetStateAction<AuthState>>;
 	loginToAuthState: (token: string) => void;
 	logoutFromAuthState: () => void;
-	updateUserData: (userData: Partial<AuthState>) => void;
 }
 
 export interface AuthProviderProps {

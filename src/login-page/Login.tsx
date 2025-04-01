@@ -102,12 +102,10 @@ const Login = () => {
 
 	return (
 		<div className="login-page">
-			<form>
-				<button onClick={toggleState}>
-					{state === "login" ? "Register" : "Login"}
-				</button>
-				{state === "login" ? loginHtml : registerHtml}
-			</form>
+			<form>{state === "login" ? loginHtml : registerHtml}</form>
+			<button onClick={toggleState}>
+				{state === "login" ? "Register" : "Login"}
+			</button>
 		</div>
 	);
 };

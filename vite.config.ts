@@ -7,6 +7,7 @@ export default defineConfig({
 	server: {
 		proxy: {
 			"/api": "http://localhost:3001", // adjust to match your backend port
+			"/auth": "http://localhost:3001", // adjust to match your backend port
 		},
 	},
 });
