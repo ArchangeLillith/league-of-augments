@@ -1,0 +1,272 @@
+:root {
+	font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+	line-height: 1.5;
+	font-weight: 400;
+
+	color-scheme: light dark;
+	color: rgba(255, 255, 255, 0.87);
+	background-color: #242424;
+
+	font-synthesis: none;
+	text-rendering: optimizeLegibility;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+.page-container {
+	display: flex;
+	flex-direction: column;
+}
+
+.droppable-container {
+	background-color: #404040;
+	min-height: 100px;
+	padding: 0.4rem;
+	border-radius: 15px;
+	margin: 0.4rem;
+	display: flex;
+	flex-direction: column;
+}
+.home-title {
+	font-size: 24px;
+	width: fit-content;
+	align-self: center;
+	justify-content: center;
+	margin: 2.5px 0;
+	padding: 0;
+}
+.champ-container {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	padding: 0;
+	margin: -10px 0;
+}
+.draggable-champ {
+	height: 40px;
+	width: 40px;
+	margin: 10px 10px;
+}
+
+.btn-home {
+	display: flex;
+	font-size: 26px;
+	align-items: center;
+	justify-content: center;
+}
+
+.save-message {
+	color: #333;
+	padding: 10px;
+	text-align: center;
+	font-weight: bold;
+	transition: opacity 0.3s ease-in-out;
+	overflow: hidden;
+}
+
+.save-message--visible {
+	opacity: 1;
+	height: auto;
+}
+
+.save-message--hidden {
+	opacity: 0;
+	height: 0;
+}
+
+.save-message--success {
+	background-color: #ccffcc;
+}
+
+.save-message--error {
+	background-color: #ffcccc;
+}
+
+.selected-aug-background.Prismatic {
+	background: linear-gradient(
+		135deg,
+		#cdb4ff,
+		#b9fbc0,
+		#f1c0e8,
+		#a3c4f3,
+		#ffe5b4
+	);
+	color: #111; /* or white depending on contrast */
+	border: none;
+	padding: 0.1rem 0.1rem;
+	border-radius: 6px;
+	font-weight: bold;
+	transition: transform 0.2s ease;
+	margin: 10px;
+}
+
+.selected-aug-background.Gold {
+	background: linear-gradient(135deg, #5c5c5c, #8b7963, #d9c4a4, #f1e7d3);
+	color: #111; /* or white depending on visibility */
+	color: #111; /* or white depending on contrast */
+	border: none;
+	padding: 0.1rem 0.1rem;
+	border-radius: 6px;
+	font-weight: bold;
+	transition: transform 0.2s ease;
+	margin: 10px;
+}
+
+.selected-aug-background.Silver {
+	background: linear-gradient(45deg, #aaa, #c0c0c0, #888, #d9d9d9);
+
+	color: #111; /* or white depending on visibility */
+	color: #111; /* or white depending on contrast */
+	border: none;
+	padding: 0.1rem 0.1rem;
+	border-radius: 6px;
+	font-weight: bold;
+	transition: transform 0.2s ease;
+	margin: 10px;
+}
+
+.champ-icon {
+	height: 120px;
+	width: 120px;
+}
+
+.top-container {
+	display: flex;
+	flex-direction: row;
+}
+
+.container-aug-btn {
+	display: flex;
+	flex-direction: row;
+}
+
+.btn-aug {
+	padding: 0.75rem;
+	display: flex;
+	flex-direction: row;
+}
+.aug-icon {
+	height: 40;
+	width: 40;
+}
+
+.container-prismatic,
+.container-gold,
+.container-silver,
+.container-selected-aug {
+	padding: 0.75rem;
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+}
+
+.btn-aug {
+	border: 4px solid transparent;
+	width: 50px;
+	height: 100px;
+	display: flex;
+	flex-direction: column;
+	padding: 2rem;
+	background: radial-gradient(
+		circle at center,
+		#3a3a3a 0%,
+		#2a2a2a 35%,
+		#1a1a1a 65%,
+		#000000 100%
+	);
+	border-radius: 10px;
+	margin: 0.5em;
+	align-items: center;
+	justify-content: center;
+	font-size: 10px;
+}
+
+.btn-aug-background.Prismatic {
+	background: linear-gradient(
+		135deg,
+		#cdb4ff,
+		#b9fbc0,
+		#f1c0e8,
+		#a3c4f3,
+		#ffe5b4
+	);
+	color: #111; /* or white depending on contrast */
+	border: none;
+	padding: 0.05rem 0.05rem;
+	border-radius: 6px;
+	font-weight: bold;
+	transition: transform 0.2s ease;
+	margin: 5px;
+}
+.btn-aug-background.Gold {
+	background: linear-gradient(135deg, #5c5c5c, #8b7963, #d9c4a4, #f1e7d3);
+	color: #111; /* or white depending on contrast */
+	border: none;
+	padding: 0.05rem 0.05rem;
+	border-radius: 6px;
+	font-weight: bold;
+	transition: transform 0.2s ease;
+	margin: 5px;
+}
+.btn-aug-background.Silver {
+	background: linear-gradient(45deg, #aaa, #c0c0c0, #888, #d9d9d9);
+	color: #111; /* or white depending on contrast */
+	border: none;
+	padding: 0.05rem 0.05rem;
+	border-radius: 6px;
+	font-weight: bold;
+	transition: transform 0.2s ease;
+	margin: 5px;
+}
+
+.btn-aug-selected {
+	border: 4px solid transparent;
+	width: 100px;
+	height: 150px;
+	display: flex;
+	flex-direction: column;
+	padding: 2rem;
+	background: radial-gradient(
+		circle at center,
+		#3a3a3a 0%,
+		#2a2a2a 35%,
+		#1a1a1a 65%,
+		#000000 100%
+	);
+	border-radius: 10px;
+	margin: 0.5em;
+	align-items: center;
+	justify-content: center;
+	font-size: 10px;
+}
+
+.btn-aug img {
+	width: 35px;
+	height: 35px;
+}
+.btn-aug-selected img {
+	width: 60px;
+	height: 60px;
+}
+
+.champ-image {
+	position: relative;
+}
+/* Add to your CSS */
+[draggable="true"] {
+	user-select: none;
+}
+
+/* .champ-frame {
+	position: absolute;
+	z-index: 5;
+	width: 80px;
+	height: 95px;
+	margin-top: -15px;
+	margin-left: -7px;
+	padding: 0;
+} */
+
+[draggable="true"] {
+	cursor: grab;
+}
