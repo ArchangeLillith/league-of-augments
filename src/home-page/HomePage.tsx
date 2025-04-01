@@ -1,4 +1,4 @@
-import { useContext, useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Champion, fetchChampions } from "../services/fetchChamps";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthProvider";
@@ -19,16 +19,10 @@ const HomePage = () => {
 	const [played, setPlayed] = useState<Champion[]>([]);
 	const [wantToPlay, setWantToPlay] = useState<Champion[]>([]);
 	const [uncategorized, setUncategorized] = useState<Champion[]>([]);
-	const [saveMessage, setSaveMessage] = useState<string | null>(null);
 	const [searchTerm, setSearchTerm] = useState("");
 
-	const saveTimeout = useRef<number | null>(null);
-
 	useEffect(() => {
-		if (saveTimeout.current) clearTimeout(saveTimeout.current);
-		saveTimeout.current = setTimeout(() => {
-			saveChamps();
-		}, 2000);
+		saveChamps();
 	}, [firstPlace, wonWith, played, wantToPlay, uncategorized]);
 
 	useEffect(() => {
@@ -58,13 +52,6 @@ const HomePage = () => {
 		setup();
 	}, [authState]);
 
-	const showSaveMessage = (message: string) => {
-		setSaveMessage(message);
-		setTimeout(() => {
-			setSaveMessage(null);
-		}, 3000); // disappear after 3 seconds
-	};
-
 	const saveChamps = async () => {
 		const dto = {
 			user_id: authState.userData?.id,
@@ -81,9 +68,8 @@ const HomePage = () => {
 				body: JSON.stringify(dto),
 			});
 			if (!res.ok) throw new Error("Failed to save augments");
-			showSaveMessage("✅ Saved!");
 		} catch {
-			showSaveMessage("❌ Auto save error");
+			console.error("Something went wrong saving your champs :(");
 		}
 	};
 
@@ -175,19 +161,6 @@ const HomePage = () => {
 
 	return (
 		<div className="page-container">
-			<div
-				className={`
-					save-message
-					${saveMessage ? "save-message--visible" : "save-message--hidden"}
-					${
-						saveMessage?.includes("error")
-							? "save-message--error"
-							: "save-message--success"
-					}
-				`}
-			>
-				{saveMessage}
-			</div>
 			{ready ? (
 				<DragDropContext onDragEnd={handleDragEnd}>
 					<input
