@@ -7,7 +7,6 @@ const router = Router();
 
 // POST /auth/login
 router.post("/", handleLogin, (req, res, next) => {
-	console.log("/auth/login req.currentuser:", req.currentUser);
 	if (!req.currentUser) throw new Error("no user");
 	try {
 		const token = createJWT(req.currentUser.user_id, req.currentUser.username);

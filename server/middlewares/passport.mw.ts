@@ -21,7 +21,7 @@ export function configurePassport(app: Express) {
 			async (username: string, password: string, done: any) => {
 				try {
 					const [userData] = await db.users.oneByUsername(username);
-					if (userData && password === userData.password) {
+					if (userData && (await bcrypt.compare(password, userData.password))) {
 						return done(null, userData);
 					}
 					return done(null, false, { message: "Invalid credentials" });
