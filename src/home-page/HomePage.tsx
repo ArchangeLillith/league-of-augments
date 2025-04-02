@@ -12,7 +12,8 @@ import {
 const HomePage = () => {
 	const [ready, setReady] = useState(false);
 
-	const { authState, logoutFromAuthState } = useContext(AuthContext);
+	const { authState, setAuthState, logoutFromAuthState } =
+		useContext(AuthContext);
 	const navigate = useNavigate();
 	const [firstPlace, setFirstPlace] = useState<Champion[]>([]);
 	const [wonWith, setWonWith] = useState<Champion[]>([]);
@@ -40,7 +41,6 @@ const HomePage = () => {
 
 			const { champsFirstPlace, champsWon, champsPlayed, champsWanted } =
 				authState;
-			alert("Triggers here");
 			setFirstPlace(
 				champReturn.filter((c) => champsFirstPlace.includes(c.name))
 			);
@@ -114,6 +114,30 @@ const HomePage = () => {
 
 		setters[source.droppableId as keyof typeof setters](sourceList);
 		setters[destination.droppableId as keyof typeof setters](destList);
+
+		// Sync updated values to authState
+		setAuthState((prev) => ({
+			...prev,
+			champsFirstPlace:
+				destination.droppableId === "firstPlace" ||
+				source.droppableId === "firstPlace"
+					? lists.firstPlace.map((c) => c.name)
+					: prev.champsFirstPlace,
+			champsWon:
+				destination.droppableId === "wonWith" ||
+				source.droppableId === "wonWith"
+					? lists.wonWith.map((c) => c.name)
+					: prev.champsWon,
+			champsPlayed:
+				destination.droppableId === "played" || source.droppableId === "played"
+					? lists.played.map((c) => c.name)
+					: prev.champsPlayed,
+			champsWanted:
+				destination.droppableId === "wantToPlay" ||
+				source.droppableId === "wantToPlay"
+					? lists.wantToPlay.map((c) => c.name)
+					: prev.champsWanted,
+		}));
 	};
 
 	const logout = (e: React.MouseEvent<HTMLButtonElement>) => {
