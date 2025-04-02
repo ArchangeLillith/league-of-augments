@@ -22,6 +22,8 @@ app.get("*", (_, res) => {
 	res.sendFile(path.join(__dirname, "../dist/index.html"));
 });
 
+
+
 // Start the server and bind to the correct port
 const PORT = process.env.PORT || config.app.port;
 app.listen(PORT, () => {

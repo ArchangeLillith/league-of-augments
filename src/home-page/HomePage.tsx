@@ -22,8 +22,9 @@ const HomePage = () => {
 	const [searchTerm, setSearchTerm] = useState("");
 
 	useEffect(() => {
+		if (!ready) return;
 		saveChamps();
-	}, [firstPlace, wonWith, played, wantToPlay, uncategorized]);
+	}, [firstPlace, wonWith, played, wantToPlay, uncategorized, ready]);
 
 	useEffect(() => {
 		const setup = async () => {
