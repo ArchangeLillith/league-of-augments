@@ -61,9 +61,10 @@ const Login = () => {
 	};
 
 	const loginHtml = (
-		<>
+		<div className="login-html">
 			<input
 				placeholder="Username"
+				className="login-input"
 				type="text"
 				onChange={(e) => {
 					setUsername(e.currentTarget.value);
@@ -71,18 +72,19 @@ const Login = () => {
 			></input>
 			<input
 				placeholder="Password"
+				className="login-input"
 				type="password"
 				onChange={(e) => {
 					setPassword(e.currentTarget.value);
 				}}
 			></input>
-			<button type="submit" onClick={login}>
+			<button className="login-submit-button" type="submit" onClick={login}>
 				Log in
 			</button>
-		</>
+		</div>
 	);
 	const registerHtml = (
-		<>
+		<div className="register-html">
 			<div
 				className={`
 			save-message
@@ -98,6 +100,7 @@ const Login = () => {
 			<input
 				placeholder="Username"
 				type="text"
+				className="login-input"
 				onChange={(e) => {
 					setUsername(e.currentTarget.value);
 				}}
@@ -105,6 +108,7 @@ const Login = () => {
 			<input
 				placeholder="Password"
 				type="password"
+				className="login-input"
 				onChange={(e) => {
 					setPassword(e.currentTarget.value);
 				}}
@@ -112,22 +116,30 @@ const Login = () => {
 			<input
 				placeholder="Confirm password"
 				type="password"
+				className="login-input"
 				onChange={(e) => {
 					setConfirmPass(e.currentTarget.value);
 				}}
 			></input>
-			<button type="submit" onClick={register}>
+			<button type="submit" className="login-submit-button" onClick={register}>
 				Register
 			</button>
-		</>
+		</div>
 	);
 
 	return (
 		<div className="login-page">
-			<form>{state === "login" ? loginHtml : registerHtml}</form>
-			<button onClick={toggleState}>
-				{state === "login" ? "Register" : "Login"}
-			</button>
+			<div className="login-section-border">
+				<div className="login-section">
+					<form className="login-form">
+						<h2 className="login-title"> Welcome to League of Augments~</h2>
+						{state === "login" ? loginHtml : registerHtml}
+					</form>
+					<button onClick={toggleState} className="login-toggle-button">
+						{state === "login" ? "Register  →" : "Login  →"}
+					</button>
+				</div>
+			</div>
 		</div>
 	);
 };

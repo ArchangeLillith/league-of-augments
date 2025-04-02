@@ -162,6 +162,23 @@ const HomePage = () => {
 		navigate("/");
 	};
 
+	const sortChamps = (e: React.MouseEvent<HTMLButtonElement>) => {
+		e.preventDefault();
+
+		setFirstPlace((prev) =>
+			[...prev].sort((a, b) => a.name.localeCompare(b.name))
+		);
+		setWonWith((prev) =>
+			[...prev].sort((a, b) => a.name.localeCompare(b.name))
+		);
+		setPlayed((prev) => [...prev].sort((a, b) => a.name.localeCompare(b.name)));
+		setWantToPlay((prev) =>
+			[...prev].sort((a, b) => a.name.localeCompare(b.name))
+		);
+		setUncategorized((prev) =>
+			[...prev].sort((a, b) => a.name.localeCompare(b.name))
+		);
+	};
 	//Helper to reduce amount of code, renders the boxes
 	const renderCategory = (
 		title: string,
@@ -180,7 +197,7 @@ const HomePage = () => {
 						{...provided.droppableProps}
 						className="droppable-container"
 					>
-						<p className="home-title">{title}</p>
+						<p className="category-title">{title}</p>
 						<div className="champ-container">
 							{filteredChamps.map((champ, index) => (
 								<Draggable
@@ -219,15 +236,22 @@ const HomePage = () => {
 		<div className="page-container">
 			{ready ? (
 				<DragDropContext onDragEnd={handleDragEnd}>
-					<input
-						type="text"
-						placeholder="Search a champ..."
-						value={searchTerm}
-						onChange={(e) => setSearchTerm(e.target.value)}
-						className="champ-search-input"
-					/>
-					<button onClick={logout}>Log Out</button>
-					{renderCategory("First Place", "firstPlace", firstPlace)}
+					<div className="champ-top-section">
+						<input
+							type="text"
+							placeholder="Search a champ..."
+							value={searchTerm}
+							onChange={(e) => setSearchTerm(e.target.value)}
+							className="champ-search-input"
+						/>
+						<button className="alphebetize-button" onClick={sortChamps}>
+							Alphebetize!
+						</button>
+						<button className="logout-button" onClick={logout}>
+							Log Out
+						</button>
+					</div>
+					{renderCategory("~First Place~", "firstPlace", firstPlace)}
 					{renderCategory("Champions Won With", "wonWith", wonWith)}
 					{renderCategory("Champions Played", "played", played)}
 					{renderCategory("Want to Win With", "wantToPlay", wantToPlay)}
