@@ -20,9 +20,16 @@ const HomePage = () => {
 	const [wantToPlay, setWantToPlay] = useState<Champion[]>([]);
 	const [uncategorized, setUncategorized] = useState<Champion[]>([]);
 	const [searchTerm, setSearchTerm] = useState("");
+	const [hasSavedOnce, setHasSavedOnce] = useState(false);
 
 	useEffect(() => {
-		if (!ready) return;
+		if (ready && !hasSavedOnce) {
+			setHasSavedOnce(true);
+		}
+	}, [ready]);
+
+	useEffect(() => {
+		if (!ready || hasSavedOnce === false) return;
 		saveChamps();
 	}, [firstPlace, wonWith, played, wantToPlay, uncategorized, ready]);
 
