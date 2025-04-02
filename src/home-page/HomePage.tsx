@@ -10,11 +10,11 @@ import {
 } from "@hello-pangea/dnd";
 
 const HomePage = () => {
-	const [ready, setReady] = useState(false);
-
 	const { authState, setAuthState, logoutFromAuthState } =
 		useContext(AuthContext);
+
 	const navigate = useNavigate();
+	const [ready, setReady] = useState(false);
 	const [firstPlace, setFirstPlace] = useState<Champion[]>([]);
 	const [wonWith, setWonWith] = useState<Champion[]>([]);
 	const [played, setPlayed] = useState<Champion[]>([]);
@@ -23,30 +23,37 @@ const HomePage = () => {
 	const [searchTerm, setSearchTerm] = useState("");
 	const [hasSavedOnce, setHasSavedOnce] = useState(false);
 
+	//A hackey way to make sure we don't accidentally overwrite the database with the initilization blank values
 	useEffect(() => {
 		if (ready && !hasSavedOnce) {
 			setHasSavedOnce(true);
 		}
 	}, [ready]);
-
+	//Second half of that hackey solution
 	useEffect(() => {
 		if (!ready || hasSavedOnce === false) return;
 		saveChamps();
 	}, [firstPlace, wonWith, played, wantToPlay, uncategorized, ready]);
 
+	//The useEffect that filters the champs into the correct places. Filters the champ return from external API by the saved data from the user
 	useEffect(() => {
+		console.log(0);
 		const setup = async () => {
 			const champReturn = await fetchChampions();
 			if (!authState.userData) return;
 
+			console.log(1);
 			const { champsFirstPlace, champsWon, champsPlayed, champsWanted } =
 				authState;
 			setFirstPlace(
 				champReturn.filter((c) => champsFirstPlace.includes(c.name))
 			);
+			console.log(2);
+
 			setWonWith(champReturn.filter((c) => champsWon.includes(c.name)));
 			setPlayed(champReturn.filter((c) => champsPlayed.includes(c.name)));
 			setWantToPlay(champReturn.filter((c) => champsWanted.includes(c.name)));
+			console.log(3);
 
 			const allTracked = new Set([
 				...champsFirstPlace,
@@ -54,12 +61,18 @@ const HomePage = () => {
 				...champsPlayed,
 				...champsWanted,
 			]);
+			console.log(4);
+
 			setUncategorized(champReturn.filter((c) => !allTracked.has(c.name)));
+			console.log(5);
+
 			setReady(true);
 		};
+		console.log(0.5);
 		setup();
-	}, []);
+	}, [authState.userData]);
 
+	//Function to save the champs to the database
 	const saveChamps = async () => {
 		const dto = {
 			user_id: authState.userData?.id,
@@ -81,10 +94,12 @@ const HomePage = () => {
 		}
 	};
 
+	//Onclick to redirect to the champion's page
 	const toChampPage = (champ: Champion) => {
 		navigate(`/champ/${champ.name}/`, { state: champ });
 	};
 
+	//Drag handler, moves a champ from one place to another and updates authState as well so that data doesn't go stale
 	const handleDragEnd = (result: DropResult) => {
 		if (!result.destination) return;
 
@@ -140,12 +155,14 @@ const HomePage = () => {
 		}));
 	};
 
+	//Logs out the user and wipes their token from local storage
 	const logout = (e: React.MouseEvent<HTMLButtonElement>) => {
 		e.preventDefault();
 		logoutFromAuthState();
-		navigate("/login");
+		navigate("/");
 	};
 
+	//Helper to reduce amount of code, renders the boxes
 	const renderCategory = (
 		title: string,
 		droppableId: string,
@@ -197,6 +214,7 @@ const HomePage = () => {
 		);
 	};
 
+	//Our body of the page!
 	return (
 		<div className="page-container">
 			{ready ? (
