@@ -247,6 +247,9 @@ const HomePage = () => {
 						<button className="alphebetize-button" onClick={sortChamps}>
 							Alphebetize!
 						</button>
+						<div className="won-with">
+							First Place: <span className="margin-2">{firstPlace.length}</span>
+						</div>
 						<button className="logout-button" onClick={logout}>
 							Log Out
 						</button>

@@ -14,6 +14,10 @@
 	font-family: "Cinzel", serif;
 }
 
+.margin-2 {
+	margin: 10px;
+}
+
 .page-container {
 	display: flex;
 	flex-direction: column;
@@ -317,6 +321,26 @@
 	text-align: center;
 	position: relative;
 	z-index: 1;
+}
+
+.won-with {
+	font-size: 1.2rem;
+	background: linear-gradient(
+		135deg,
+		#f0d887,
+		#d4af58,
+		#b88a2b
+	); /* lighter but warm golds */
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4), 0 0 6px rgba(255, 223, 120, 0.2); /* soft glow */
+	letter-spacing: 1.5px;
+	width: fit-content;
+	align-self: center;
+	justify-content: center;
+	margin: 2.5px 0;
+	padding: 0;
+	text-shadow: 0 0 4px rgba(255, 215, 100, 0.2); /* soft golden glow */
 }
 .login-page {
 	padding: 0;
