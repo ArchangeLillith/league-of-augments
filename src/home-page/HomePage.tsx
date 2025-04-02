@@ -40,7 +40,7 @@ const HomePage = () => {
 
 			const { champsFirstPlace, champsWon, champsPlayed, champsWanted } =
 				authState;
-
+			alert("Triggers here");
 			setFirstPlace(
 				champReturn.filter((c) => champsFirstPlace.includes(c.name))
 			);
@@ -58,7 +58,7 @@ const HomePage = () => {
 			setReady(true);
 		};
 		setup();
-	}, [authState]);
+	}, []);
 
 	const saveChamps = async () => {
 		const dto = {
