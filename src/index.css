@@ -14,6 +14,29 @@
 	font-family: "Cinzel", serif;
 }
 
+.tooltip-wrapper {
+	position: relative;
+	display: inline-block;
+}
+
+.tooltip-box {
+	position: absolute;
+	top: 100%;
+	left: 50%;
+	transform: translateX(-50%);
+	background-color: #222;
+	color: #fff;
+	padding: 0.5rem;
+	border-radius: 5px;
+	white-space: pre-line;
+	width: 200px;
+	margin-top: 5px;
+	z-index: 10;
+	font-size: 0.8rem;
+	box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+	pointer-events: none;
+}
+
 .margin-2 {
 	margin: 10px;
 }
@@ -71,13 +94,6 @@
 	height: 40px;
 	width: 40px;
 	margin: 10px 10px;
-}
-
-.btn-home {
-	display: flex;
-	font-size: 26px;
-	align-items: center;
-	justify-content: center;
 }
 
 .save-message {
@@ -173,16 +189,6 @@
 .aug-icon {
 	height: 40;
 	width: 40;
-}
-
-.container-prismatic,
-.container-gold,
-.container-silver,
-.container-selected-aug {
-	padding: 0.75rem;
-	display: flex;
-	flex-direction: row;
-	flex-wrap: wrap;
 }
 
 .btn-aug {
@@ -485,4 +491,144 @@
 	margin: 2.5px 0;
 	padding: 0;
 	text-shadow: 0 0 4px rgba(255, 215, 100, 0.2); /* soft golden glow */
+}
+
+.top-champ-container {
+	display: flex;
+	align-items: center;
+	flex-direction: row;
+	justify-content: space-between;
+}
+
+.flex-row {
+	display: flex;
+	flex-direction: row;
+}
+
+.btn-home {
+	margin: 40px;
+	display: flex;
+	font-size: 26px;
+	align-items: center;
+	justify-content: center;
+}
+
+.container-prismatic,
+.container-gold,
+.container-silver {
+	padding: 0.75rem;
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: center;
+}
+
+.selected-augs-top {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-around;
+}
+
+.selected-augs {
+	margin-left: 150px;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: center;
+}
+.selected-augs-title {
+	margin-right: 150px;
+}
+
+.color-muted {
+	color: rgba(255, 255, 255, 0.337);
+}
+
+.keyword-ap {
+	color: #8662eb;
+	font-weight: bold;
+}
+
+.keyword-ad {
+	color: #f87171;
+	font-weight: bold;
+}
+
+.keyword-health,
+.keyword-heal,
+.keyword-maxhealth {
+	color: #34d399;
+	font-weight: bold;
+}
+
+.keyword-armor {
+	color: #fbbf24;
+	font-weight: bold;
+}
+
+.keyword-mr {
+	color: #a78bfa;
+	font-weight: bold;
+}
+
+.keyword-haste {
+	color: #93c5fd;
+	font-weight: bold;
+}
+
+.keyword-crit {
+	color: #ff6262;
+	font-weight: bold;
+}
+
+.keyword-vamp {
+	color: #fb4646;
+	font-weight: bold;
+}
+
+.keyword-true {
+	color: #ffffff;
+	background-color: #000000;
+	padding: 0 4px;
+	border-radius: 3px;
+	font-weight: bold;
+}
+
+.keyword-onhit {
+	color: #eab308;
+	font-weight: bold;
+}
+
+.keyword-as {
+	color: #f8e5a4;
+	font-weight: bold;
+}
+@keyframes shine {
+	0% {
+		background-position: 0% 50%;
+	}
+	100% {
+		background-position: 100% 50%;
+	}
+}
+
+.keyword-juice {
+	background: linear-gradient(
+		135deg,
+		#cdb4ff,
+		#b9fbc0,
+		#f1c0e8,
+		#a3c4f3,
+		#ffe5b4
+	);
+	background-size: 300%;
+	background-clip: text;
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	color: transparent;
+	font-weight: bold;
+
+	animation: shine 3s ease-in-out infinite;
 }
