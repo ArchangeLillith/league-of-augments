@@ -271,9 +271,27 @@ const TooltipWrapper = ({
 }) => {
 	const [showTooltip, setShowTooltip] = useState(false);
 	const [hoverTimer, setHoverTimer] = useState<number | null>(null);
+	const [positionAbove, setPositionAbove] = useState(false);
+	const wrapperRef = useRef<HTMLDivElement>(null);
+	const tooltipRef = useRef<HTMLDivElement>(null);
 
 	const handleMouseEnter = () => {
-		const timer = window.setTimeout(() => setShowTooltip(true), 500);
+		const timer = window.setTimeout(() => {
+			setShowTooltip(true);
+
+			// Wait for the tooltip to render first
+			setTimeout(() => {
+				if (wrapperRef.current && tooltipRef.current) {
+					const wrapperRect = wrapperRef.current.getBoundingClientRect();
+					const tooltipRect = tooltipRef.current.getBoundingClientRect();
+
+					const tooltipWouldOverflow =
+						wrapperRect.bottom + tooltipRect.height > window.innerHeight;
+
+					setPositionAbove(tooltipWouldOverflow);
+				}
+			}, 0); // defer to next tick
+		}, 500);
 		setHoverTimer(timer);
 	};
 
@@ -284,6 +302,7 @@ const TooltipWrapper = ({
 
 	return (
 		<div
+			ref={wrapperRef}
 			className="tooltip-wrapper"
 			onMouseEnter={handleMouseEnter}
 			onMouseLeave={handleMouseLeave}
@@ -291,7 +310,8 @@ const TooltipWrapper = ({
 			{children}
 			{showTooltip && (
 				<div
-					className="tooltip-box"
+					ref={tooltipRef}
+					className={`tooltip-box ${positionAbove ? "tooltip-box--above" : ""}`}
 					dangerouslySetInnerHTML={{ __html: formatDescription(tooltipText) }}
 				/>
 			)}

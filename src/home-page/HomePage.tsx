@@ -22,6 +22,7 @@ const HomePage = () => {
 	const [uncategorized, setUncategorized] = useState<Champion[]>([]);
 	const [searchTerm, setSearchTerm] = useState("");
 	const [hasSavedOnce, setHasSavedOnce] = useState(false);
+	const [showTooltip, setShowTooltip] = useState(false);
 
 	//A hackey way to make sure we don't accidentally overwrite the database with the initilization blank values
 	useEffect(() => {
@@ -101,7 +102,7 @@ const HomePage = () => {
 
 	//Drag handler, moves a champ from one place to another and updates authState as well so that data doesn't go stale
 	const handleDragEnd = (result: DropResult) => {
-		if (!result.destination) return;
+		if (!result.destination || searchTerm) return;
 
 		const { source, destination } = result;
 
@@ -155,6 +156,11 @@ const HomePage = () => {
 		}));
 	};
 
+	const filterChamps = (champs: Champion[]) =>
+		champs.filter((champ) =>
+			champ.name.toLowerCase().includes(searchTerm.toLowerCase())
+		);
+
 	//Logs out the user and wipes their token from local storage
 	const logout = (e: React.MouseEvent<HTMLButtonElement>) => {
 		e.preventDefault();
@@ -185,10 +191,6 @@ const HomePage = () => {
 		droppableId: string,
 		champs: Champion[]
 	) => {
-		const filteredChamps = champs.filter((champ) =>
-			champ.name.toLowerCase().includes(searchTerm.toLowerCase())
-		);
-
 		return (
 			<Droppable droppableId={droppableId}>
 				{(provided) => (
@@ -199,7 +201,7 @@ const HomePage = () => {
 					>
 						<p className="category-title">{title}</p>
 						<div className="champ-container">
-							{filteredChamps.map((champ, index) => (
+							{champs.map((champ, index) => (
 								<Draggable
 									draggableId={`champ-${champ.name}`}
 									index={index}
@@ -233,17 +235,31 @@ const HomePage = () => {
 
 	//Our body of the page!
 	return (
-		<div className="page-container">
+		<div className={`page-container ${searchTerm ? "no-drag" : ""}`}>
 			{ready ? (
 				<DragDropContext onDragEnd={handleDragEnd}>
 					<div className="champ-top-section">
-						<input
-							type="text"
-							placeholder="Search a champ..."
-							value={searchTerm}
-							onChange={(e) => setSearchTerm(e.target.value)}
-							className="champ-search-input"
-						/>
+						<div className="search-with-tooltip">
+							<input
+								type="text"
+								placeholder="Search a champ..."
+								value={searchTerm}
+								onChange={(e) => {
+									const val = e.target.value;
+									setSearchTerm(val);
+									if (val) {
+										setShowTooltip(true);
+										setTimeout(() => setShowTooltip(false), 4500);
+									}
+								}}
+								className="champ-search-input"
+							/>
+							{searchTerm && showTooltip && (
+								<div className="search-tooltip">
+									Dragging and dropping breaks when searching, sorry!
+								</div>
+							)}
+						</div>
 						<button className="alphebetize-button" onClick={sortChamps}>
 							Alphebetize!
 						</button>
@@ -254,11 +270,27 @@ const HomePage = () => {
 							Log Out
 						</button>
 					</div>
-					{renderCategory("~First Place~", "firstPlace", firstPlace)}
-					{renderCategory("Champions Won With", "wonWith", wonWith)}
-					{renderCategory("Champions Played", "played", played)}
-					{renderCategory("Want to Win With", "wantToPlay", wantToPlay)}
-					{renderCategory("Uncategorized", "uncategorized", uncategorized)}
+					{renderCategory(
+						"~First Place~",
+						"firstPlace",
+						filterChamps(firstPlace)
+					)}
+					{renderCategory(
+						"Champions Won With",
+						"wonWith",
+						filterChamps(wonWith)
+					)}
+					{renderCategory("Champions Played", "played", filterChamps(played))}
+					{renderCategory(
+						"Want to Win With",
+						"wantToPlay",
+						filterChamps(wantToPlay)
+					)}
+					{renderCategory(
+						"Uncategorized",
+						"uncategorized",
+						filterChamps(uncategorized)
+					)}
 				</DragDropContext>
 			) : (
 				<p>Loading champs...</p>
