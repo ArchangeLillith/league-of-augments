@@ -1,22 +1,22 @@
-import { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 
 const AugmentAlchemy = () => {
-	const [data, setData] = useState<any[]>();
+	const [data, setData] = useState<any[] | undefined>([]);
 
 	useEffect(() => {
 		const fetchData = async () => {
-			const data = await getData(); // Await the result here
-			setData(data); // Now this will be the resolved value
+			const data = await getData();
+			setData(data); // Set the fetched data
 		};
 
-		fetchData(); // Call the fetch function
+		fetchData();
 	}, []);
 
 	const getData = async () => {
 		try {
 			const res = await fetch(`/api/items/tags`);
 			if (!res.ok) throw new Error("Failed to fetch tags");
-			console.log(res);
+
 			const data = await res.json();
 			return data;
 		} catch (error) {
@@ -32,7 +32,20 @@ const AugmentAlchemy = () => {
 				{data && (
 					<div>
 						{data.map((item) => (
-							<div>{JSON.stringify(item)}</div>
+							<div key={item.item_id} style={{ marginBottom: "20px" }}>
+								<h3>{item.item_name}</h3>
+								<p>
+									<strong>Item ID:</strong> {item.item_id}
+								</p>
+								<p>
+									<strong>Tags:</strong>
+								</p>
+								<ul>
+									{item.tags.split(",").map((tag: string, index: number) => (
+										<li key={index}>{tag}</li>
+									))}
+								</ul>
+							</div>
 						))}
 					</div>
 				)}
