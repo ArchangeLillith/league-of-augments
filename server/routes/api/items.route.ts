@@ -13,6 +13,15 @@ router.get("/", async (req, res) => {
 		console.error(error);
 	}
 });
+//GET api/items/tags
+router.get("/tags", async (req, res) => {
+	try {
+		const result = await db.items.getItemTags();
+		res.json(result);
+	} catch (error) {
+		console.error(error);
+	}
+});
 
 //POST /api/builds/
 router.post("/", async (req, res) => {
