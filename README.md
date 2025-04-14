@@ -34,7 +34,6 @@
     <li><a href="#roadmap">Roadmap</a></li>
     <li><a href="#gallery">Gallery</a></li>
     <li><a href="#for-developers">For Developers</a></li>
-    <li><a href="#acknowledgments">Acknowledgments</a></li>
     <li><a href="#license">License</a></li>
   </ul>
 </details>
@@ -173,13 +172,6 @@ If you'd like to run a local copy of this project, please follow the steps below
    npm run dev
    ```
 
-<!-- ACKNOWLEDGMENTS -->
-## Acknowledgments
-
-Thank you to Elivaras who's been helping me learn version control and keeping my code clean by reviewing most of my commits! And thank you to [Covalence](https://covalence.io/) for their incredible support and amazing lectures (looking at you Luke and Andrew!)
-
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
 <!-- LICENSE -->
