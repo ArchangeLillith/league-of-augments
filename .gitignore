@@ -27,4 +27,4 @@ dist-ssr
 *.sw?
 
 .env
-public/augment-icons
+/public/augment-icons/
