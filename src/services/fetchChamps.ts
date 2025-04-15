@@ -8,7 +8,7 @@ export type Champion = {
 };
 
 export const fetchChampions = async (): Promise<Champion[]> => {
-	const version = "15.6.1"; // update this as needed (or fetch latest dynamically)
+	const version = "15.6.1"; // update this as needed
 	const res = await fetch(
 		`https://ddragon.leagueoflegends.com/cdn/${version}/data/en_US/champion.json`
 	);

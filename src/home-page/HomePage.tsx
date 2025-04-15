@@ -293,6 +293,7 @@ const HomePage = () => {
 					)}
 				</DragDropContext>
 			) : (
+				// Fallback for if something goes wrong or loading takes a whille
 				<p>Loading champs...</p>
 			)}
 		</div>

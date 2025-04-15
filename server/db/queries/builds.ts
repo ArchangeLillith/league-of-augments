@@ -16,7 +16,7 @@ const upsertFullBuild = async (
 
 	try {
 		// Step 1: Insert or find build
-		//HARDCODED HERE
+		//!HARDCODED HERE
 		const result: [ResultSetHeader, FieldPacket[]] = await conn.query(
 			`INSERT INTO loa_builds (user_id, champion_name, name)
 			 VALUES (?, ?, ?)

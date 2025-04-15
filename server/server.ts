@@ -17,7 +17,6 @@ app.use(express.json({ limit: "1mb" }));
 app.use("/api", apiRouter);
 app.use("/auth", authRouter);
 
-// 👇 Fallback for React Router SPA
 app.get("*", (_, res) => {
 	res.sendFile(path.join(__dirname, "../dist/index.html"));
 });

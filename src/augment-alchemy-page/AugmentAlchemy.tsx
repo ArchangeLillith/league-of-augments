@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 
 const AugmentAlchemy = () => {
 	const [data, setData] = useState<any[] | undefined>([]);
@@ -33,6 +33,7 @@ const AugmentAlchemy = () => {
 					<div>
 						{data.map((item) => (
 							<div key={item.item_id} style={{ marginBottom: "20px" }}>
+								<img src={item.url} />
 								<h3>{item.item_name}</h3>
 								<p>
 									<strong>Item ID:</strong> {item.item_id}

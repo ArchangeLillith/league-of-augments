@@ -78,7 +78,6 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 	//
 	/**
 	 * If there's a valid token in storage, check if the user is logged in - this runs on load
-	 * Refactor we could even make this an option, if the user wants it to auto log them in or not!
 	 */
 	useEffect(() => {
 		const checkUser = async () => {

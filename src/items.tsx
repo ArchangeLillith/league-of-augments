@@ -10,6 +10,7 @@ interface Item {
 	[key: string]: string | number;
 }
 
+//!we need to add both percent pen for armour and mr here if we reuse any of this!
 const statLabels: Record<string, string> = {
 	ability_power: "AP",
 	ability_haste: "Ability Haste",

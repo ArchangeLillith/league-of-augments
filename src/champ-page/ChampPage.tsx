@@ -197,7 +197,6 @@ const ChampPage = () => {
 							className={`btn-aug-background ${aug.tier}`}
 							key={aug.augment_id}
 						>
-							{" "}
 							<TooltipWrapper tooltipText={`${aug.description}`}>
 								<button
 									className="btn-aug"
@@ -218,7 +217,6 @@ const ChampPage = () => {
 							className={`btn-aug-background ${aug.tier}`}
 							key={aug.augment_id}
 						>
-							{" "}
 							<TooltipWrapper tooltipText={`${aug.description}`}>
 								<button
 									className="btn-aug gold"
@@ -239,7 +237,6 @@ const ChampPage = () => {
 							className={`btn-aug-background ${aug.tier}`}
 							key={aug.augment_id}
 						>
-							{" "}
 							<TooltipWrapper tooltipText={`${aug.description}`}>
 								<button
 									className="btn-aug silver"
@@ -290,7 +287,7 @@ const TooltipWrapper = ({
 
 					setPositionAbove(tooltipWouldOverflow);
 				}
-			}, 0); // defer to next tick
+			}, 0);
 		}, 500);
 		setHoverTimer(timer);
 	};
