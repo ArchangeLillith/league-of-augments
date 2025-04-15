@@ -12,6 +12,14 @@ router.get("/", async (req, res) => {
 		console.error(error);
 	}
 });
+router.get("/includeTags", async (req, res) => {
+	try {
+		const result = await db.augments.getAllAugsWithTags();
+		res.json(result);
+	} catch (error) {
+		console.error(error);
+	}
+});
 
 
 export default router;
