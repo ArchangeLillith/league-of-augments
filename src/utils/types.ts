@@ -9,6 +9,12 @@ export type Build = {
 	items: number[];
 };
 
+export type ItemType = {
+	name: string;
+	id: number;
+	tags: string[];
+};
+
 export type Augment = {
 	name: string;
 	augment_id: number;

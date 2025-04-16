@@ -1,6 +1,7 @@
-import { Augment } from "../utils/types";
+import { Augment, ItemType } from "../utils/types";
 
 export type PageDataType = {
+	augments: Augment[];
 	selectedAugments: {
 		panel1: Augment | null;
 		panel2: Augment | null;
@@ -9,9 +10,18 @@ export type PageDataType = {
 		panel5: Augment | null;
 		panel6: Augment | null;
 	};
-	augments: Augment[];
+	suggestedItems: {
+		panel1: ItemType | null;
+		panel2: ItemType | null;
+		panel3: ItemType | null;
+		panel4: ItemType | null;
+		panel5: ItemType | null;
+		panel6: ItemType | null;
+		itemSet: Set<ItemType>;
+	};
 };
 export const initializePageData = {
+	augments: [],
 	selectedAugments: {
 		panel1: null,
 		panel2: null,
@@ -20,5 +30,13 @@ export const initializePageData = {
 		panel5: null,
 		panel6: null,
 	},
-	augments: [],
+	suggestedItems: {
+		panel1: null,
+		panel2: null,
+		panel3: null,
+		panel4: null,
+		panel5: null,
+		panel6: null,
+		itemSet: new Set<ItemType>,
+	},
 };

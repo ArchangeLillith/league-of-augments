@@ -21,7 +21,6 @@ const AugSearchBar: React.FC<AugSearchBarProps> = ({
 	const filteredAugments = augments.filter((augment: Augment) =>
 		augment.name.toLowerCase().includes(inputValue.toLowerCase())
 	);
-	console.log("filtered", filteredAugments);
 
 
 	const handleSelect = (augment: Augment) => {

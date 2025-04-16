@@ -13,6 +13,7 @@
 	-moz-osx-font-smoothing: grayscale;
 	font-family: "Cinzel", serif;
 }
+
 .search-with-tooltip {
 	position: relative;
 	display: inline-block;
@@ -243,9 +244,19 @@
 	width: 120px;
 }
 
-.top-container {
+.augment-panel {
+	background-color: rgb(1, 1, 129);
+	align-items: flex;
+	flex-direction: column;
+	height: 500px;
+	padding: 2rem;
+	border-radius: 15px;
+}
+.augment-panel-container {
 	display: flex;
 	flex-direction: row;
+	align-items: center;
+	justify-content: space-around;
 }
 
 .container-aug-btn {

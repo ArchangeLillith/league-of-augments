@@ -1,6 +1,7 @@
 import { SetStateAction } from "react";
 import AugSearchBar from "./AugSearchBar";
 import { PageDataType } from "./augmentAlchemy.utils";
+import ItemIcon from "./ItemIcon";
 
 interface AugmentPanelProps {
 	pageData: PageDataType;
@@ -14,7 +15,7 @@ const AugmentPanel: React.FC<AugmentPanelProps> = ({
 	childKey,
 }) => {
 	return (
-		<div className={`${childKey}`}>
+		<div className={`${childKey} augment-panel`}>
 			<div className="augment-selection">
 				<AugSearchBar
 					pageData={pageData}
@@ -24,7 +25,7 @@ const AugmentPanel: React.FC<AugmentPanelProps> = ({
 				<img />
 			</div>
 			<div className="item-box">
-				{/* We can reuse the component we'll make for the parent page here but sytle based on .item-box to differenciate */}
+				<ItemIcon />
 			</div>
 		</div>
 	);
