@@ -14,9 +14,13 @@ const AugmentPanel: React.FC<AugmentPanelProps> = ({
 	childKey,
 }) => {
 	return (
-		<div className="augment-panel">
+		<div className={`${childKey}`}>
 			<div className="augment-selection">
-				<AugSearchBar pageData={pageData} setPageData={setPageData} childKey={childKey}/>
+				<AugSearchBar
+					pageData={pageData}
+					setPageData={setPageData}
+					childKey={childKey}
+				/>
 				<img />
 			</div>
 			<div className="item-box">

@@ -191,6 +191,10 @@
 	background-color: #ffcccc;
 }
 
+.augment-selector-panel {
+	position: relative;
+}
+
 .selected-aug-background.Prismatic {
 	background: linear-gradient(
 		135deg,

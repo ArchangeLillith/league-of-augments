@@ -21,6 +21,8 @@ const AugSearchBar: React.FC<AugSearchBarProps> = ({
 	const filteredAugments = augments.filter((augment: Augment) =>
 		augment.name.toLowerCase().includes(inputValue.toLowerCase())
 	);
+	console.log("filtered", filteredAugments);
+
 
 	const handleSelect = (augment: Augment) => {
 		setInputValue(augment.name);
@@ -60,7 +62,7 @@ const AugSearchBar: React.FC<AugSearchBarProps> = ({
 				value={inputValue}
 				placeholder="Type an augment name..."
 				onChange={(e) => {
-					setInputValue(e.target.value);
+					setInputValue(e.currentTarget.value);
 					setShowDropdown(true);
 				}}
 				onFocus={() => setShowDropdown(true)}
