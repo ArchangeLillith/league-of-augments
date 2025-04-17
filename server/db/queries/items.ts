@@ -10,8 +10,7 @@ const getItemTags = (): Promise<any[]> =>
 	Query<any>(
 		`
    SELECT 
-  i.item_id,
-  i.name AS item_name,
+  i.*,
   GROUP_CONCAT(t.tag_name ORDER BY t.tag_name ASC) AS tags
 FROM 
   loa_items i
