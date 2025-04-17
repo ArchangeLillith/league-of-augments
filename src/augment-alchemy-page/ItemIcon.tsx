@@ -1,9 +1,13 @@
-interface ItemIconProps {}
+import { ItemType } from "../utils/types";
 
-const ItemIcon = (props: ItemIconProps) => {
+interface ItemIconProps {
+	item: ItemType;
+}
+
+const ItemIcon: React.FC<ItemIconProps> = ({ item }) => {
 	return (
 		<div className="suggested-item">
-			<img src=""/>
+			<img src={item.url} />
 		</div>
 	);
 };

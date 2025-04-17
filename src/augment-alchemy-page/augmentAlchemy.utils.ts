@@ -11,12 +11,12 @@ export type PageDataType = {
 		panel6: Augment | null;
 	};
 	suggestedItems: {
-		panel1: ItemType | null;
-		panel2: ItemType | null;
-		panel3: ItemType | null;
-		panel4: ItemType | null;
-		panel5: ItemType | null;
-		panel6: ItemType | null;
+		panel1: ItemType[] | null;
+		panel2: ItemType[] | null;
+		panel3: ItemType[] | null;
+		panel4: ItemType[] | null;
+		panel5: ItemType[] | null;
+		panel6: ItemType[] | null;
 		itemSet: Set<ItemType>;
 	};
 };
@@ -37,6 +37,6 @@ export const initializePageData = {
 		panel4: null,
 		panel5: null,
 		panel6: null,
-		itemSet: new Set<ItemType>,
+		itemSet: new Set<ItemType>(),
 	},
 };

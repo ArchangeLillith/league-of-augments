@@ -22,10 +22,15 @@ const AugmentPanel: React.FC<AugmentPanelProps> = ({
 					setPageData={setPageData}
 					childKey={childKey}
 				/>
-				<img />
 			</div>
 			<div className="item-box">
-				<ItemIcon />
+				{pageData.suggestedItems[childKey] && (
+					<>
+						{pageData.suggestedItems[childKey].map((item) => (
+							<ItemIcon item={item} />
+						))}
+					</>
+				)}
 			</div>
 		</div>
 	);

@@ -33,12 +33,18 @@ const AugmentAlchemy = () => {
 		) {
 			return;
 		}
-
+		console.log("All items:", allItems);
 		const suggestedItems = allItems.filter((item) =>
 			item.tags.includes(selected.tags[0])
 		);
 
-		console.log("Sugg:", suggestedItems);
+		setPageData((prev) => ({
+			...prev,
+			suggestedItems: {
+				...prev.suggestedItems,
+				panel1: suggestedItems,
+			},
+		}));
 	}, [
 		//can we shorthand this? I imagine so, but like, does that work...?
 		pageData.selectedAugments.panel1,
@@ -55,6 +61,8 @@ const AugmentAlchemy = () => {
 
 	return (
 		<div className="augment-alchemy-page">
+			{/* <div>{JSON.stringify(pageData.suggestedItems.panel1)}</div>
+			<div>{JSON.stringify(allItems)}</div> */}
 			<div className="augment-alchemy-header">
 				<button onClick={() => navigate("/home")}>Home</button>
 				<h1>~AugmentAlchemy~</h1>
@@ -70,9 +78,7 @@ const AugmentAlchemy = () => {
 					/>
 				))}
 			</div>
-			<div className="bottom-container">
-				<ItemIcon />
-			</div>
+			<div className="bottom-container">{/* <ItemIcon /> */}</div>
 		</div>
 	);
 };

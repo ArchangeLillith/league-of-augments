@@ -6,6 +6,8 @@ import { fetchAugments } from "../services/fetchAugments";
 import { Build } from "../utils/types";
 import { AuthContext } from "../context/AuthProvider";
 import { fetchBuilds } from "../services/fetchBuilds";
+import TooltipWrapper from "../componenets/TooltipWrapper";
+import AugmentTile from "../componenets/AugmentTile";
 
 const ChampPage = () => {
 	// Context & routing
@@ -151,6 +153,7 @@ const ChampPage = () => {
 			{/* Selected Augments */}
 			<div className="container-selected-aug">
 				<div className="selected-augs-top">
+					{/* Styling divs for space */}
 					<div></div>
 					<div></div>
 					<h3 className="selected-augs-title">Selected Augments:</h3>
@@ -193,61 +196,19 @@ const ChampPage = () => {
 			<div>
 				<div className="container-prismatic">
 					{prismaticAugs.map((aug) => (
-						<div
-							className={`btn-aug-background ${aug.tier}`}
-							key={aug.augment_id}
-						>
-							<TooltipWrapper tooltipText={`${aug.description}`}>
-								<button
-									className="btn-aug"
-									onClick={() => toggleAug(aug)}
-									id={aug.name}
-								>
-									<img src={aug.url!} width={35} height={35} />
-									{aug.name}
-								</button>
-							</TooltipWrapper>
-						</div>
+						<AugmentTile aug={aug} toggleAug={toggleAug} />
 					))}
 				</div>
 
 				<div className="container-gold">
 					{goldAugs.map((aug) => (
-						<div
-							className={`btn-aug-background ${aug.tier}`}
-							key={aug.augment_id}
-						>
-							<TooltipWrapper tooltipText={`${aug.description}`}>
-								<button
-									className="btn-aug gold"
-									onClick={() => toggleAug(aug)}
-									id={aug.name}
-								>
-									<img src={aug.url!} />
-									{aug.name}
-								</button>
-							</TooltipWrapper>
-						</div>
+						<AugmentTile aug={aug} toggleAug={toggleAug} />
 					))}
 				</div>
 
 				<div className="container-silver">
 					{silverAugs.map((aug) => (
-						<div
-							className={`btn-aug-background ${aug.tier}`}
-							key={aug.augment_id}
-						>
-							<TooltipWrapper tooltipText={`${aug.description}`}>
-								<button
-									className="btn-aug silver"
-									onClick={() => toggleAug(aug)}
-									id={aug.name}
-								>
-									<img src={aug.url!} width={35} height={35} />
-									{aug.name}
-								</button>
-							</TooltipWrapper>
-						</div>
+						<AugmentTile aug={aug} toggleAug={toggleAug} />
 					))}
 				</div>
 			</div>
@@ -256,62 +217,3 @@ const ChampPage = () => {
 };
 
 export default ChampPage;
-
-import { formatDescription } from "../utils/formatDescription";
-
-const TooltipWrapper = ({
-	children,
-	tooltipText,
-}: {
-	children: React.ReactNode;
-	tooltipText: string;
-}) => {
-	const [showTooltip, setShowTooltip] = useState(false);
-	const [hoverTimer, setHoverTimer] = useState<number | null>(null);
-	const [positionAbove, setPositionAbove] = useState(false);
-	const wrapperRef = useRef<HTMLDivElement>(null);
-	const tooltipRef = useRef<HTMLDivElement>(null);
-
-	const handleMouseEnter = () => {
-		const timer = window.setTimeout(() => {
-			setShowTooltip(true);
-
-			// Wait for the tooltip to render first
-			setTimeout(() => {
-				if (wrapperRef.current && tooltipRef.current) {
-					const wrapperRect = wrapperRef.current.getBoundingClientRect();
-					const tooltipRect = tooltipRef.current.getBoundingClientRect();
-
-					const tooltipWouldOverflow =
-						wrapperRect.bottom + tooltipRect.height > window.innerHeight;
-
-					setPositionAbove(tooltipWouldOverflow);
-				}
-			}, 0);
-		}, 500);
-		setHoverTimer(timer);
-	};
-
-	const handleMouseLeave = () => {
-		if (hoverTimer) clearTimeout(hoverTimer);
-		setShowTooltip(false);
-	};
-
-	return (
-		<div
-			ref={wrapperRef}
-			className="tooltip-wrapper"
-			onMouseEnter={handleMouseEnter}
-			onMouseLeave={handleMouseLeave}
-		>
-			{children}
-			{showTooltip && (
-				<div
-					ref={tooltipRef}
-					className={`tooltip-box ${positionAbove ? "tooltip-box--above" : ""}`}
-					dangerouslySetInnerHTML={{ __html: formatDescription(tooltipText) }}
-				/>
-			)}
-		</div>
-	);
-};

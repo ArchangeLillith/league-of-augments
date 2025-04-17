@@ -246,35 +246,26 @@
 
 .augment-panel {
 	background-color: rgb(1, 1, 129);
-	align-items: flex;
+	display: flex;
 	flex-direction: column;
+	/* Justify content we can add here when everything is in to give space around the items */
+	align-items: center;
+	width: 200px;
 	height: 500px;
 	padding: 2rem;
 	border-radius: 15px;
 }
+
 .augment-panel-container {
 	display: flex;
 	flex-direction: row;
 	align-items: center;
 	justify-content: space-around;
 }
-
-.container-aug-btn {
-	display: flex;
-	flex-direction: row;
-}
-
-.btn-aug {
+.selected-augment-border {
 	padding: 0.75rem;
 	display: flex;
 	flex-direction: row;
-}
-.aug-icon {
-	height: 40;
-	width: 40;
-}
-
-.btn-aug {
 	border: 4px solid transparent;
 	width: 50px;
 	height: 100px;
@@ -293,6 +284,61 @@
 	align-items: center;
 	justify-content: center;
 	font-size: 10px;
+}
+.selected-augment-icon {
+	width: 100px;
+}
+
+.container-aug-btn {
+	display: flex;
+	flex-direction: row;
+}
+
+.aug-icon {
+	height: 40;
+	width: 40;
+}
+
+.btn-aug {
+	padding: 0.75rem;
+	display: flex;
+	flex-direction: row;
+	border: 4px solid transparent;
+	width: 50px;
+	height: 100px;
+	display: flex;
+	flex-direction: column;
+	padding: 2rem;
+	background: radial-gradient(
+		circle at center,
+		#3a3a3a 0%,
+		#2a2a2a 35%,
+		#1a1a1a 65%,
+		#000000 100%
+	);
+	border-radius: 10px;
+	margin: 0.5em;
+	align-items: center;
+	justify-content: center;
+	font-size: 10px;
+}
+
+.augment-alchemy-tile {
+	.btn-aug-background {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		width: 10rem;
+		height: 13rem;
+		.btn-aug {
+			width: 9rem;
+			height: 12rem;
+			img {
+				width: 8rem;
+				height: auto;
+			}
+		}
+	}
 }
 
 .btn-aug-background.Prismatic {

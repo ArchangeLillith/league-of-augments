@@ -1,6 +1,8 @@
 import { SetStateAction, useState } from "react";
 import { Augment } from "../utils/types";
 import { PageDataType } from "./augmentAlchemy.utils";
+import AugmentTile from "../componenets/AugmentTile";
+import ItemIcon from "./ItemIcon";
 
 interface AugSearchBarProps {
 	pageData: PageDataType;
@@ -22,7 +24,6 @@ const AugSearchBar: React.FC<AugSearchBarProps> = ({
 		augment.name.toLowerCase().includes(inputValue.toLowerCase())
 	);
 
-
 	const handleSelect = (augment: Augment) => {
 		setInputValue(augment.name);
 		setPageData((prev) => ({
@@ -42,13 +43,16 @@ const AugSearchBar: React.FC<AugSearchBarProps> = ({
 						setPageData((prev) => ({
 							...prev,
 							selectedAugments: { ...prev.selectedAugments, [childKey]: null },
+							suggestedItems: { ...prev.suggestedItems, [childKey]: null },
 						}));
 					}}
 				>
 					X
 				</button>
-				<img src={augment.url!} />
-				<p>{augment.name}</p>
+				<div className="augment-alchemy-tile">
+					<AugmentTile aug={augment} toggleAug={() => {}} />
+				</div>
+				<div className="suggested-items">{/* <ItemIcon item/> */}</div>
 			</div>
 		);
 	}
