@@ -17,7 +17,11 @@ router.get("/", async (req, res) => {
 router.get("/tags", async (req, res) => {
 	try {
 		const result = await db.items.getItemTags();
-		res.json(result);
+		const parsedItems = result.map((item) => ({
+			...item,
+			tags: item.tags ? item.tags.split(",") : [],
+		}));
+		res.json(parsedItems);
 	} catch (error) {
 		console.error(error);
 	}
