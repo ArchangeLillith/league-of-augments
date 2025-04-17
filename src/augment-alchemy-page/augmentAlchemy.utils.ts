@@ -52,10 +52,13 @@ export function filterItems(selectedAugment: Augment, allItems: ItemType[]) {
 		const selectedAugmentTag = selectedAugment.tags[i];
 		//We'll also declare the item id here to make it easier as well
 		const item_id = allItems[i].item_id;
+		console.log("Tag we're testing:", selectedAugmentTag);
 		//Loop over the item tags now!
 		for (let j = 0; j < allItems[i].tags.length; j++) {
 			//Again, make it easier to call to the current item tag
 			const itemTag = allItems[i].tags[j];
+			console.log("Item we're testing:", allItems[i]);
+			console.log("ItemTag we're testing:", itemTag);
 			//Compare, if they match we enter in, if not, we just continue
 			if (itemTag === selectedAugmentTag) {
 				//It matched, now we see if out map has the item entry
