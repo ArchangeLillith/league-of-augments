@@ -87,7 +87,12 @@ export function filterItems(selectedAugment: Augment, allItems: ItemType[]) {
 		};
 	});
 	console.log(topItems);
-	return topItems;
+	return [
+		topItems[0] ?? {},
+		topItems[1] ?? {},
+		topItems[2] ?? {},
+		topItems[3] ?? {},
+	];
 
 	//This will ensure every tag is matching, will be used if a harsh comparison option is toggled in advanced settings
 	// for (let tag of selectedAugment.tags) {

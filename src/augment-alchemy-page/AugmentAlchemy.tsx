@@ -19,8 +19,8 @@ const AugmentAlchemy = () => {
 
 	useEffect(() => {
 		const fetchData = async () => {
-			const items = await fetchItems(true);
-			const augments = await fetchAugments(true);
+			const items = await fetchItems(true, true);
+			const augments = await fetchAugments(true, true);
 			setPageData((prev) => ({ ...prev, augments }));
 			setAllItems(items);
 		};
@@ -46,7 +46,7 @@ const AugmentAlchemy = () => {
 			},
 		}));
 	}, [
-		//can we shorthand this? I imagine so, but like, does that work...?
+		//can we shorthand this? I imagine so, but like, does that work...? and should we be doing it...?
 		pageData.selectedAugments.panel1,
 		pageData.selectedAugments.panel2,
 		pageData.selectedAugments.panel3,

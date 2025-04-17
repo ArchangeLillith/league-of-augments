@@ -2,7 +2,6 @@ import { SetStateAction, useState } from "react";
 import { Augment } from "../utils/types";
 import { PageDataType } from "./augmentAlchemy.utils";
 import AugmentTile from "../componenets/AugmentTile";
-import ItemIcon from "./ItemIcon";
 
 interface AugSearchBarProps {
 	pageData: PageDataType;
@@ -52,7 +51,13 @@ const AugSearchBar: React.FC<AugSearchBarProps> = ({
 				<div className="augment-alchemy-tile">
 					<AugmentTile aug={augment} toggleAug={() => {}} />
 				</div>
-				<div className="suggested-items">{/* <ItemIcon item/> */}</div>
+				<div className="bubble-box">
+					<>
+						{augment.tags.map((tag: string) => (
+							<div className={`${tag.replace(/\s+/g, "-")}`}></div>
+						))}
+					</>
+				</div>
 			</div>
 		);
 	}
