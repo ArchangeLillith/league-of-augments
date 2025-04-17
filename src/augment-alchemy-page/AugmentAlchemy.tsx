@@ -37,6 +37,7 @@ const AugmentAlchemy = () => {
 		const suggestedItems = allItems.filter((item) =>
 			item.tags.includes(selected.tags[0])
 		);
+		console.log("sugg items:", suggestedItems);
 
 		setPageData((prev) => ({
 			...prev,
