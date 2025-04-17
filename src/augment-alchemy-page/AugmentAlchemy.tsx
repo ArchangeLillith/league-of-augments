@@ -19,8 +19,8 @@ const AugmentAlchemy = () => {
 
 	useEffect(() => {
 		const fetchData = async () => {
-			const items = await fetchItems(true);
-			const augments = await fetchAugments(true);
+			const items = await fetchItems(true, true);
+			const augments = await fetchAugments(true, true);
 			setPageData((prev) => ({ ...prev, augments }));
 			setAllItems(items);
 		};
@@ -28,32 +28,33 @@ const AugmentAlchemy = () => {
 	}, []);
 
 	useEffect(() => {
-		//This is where we're gunna put the "something changed, refilter!" logic
-		const selected = pageData.selectedAugments.panel1;
-		if (
-			selected === null ||
-			selected.tags.length < 1 ||
-			selected.tags[0] === undefined
-		) {
-			return;
+		//We'll make a copy of the current items to modify
+		const newSuggestedItems = { ...pageData.suggestedItems };
+
+		//Loop to see which panel we're doing
+		for (let i = 1; i <= 6; i++) {
+			//Get the key for the panel
+			const key = `panel${i}` as keyof typeof pageData.selectedAugments;
+			//Easy handle on the selected augments
+			const selected = pageData.selectedAugments[key];
+
+			//Now we can filter for the panel we're on if everything is defined and there
+			if (selected && selected.tags && selected.tags.length > 0) {
+				newSuggestedItems[key] = filterItems(selected, allItems);
+			} else {
+				newSuggestedItems[key];
+			}
 		}
-		const suggestedItems = filterItems(selected, allItems);
+
+		//Set the state with the copy we modified!
 		setPageData((prev) => ({
 			...prev,
 			suggestedItems: {
 				...prev.suggestedItems,
-				panel1: suggestedItems,
+				...newSuggestedItems,
 			},
 		}));
-	}, [
-		//can we shorthand this? I imagine so, but like, does that work...? and should we be doing it...?
-		pageData.selectedAugments.panel1,
-		pageData.selectedAugments.panel2,
-		pageData.selectedAugments.panel3,
-		pageData.selectedAugments.panel4,
-		pageData.selectedAugments.panel5,
-		pageData.selectedAugments.panel6,
-	]);
+	}, [pageData.selectedAugments]);
 
 	function showModal() {
 		console.log("MODAL");
@@ -61,12 +62,14 @@ const AugmentAlchemy = () => {
 
 	return (
 		<div className="augment-alchemy-page">
-			{/* <div>{JSON.stringify(pageData.suggestedItems.panel1)}</div>
-			<div>{JSON.stringify(allItems)}</div> */}
 			<div className="augment-alchemy-header">
-				<button onClick={() => navigate("/home")}>Home</button>
-				<h1>~AugmentAlchemy~</h1>
-				<button onClick={showModal}>Advanced Options</button>
+				<button className="home-button" onClick={() => navigate("/home")}>
+					Home
+				</button>
+				<h1 className="augment-alchemy-title">~Augment Alchemy~</h1>
+				<button className="modal-button" onClick={showModal}>
+					Advanced Options
+				</button>
 			</div>
 			<div className="augment-panel-container">
 				{panelArray.map((index) => (

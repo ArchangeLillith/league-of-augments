@@ -263,6 +263,12 @@ const HomePage = () => {
 						<button className="alphebetize-button" onClick={sortChamps}>
 							Alphebetize!
 						</button>
+						<button
+							className="alphebetize-button"
+							onClick={() => navigate("/augment-alchemy")}
+						>
+							Build Helper
+						</button>
 						<div className="won-with">
 							First Place: <span className="margin-2">{firstPlace.length}</span>
 						</div>

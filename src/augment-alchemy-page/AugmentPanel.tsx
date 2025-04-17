@@ -15,22 +15,28 @@ const AugmentPanel: React.FC<AugmentPanelProps> = ({
 	childKey,
 }) => {
 	return (
-		<div className={`${childKey} augment-panel`}>
-			<div className="augment-selection">
-				<AugSearchBar
-					pageData={pageData}
-					setPageData={setPageData}
-					childKey={childKey}
-				/>
-			</div>
-			<div className="item-container">
-				{pageData.suggestedItems[childKey] && (
-					<>
-						{pageData.suggestedItems[childKey].map((item) => (
-							<ItemIcon item={item} key={item.item_id} augment={pageData.selectedAugments[childKey]}/>
-						))}
-					</>
-				)}
+		<div className="augment-panel-border">
+			<div className={`${childKey} augment-panel`}>
+				<div className="augment-selection">
+					<AugSearchBar
+						pageData={pageData}
+						setPageData={setPageData}
+						childKey={childKey}
+					/>
+				</div>
+				<div className="item-container">
+					{pageData.suggestedItems[childKey] && (
+						<>
+							{pageData.suggestedItems[childKey].map((item) => (
+								<ItemIcon
+									item={item}
+									key={item.item_id}
+									augment={pageData.selectedAugments[childKey]}
+								/>
+							))}
+						</>
+					)}
+				</div>
 			</div>
 		</div>
 	);
