@@ -285,6 +285,30 @@
 	.AD {
 		background: rgb(216, 118, 21);
 	}
+	.Ability-Haste {
+		background: rgb(216, 118, 21);
+	}
+	.Defensive {
+		background: rgb(216, 118, 21);
+	}
+	.Health {
+		background: rgb(216, 118, 21);
+	}
+	.Kiting {
+		background: rgb(216, 118, 21);
+	}
+	.Mage {
+		background: rgb(216, 118, 21);
+	}
+	.Shield {
+		background: rgb(216, 118, 21);
+	}
+	.Spell-Heavy {
+		background: rgb(216, 118, 21);
+	}
+	.Support {
+		background: rgb(216, 118, 21);
+	}
 }
 
 .augment-panel {
