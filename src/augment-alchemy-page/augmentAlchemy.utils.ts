@@ -46,28 +46,23 @@ export function filterItems(selectedAugment: Augment, allItems: ItemType[]) {
 	//Declare the map we'll use to see how many tags something has in common
 	const itemMap: Record<number, number> = {};
 
-	//First loop to loop over the selected augment's tags
-	for (let i = 0; i < selectedAugment.tags.length; i++) {
-		//Make it easier to call to the currently selected augment tag
-		const selectedAugmentTag = selectedAugment.tags[i];
-		//We'll also declare the item id here to make it easier as well
-		const item_id = allItems[i].item_id;
-		console.log("Tag we're testing:", selectedAugmentTag);
-		//Loop over the item tags now!
-		for (let j = 0; j < allItems[i].tags.length; j++) {
-			//Again, make it easier to call to the current item tag
-			const itemTag = allItems[i].tags[j];
-			console.log("Item we're testing:", allItems[i]);
-			console.log("ItemTag we're testing:", itemTag);
-			//Compare, if they match we enter in, if not, we just continue
-			if (itemTag === selectedAugmentTag) {
+	//Loop over the items to get ahold of each item!
+	for (let i = 0; i < allItems.length; i++) {
+		//Make it easier to reference the current item we're testing
+		const selectedItem = allItems[i];
+		//Now we loop through the augments tags
+		for (let j = 0; j < selectedAugment.tags.length; j++) {
+			//make it easier to refer back to the current augment tag
+			const currentAugmentTag = selectedAugment.tags[j];
+			//Now we see if the item has the tag!
+			if (selectedItem.tags.includes(currentAugmentTag)) {
 				//It matched, now we see if out map has the item entry
-				if (itemMap[item_id]) {
+				if (itemMap[selectedItem.item_id]) {
 					//The map has an entry! We'll add a count to the entry that's there
-					itemMap[item_id]++;
+					itemMap[selectedItem.item_id]++;
 				} else {
 					//There's not an entry yet, we'll add one
-					itemMap[item_id] = 1;
+					itemMap[selectedItem.item_id] = 1;
 				}
 			}
 		}
