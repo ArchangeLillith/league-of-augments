@@ -21,6 +21,7 @@ export const fetchItems = async (
 const mockItems = [
 	{
 		name: "Rift Reaper",
+		item_id: 1,
 		tier: "legendary",
 		cost: 3100,
 		sell: 2170,
@@ -34,6 +35,7 @@ const mockItems = [
 	},
 	{
 		name: "Crimson Executioner",
+		item_id: 2,
 		tier: "legendary",
 		cost: 3000,
 		sell: 2100,
@@ -46,6 +48,7 @@ const mockItems = [
 	},
 	{
 		name: "Titan’s Vigor",
+		item_id: 3,
 		tier: "legendary",
 		cost: 3200,
 		sell: 2240,
@@ -58,6 +61,7 @@ const mockItems = [
 	},
 	{
 		name: "Soulrend Censer",
+		item_id: 4,
 		tier: "prismatic",
 		cost: 3400,
 		sell: 2380,

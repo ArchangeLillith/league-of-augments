@@ -1,7 +1,11 @@
 import { useState, useEffect } from "react";
 import AugmentPanel from "./AugmentPanel";
 import { fetchAugments } from "../services/fetchAugments";
-import { initializePageData, PageDataType } from "./augmentAlchemy.utils";
+import {
+	filterItems,
+	initializePageData,
+	PageDataType,
+} from "./augmentAlchemy.utils";
 import ItemIcon from "./ItemIcon";
 import { useNavigate } from "react-router-dom";
 import { fetchItems } from "../services/items";
@@ -15,8 +19,8 @@ const AugmentAlchemy = () => {
 
 	useEffect(() => {
 		const fetchData = async () => {
-			const items = await fetchItems(true);
-			const augments = await fetchAugments(true);
+			const items = await fetchItems(true, true);
+			const augments = await fetchAugments(true, true);
 			setPageData((prev) => ({ ...prev, augments }));
 			setAllItems(items);
 		};
@@ -33,12 +37,7 @@ const AugmentAlchemy = () => {
 		) {
 			return;
 		}
-		console.log("All items:", allItems);
-		const suggestedItems = allItems.filter((item) =>
-			item.tags.includes(selected.tags[0])
-		);
-		console.log("sugg items:", suggestedItems);
-
+		const suggestedItems = filterItems(selected, allItems);
 		setPageData((prev) => ({
 			...prev,
 			suggestedItems: {

@@ -19,6 +19,7 @@ export const fetchAugments = async (
 const mockAugments = [
 	{
 		name: "Mind Over Matter",
+		augment_id: 1,
 		description: "Gain bonus mana and ability haste. Restore mana on takedown.",
 		url: "https://league-of-augments.s3.ca-central-1.amazonaws.com/It's_Critical.png",
 		tier: "Silver",
@@ -26,6 +27,7 @@ const mockAugments = [
 	},
 	{
 		name: "Brutal Force",
+		augment_id: 2,
 		description:
 			"Gain attack damage and a burst of movement speed after damaging an enemy champion.",
 		url: "https://league-of-augments.s3.ca-central-1.amazonaws.com/Hold_Very_Still.png",
@@ -34,6 +36,7 @@ const mockAugments = [
 	},
 	{
 		name: "Cursed Wounds",
+		augment_id: 3,
 		description:
 			"Your damage inflicts Grievous Wounds for 3 seconds. Gain bonus damage against healing enemies.",
 		url: "https://league-of-augments.s3.ca-central-1.amazonaws.com/Don't_Chase.png",
@@ -42,6 +45,7 @@ const mockAugments = [
 	},
 	{
 		name: "Arcane Might",
+		augment_id: 4,
 		description:
 			"Gain a burst of Ability Power every time you cast an ability, stacking up to 10 times.",
 		url: "https://league-of-augments.s3.ca-central-1.amazonaws.com/Combo_Master.png",
@@ -50,6 +54,7 @@ const mockAugments = [
 	},
 	{
 		name: "Colossus Pact",
+		augment_id: 5,
 		description:
 			"Gain a massive amount of health. Deal bonus damage based on max HP.",
 		url: "https://league-of-augments.s3.ca-central-1.amazonaws.com/Blood_Brother.png",

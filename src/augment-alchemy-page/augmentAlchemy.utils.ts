@@ -20,6 +20,7 @@ export type PageDataType = {
 		itemSet: Set<ItemType>;
 	};
 };
+
 export const initializePageData = {
 	augments: [],
 	selectedAugments: {
@@ -40,3 +41,57 @@ export const initializePageData = {
 		itemSet: new Set<ItemType>(),
 	},
 };
+
+export function filterItems(selectedAugment: Augment, allItems: ItemType[]) {
+	//Declare the map we'll use to see how many tags something has in common
+	const itemMap: Record<number, number> = {};
+
+	//First loop to loop over the selected augment's tags
+	for (let i = 0; i < selectedAugment.tags.length; i++) {
+		//Make it easier to call to the currently selected augment tag
+		const selectedAugmentTag = selectedAugment.tags[i];
+		//We'll also declare the item id here to make it easier as well
+		const item_id = allItems[i].item_id;
+		//Loop over the item tags now!
+		for (let j = 0; j < allItems[i].tags.length; j++) {
+			//Again, make it easier to call to the current item tag
+			const itemTag = allItems[i].tags[j];
+			//Compare, if they match we enter in, if not, we just continue
+			if (itemTag === selectedAugmentTag) {
+				//It matched, now we see if out map has the item entry
+				if (itemMap[item_id]) {
+					//The map has an entry! We'll add a count to the entry that's there
+					itemMap[item_id]++;
+				} else {
+					//There's not an entry yet, we'll add one
+					itemMap[item_id] = 1;
+				}
+			}
+		}
+	}
+
+	//Now we conver the map into an object that gives us an array of objects cooresponding to the id of the item and the number of tags that matched between the item and augment
+	const scoredItems = Object.entries(itemMap).map(([item_id, score]) => ({
+		item_id: Number(item_id),
+		score,
+	}));
+
+	//We'll then sort that to give us the highest at the top
+	const sortedItems = scoredItems.sort((a, b) => b.score - a.score);
+
+	//From there, we'll return an array of items with the additional key of score to have easy acess outside of thie function!
+	const topItems = sortedItems.map(({ item_id, score }) => {
+		const item = allItems.find((item) => item.item_id === item_id);
+		return {
+			...item!,
+			score,
+		};
+	});
+
+	return topItems;
+
+	//This will ensure every tag is matching, will be used if a harsh comparison option is toggled in advanced settings
+	// for (let tag of selectedAugment.tags) {
+	// 	suggestedItems = suggestedItems.filter((item) => item.tags.includes(tag));
+	// }
+}

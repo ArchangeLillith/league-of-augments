@@ -29,7 +29,6 @@ const loginUser = async (token: string): Promise<UserLoginObject> => {
 		);
 		const userReturn = await baseService.get(`/api/users/${username}`);
 		const settings: any = settingsReturn[0].settings;
-		console.log(settings);
 		return {
 			userData: {
 				username,
