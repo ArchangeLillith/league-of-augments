@@ -1,11 +1,21 @@
-export const fetchItems = async (dev = false): Promise<any[]> => {
+export const fetchItems = async (
+	includeTags = false,
+	dev = false
+): Promise<any[]> => {
 	if (dev) {
 		return mockItems;
 	}
-	const res = await fetch("/api/items/");
-	console.log(`res`, res);
-	const augments = await res.json();
-	return augments;
+	if (includeTags) {
+		const res = await fetch("/api/items/tags");
+		console.log(`res`, res);
+		const augments = await res.json();
+		return augments;
+	} else {
+		const res = await fetch("/api/items/");
+		console.log(`res`, res);
+		const augments = await res.json();
+		return augments;
+	}
 };
 
 const mockItems = [

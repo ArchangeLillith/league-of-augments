@@ -15,7 +15,7 @@ const AugmentAlchemy = () => {
 
 	useEffect(() => {
 		const fetchData = async () => {
-			const items = await fetchItems();
+			const items = await fetchItems(true);
 			const augments = await fetchAugments(true);
 			setPageData((prev) => ({ ...prev, augments }));
 			setAllItems(items);
