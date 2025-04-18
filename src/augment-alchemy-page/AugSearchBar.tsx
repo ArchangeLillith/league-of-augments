@@ -1,7 +1,8 @@
 import { SetStateAction, useState } from "react";
 import { Augment } from "../utils/types";
-import { PageDataType } from "./augmentAlchemy.utils";
+import { gemMap, PageDataType } from "./augmentAlchemy.utils";
 import AugmentTile from "../componenets/AugmentTile";
+import TooltipWrapper from "../componenets/TooltipWrapper";
 
 interface AugSearchBarProps {
 	pageData: PageDataType;
@@ -50,10 +51,28 @@ const AugSearchBar: React.FC<AugSearchBarProps> = ({
 				</button>
 				<div className="augment-alchemy-tile">
 					<AugmentTile aug={augment} toggleAug={() => {}} />
+					<div className="aug-gem-box">
+						{augment.tags.map((tag) => (
+							<>
+								<div className={`settings ${gemMap[tag]}`}>
+									{tag && (
+										<div className={`tinted-gem ${tag.replace(/\s+/g, "-")}`}>
+											<TooltipWrapper tooltipText={tag} gem={true}>
+												<img
+													src={`/gems/${gemMap[tag]}.png`}
+													className={`base-gem ${gemMap[tag]}`}
+												/>
+											</TooltipWrapper>
+										</div>
+									)}
+								</div>
+							</>
+						))}
+					</div>
 				</div>
 				{augment.tags.map((tag, i) => {
 					if (typeof tag !== "string") {
-					if(tag === null){
+						if (tag === null) {
 						}
 						console.warn("Unexpected tag value at index", i, tag);
 						return null;

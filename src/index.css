@@ -61,6 +61,29 @@
 	position: relative;
 	display: inline-block;
 }
+.sugg-item-frame {
+	margin-top: -0.8rem;
+	width: 4.6rem;
+	height: 4.6rem;
+	background: linear-gradient(
+		135deg,
+		#d8b166 0%,
+		#b38b4e 20%,
+		#8e6d36 40%,
+		#6e5227 65%,
+		#4e391a 85%,
+		#3a2a13 100%
+	);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border-radius: 4px;
+}
+
+.sugg-item-img {
+	width: 4rem;
+}
+
 .item-page {
 	display: flex;
 	flex-wrap: wrap;
@@ -95,6 +118,23 @@
 	padding-top: 0.75rem;
 }
 
+.gem > .tooltip-box {
+	position: absolute;
+	top: 100%;
+	left: 50%;
+	transform: translateX(-50%);
+	background-color: #222;
+	color: #fff;
+	padding: 0.5rem;
+	border-radius: 5px;
+	white-space: pre-line;
+	width: fit-content;
+	margin-top: 5px;
+	z-index: 10;
+	font-size: 0.8rem;
+	box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+	pointer-events: none;
+}
 .tooltip-box {
 	position: absolute;
 	top: 100%;
@@ -260,185 +300,14 @@
 	padding: 10px;
 }
 
-/* .gem {
-	width: 10px;
-	height: 10px;
-	position: relative;
-	border-radius: 2px;
-	box-shadow: 0 0 2px rgba(255, 0, 0, 0.6);
-	display: inline-block;
-	margin: 0.15rem;
-	overflow: hidden;
-} */
-
-/* .square-gem {
-	background: linear-gradient(135deg, #ff4d4d, #990000);
-	border: 1px solid #ffcccc;
-
-	&::before,
-	&::after {
-		content: "";
-		position: absolute;
-		inset: 0;
-		pointer-events: none;
-	}
-
-	&::before {
-		background: linear-gradient(
-			45deg,
-			transparent 0%,
-			rgba(255, 255, 255, 0.2) 40%,
-			transparent 70%
-		);
-		transform: rotate(20deg);
-	}
-
-	&::after {
-		background: radial-gradient(
-			circle at 30% 30%,
-			rgba(255, 255, 255, 0.25),
-			transparent 50%
-		);
-	}
-}
-.green-gem {
-	background: linear-gradient(135deg, #28a745, #064d1f);
-	border: 1px solid #a2f5a2;
-
-	&::before,
-	&::after {
-		content: "";
-		position: absolute;
-		inset: 0;
-		pointer-events: none;
-	}
-
-	&::before {
-		background: linear-gradient(
-			45deg,
-			transparent 0%,
-			rgba(255, 255, 255, 0.15) 35%,
-			transparent 70%
-		);
-		transform: rotate(20deg);
-	}
-
-	&::after {
-		background: radial-gradient(
-			circle at 35% 35%,
-			rgba(255, 255, 255, 0.18),
-			transparent 50%
-		);
-	}
-} */
-
-/* .bubble-box,
-.item-bubble-box {
+.item-gem-box,
+.aug-gem-box {
 	display: flex;
 	flex-direction: row;
 	align-items: center;
-	justify-content: space-evenly;
-	z-index: 15;
-
-	div {
-		width: 1rem;
-		height: 1rem;
-		border-radius: 50%;
-		margin-top: -15px;
-		z-index: 15;
+	justify-content: space-around;
 }
-.Ability Haste{}
-.Active{}
-.AD{}
-.Adaptive Force{}
-.ADC{}
-.Aggressive{}
-.AOE{}
-.AP{}
-.Apex Inventor Synergy{}
-.Armour{}
-.Armour Pen{}
-.Armour Scaling{}
-.Armour Shred{}
-.Assassin{}
-.Attack Speed{}
-.Auto Attacking{}
-.Auto Reset{}
-.Auto Weaving{}
-.Autocast{}
-.Bleed{}
-.Block{}
-.Bruiser{}
-.Burn{}
-.Burst{}
-.Cooldown Reduction{}
-.Crit{}
-.Crit Damage{}
-.Crit Scaling{}
-.Current Health Dmg{}
-.Damage Steroid{}
-.Defensive{}
-.Dragon{}
-.Energized{}
-.Enhanced Auto Attack{}
-.Execute{}
-.Gambling{}
-.Grievous{}
-.Heal{}
-.Heal and Shield Power{}
-.Health{}
-.Health Regen{}
-.Hybrid{}
-.Immobilize{}
-.Immobilize Enhancer{}
-.Income{}
-.Kiting{}
-.Lethality{}
-.Lifesteal{}
-.Lil Guys{}
-.Long Range{}
-.Mage{}
-.Magic Pen{}
-.Magic Resist{}
-.Magic Resist Scaling{}
-.Magic Resist Shred{}
-.Mana{}
-.Mana Regen{}
-.Mana Scaling{}
-.Max Health Damage{}
-.Max Health Scaling{}
-.Missing Health Damage{}
-.Missing Health Scaling{}
-.Move Speed{}
-.Movement{}
-.Omnivamp{}
-.On Takedown Effect{}
-.On-Hit{}
-.Only Child{}
-.Positioning Pattern{}
-.Projectile{}
-.Quest{}
-.Range Increase{}
-.Range Only{}
-.Shield{}
-.Slow{}
-.Sniper{}
-.Spell Heavy{}
-.Spell Weaving{}
-.Stacking{}
-.Sticky{}
-.Summoner Spell Cooldown{}
-.Support{}
-.Tank{}
-.Targeted{}
-.Tenacity{}
-.Threshold{}
-.True Damage{}
-.Twinning{}
-.Ultimate Scaling{}
-.Untargetability{}
-.Win More{}
-} */
+
 .augment-panel-border {
 	border-radius: 25px;
 	background: linear-gradient(
@@ -1138,6 +1007,42 @@
 	}
 }
 
+.settings.effects {
+	transition: transform 0.2s ease-out;
+}
+.settings.effects:hover {
+	transform: scale(1.2);
+}
+.settings.misc {
+	transition: transform 0.2s ease-out;
+}
+.settings.misc:hover {
+	transform: scale(1.2);
+}
+.settings.playstyle {
+	transition: transform 0.2s ease-out;
+}
+.settings .playstyle:hover {
+	transform: scale(1.2);
+}
+.settings.role {
+	transition: transform 0.2s ease-out;
+}
+.settings.role:hover {
+	transform: scale(1.2);
+}
+.settings.scalings {
+	transition: transform 0.2s ease-out;
+}
+.settings.scalings:hover {
+	transform: scale(1.2);
+}
+.settings.stats {
+	transition: transform 0.2s ease-out;
+}
+.settings.stats:hover {
+	transform: scale(1.2);
+}
 /* Border mask behind the gem */
 .settings.effects::before {
 	mask-image: url("/gems/effects.png");

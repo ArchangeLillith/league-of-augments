@@ -19,8 +19,8 @@ const AugmentAlchemy = () => {
 
 	useEffect(() => {
 		const fetchData = async () => {
-			const items = await fetchItems(true);
-			const augments = await fetchAugments(true);
+			const items = await fetchItems(true, true);
+			const augments = await fetchAugments(true, true);
 			setPageData((prev) => ({ ...prev, augments }));
 			setAllItems(items);
 		};
@@ -66,9 +66,15 @@ const AugmentAlchemy = () => {
 				<button className="home-button" onClick={() => navigate("/home")}>
 					Home
 				</button>
+				<div>{/*Styling div*/}</div>
+				<div>{/*Styling div*/}</div>
+				<div>{/*Styling div*/}</div>
 				<h1 className="augment-alchemy-title">~Augment Alchemy~</h1>
 				<button className="modal-button" onClick={showModal}>
 					Advanced Options
+				</button>
+				<button className="modal-button" onClick={showModal}>
+					Tag Glossary
 				</button>
 			</div>
 			<div className="augment-panel-container">
