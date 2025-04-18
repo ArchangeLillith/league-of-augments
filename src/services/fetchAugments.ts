@@ -41,7 +41,7 @@ const mockAugments = [
 			"Your damage inflicts Grievous Wounds for 3 seconds. Gain bonus damage against healing enemies.",
 		url: "https://league-of-augments.s3.ca-central-1.amazonaws.com/Don't_Chase.png",
 		tier: "Silver",
-		tags: ["Grievous", "AD", "AP"],
+		tags: [],
 	},
 	{
 		name: "Arcane Might",

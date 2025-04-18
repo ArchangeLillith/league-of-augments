@@ -77,7 +77,7 @@ export function filterItems(selectedAugment: Augment, allItems: ItemType[]) {
 	//We'll then sort that to give us the highest at the top
 	const sortedItems = scoredItems.sort((a, b) => b.score - a.score);
 
-	console.log(sortedItems);
+	console.log("sorted:", sortedItems);
 	//From there, we'll return an array of items with the additional key of score to have easy acess outside of thie function!
 	const topItems = sortedItems.map(({ item_id, score }) => {
 		const item = allItems.find((item) => item.item_id === item_id);
@@ -86,7 +86,7 @@ export function filterItems(selectedAugment: Augment, allItems: ItemType[]) {
 			score,
 		};
 	});
-	console.log(topItems);
+	console.log("top", topItems);
 	return [
 		topItems[0] ?? {},
 		topItems[1] ?? {},
