@@ -53,6 +53,8 @@ const AugSearchBar: React.FC<AugSearchBarProps> = ({
 				</div>
 				{augment.tags.map((tag, i) => {
 					if (typeof tag !== "string") {
+					if(tag === null){
+						}
 						console.warn("Unexpected tag value at index", i, tag);
 						return null;
 					}
