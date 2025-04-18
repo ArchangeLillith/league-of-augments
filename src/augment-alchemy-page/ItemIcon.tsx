@@ -119,12 +119,14 @@ const ItemIcon: React.FC<ItemIconProps> = ({ item, augment }) => {
 					{matchingTags.map((tag: string) => (
 						<>
 							<div className={`settings ${gemMap[tag]}`}>
-								<div className={`tinted-gem ${tag.replace(/\s+/g, "-")}`}>
-									<img
-										src={`/gems/${gemMap[tag]}.png`}
-										className={`base-gem ${gemMap[tag]}`}
-									/>
-								</div>
+								{tag && (
+									<div className={`tinted-gem ${tag.replace(/\s+/g, "-")}`}>
+										<img
+											src={`/gems/${gemMap[tag]}.png`}
+											className={`base-gem ${gemMap[tag]}`}
+										/>
+									</div>
+								)}
 							</div>
 						</>
 					))}

@@ -53,13 +53,16 @@ export function formatDescription(text: string): string {
 
 	const regex = new RegExp(`\\b(${keywords.join("|")})\\b`, "gi");
 
-	return text.replace(regex, (match) => {
-		// Find the key in the original map, case-insensitively
+	return text.replace(regex, (match: string) => {
+		if (typeof match !== "string") return match;
+
 		const originalKey = Object.keys(keywordClassMap).find(
 			(key) => key.toLowerCase() === match.toLowerCase()
 		);
 
-		const className = originalKey ? keywordClassMap[originalKey] : "";
+		if (!originalKey) return match;
+
+		const className = keywordClassMap[originalKey];
 		return `<span class="${className}">${match}</span>`;
 	});
 }
