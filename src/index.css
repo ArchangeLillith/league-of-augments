@@ -259,7 +259,80 @@
 .suggested-item {
 	padding: 10px;
 }
-.bubble-box,
+
+/* .gem {
+	width: 10px;
+	height: 10px;
+	position: relative;
+	border-radius: 2px;
+	box-shadow: 0 0 2px rgba(255, 0, 0, 0.6);
+	display: inline-block;
+	margin: 0.15rem;
+	overflow: hidden;
+} */
+
+/* .square-gem {
+	background: linear-gradient(135deg, #ff4d4d, #990000);
+	border: 1px solid #ffcccc;
+
+	&::before,
+	&::after {
+		content: "";
+		position: absolute;
+		inset: 0;
+		pointer-events: none;
+	}
+
+	&::before {
+		background: linear-gradient(
+			45deg,
+			transparent 0%,
+			rgba(255, 255, 255, 0.2) 40%,
+			transparent 70%
+		);
+		transform: rotate(20deg);
+	}
+
+	&::after {
+		background: radial-gradient(
+			circle at 30% 30%,
+			rgba(255, 255, 255, 0.25),
+			transparent 50%
+		);
+	}
+}
+.green-gem {
+	background: linear-gradient(135deg, #28a745, #064d1f);
+	border: 1px solid #a2f5a2;
+
+	&::before,
+	&::after {
+		content: "";
+		position: absolute;
+		inset: 0;
+		pointer-events: none;
+	}
+
+	&::before {
+		background: linear-gradient(
+			45deg,
+			transparent 0%,
+			rgba(255, 255, 255, 0.15) 35%,
+			transparent 70%
+		);
+		transform: rotate(20deg);
+	}
+
+	&::after {
+		background: radial-gradient(
+			circle at 35% 35%,
+			rgba(255, 255, 255, 0.18),
+			transparent 50%
+		);
+	}
+} */
+
+/* .bubble-box,
 .item-bubble-box {
 	display: flex;
 	flex-direction: row;
@@ -273,48 +346,99 @@
 		border-radius: 50%;
 		margin-top: -15px;
 		z-index: 15;
-	}
-
-	.AP {
-		background: red;
-	}
-	.Stacking {
-		background: rgb(33, 245, 167);
-	}
-	.Spell-Heavy {
-		background: rgb(5, 11, 72);
-	}
-	.Grievous {
-		background: rgb(3, 79, 44);
-	}
-	.AD {
-		background: rgb(216, 118, 21);
-	}
-	.Ability-Haste {
-		background: rgb(216, 118, 21);
-	}
-	.Defensive {
-		background: rgb(216, 118, 21);
-	}
-	.Health {
-		background: rgb(216, 118, 21);
-	}
-	.Kiting {
-		background: rgb(216, 118, 21);
-	}
-	.Mage {
-		background: rgb(216, 118, 21);
-	}
-	.Shield {
-		background: rgb(216, 118, 21);
-	}
-	.Spell-Heavy {
-		background: rgb(216, 118, 21);
-	}
-	.Support {
-		background: rgb(216, 118, 21);
-	}
 }
+.Ability Haste{}
+.Active{}
+.AD{}
+.Adaptive Force{}
+.ADC{}
+.Aggressive{}
+.AOE{}
+.AP{}
+.Apex Inventor Synergy{}
+.Armour{}
+.Armour Pen{}
+.Armour Scaling{}
+.Armour Shred{}
+.Assassin{}
+.Attack Speed{}
+.Auto Attacking{}
+.Auto Reset{}
+.Auto Weaving{}
+.Autocast{}
+.Bleed{}
+.Block{}
+.Bruiser{}
+.Burn{}
+.Burst{}
+.Cooldown Reduction{}
+.Crit{}
+.Crit Damage{}
+.Crit Scaling{}
+.Current Health Dmg{}
+.Damage Steroid{}
+.Defensive{}
+.Dragon{}
+.Energized{}
+.Enhanced Auto Attack{}
+.Execute{}
+.Gambling{}
+.Grievous{}
+.Heal{}
+.Heal and Shield Power{}
+.Health{}
+.Health Regen{}
+.Hybrid{}
+.Immobilize{}
+.Immobilize Enhancer{}
+.Income{}
+.Kiting{}
+.Lethality{}
+.Lifesteal{}
+.Lil Guys{}
+.Long Range{}
+.Mage{}
+.Magic Pen{}
+.Magic Resist{}
+.Magic Resist Scaling{}
+.Magic Resist Shred{}
+.Mana{}
+.Mana Regen{}
+.Mana Scaling{}
+.Max Health Damage{}
+.Max Health Scaling{}
+.Missing Health Damage{}
+.Missing Health Scaling{}
+.Move Speed{}
+.Movement{}
+.Omnivamp{}
+.On Takedown Effect{}
+.On-Hit{}
+.Only Child{}
+.Positioning Pattern{}
+.Projectile{}
+.Quest{}
+.Range Increase{}
+.Range Only{}
+.Shield{}
+.Slow{}
+.Sniper{}
+.Spell Heavy{}
+.Spell Weaving{}
+.Stacking{}
+.Sticky{}
+.Summoner Spell Cooldown{}
+.Support{}
+.Tank{}
+.Targeted{}
+.Tenacity{}
+.Threshold{}
+.True Damage{}
+.Twinning{}
+.Ultimate Scaling{}
+.Untargetability{}
+.Win More{}
+} */
 .augment-panel-border {
 	border-radius: 25px;
 	background: linear-gradient(
@@ -1012,4 +1136,380 @@
 	100% {
 		background-position: 100% 50%;
 	}
+}
+
+/* Border mask behind the gem */
+.settings.effects::before {
+	mask-image: url("/gems/effects.png");
+	-webkit-mask-image: url("/gems/effects.png");
+}
+.settings.misc::before {
+	mask-image: url("/gems/misc.png");
+	-webkit-mask-image: url("/gems/misc.png");
+}
+.settings.playstyle::before {
+	mask-image: url("/gems/playstyle.png");
+	-webkit-mask-image: url("/gems/playstyle.png");
+}
+.settings.role::before {
+	mask-image: url("/gems/role.png");
+	-webkit-mask-image: url("/gems/role.png");
+}
+.settings.scalings::before {
+	mask-image: url("/gems/scalings.png");
+	-webkit-mask-image: url("/gems/scalings.png");
+}
+.settings.stats::before {
+	mask-image: url("/gems/stats.png");
+	-webkit-mask-image: url("/gems/stats.png");
+}
+/* Border mask behind the gem */
+.settings::before {
+	content: "";
+	position: absolute;
+	inset: 0;
+	transform: scale(1.2); /* slightly bigger than gem */
+	background: linear-gradient(45deg, #aaa, #c0c0c0, #9b9b9b, #d9d9d9);
+	mask-repeat: no-repeat;
+	mask-size: contain;
+	mask-position: center;
+	z-index: 0;
+}
+
+.settings {
+	position: relative;
+	width: 20px;
+	height: 20px;
+
+	.base-gem {
+		width: 100%;
+		height: 100%;
+		display: block;
+	}
+
+	/* Main gem container */
+	.tinted-gem {
+		position: relative;
+		width: 20px;
+		height: 20px;
+		mask-repeat: no-repeat;
+		mask-size: contain;
+		mask-position: center;
+		z-index: 1;
+	}
+	.tinted-gem.effects {
+		mask-image: url("/gems/effects.png");
+		-webkit-mask-image: url("/gems/effects.png");
+	}
+	.tinted-gem.misc {
+		mask-image: url("/gems/misc.png");
+		-webkit-mask-image: url("/gems/misc.png");
+	}
+	.tinted-gem.playstyle {
+		mask-image: url("/gems/playstyle.png");
+		-webkit-mask-image: url("/gems/playstyle.png");
+	}
+	.tinted-gem.role {
+		mask-image: url("/gems/role.png");
+		-webkit-mask-image: url("/gems/role.png");
+	}
+	.tinted-gem.scalings {
+		mask-image: url("/gems/scalings.png");
+		-webkit-mask-image: url("/gems/scalings.png");
+	}
+	.tinted-gem.stats {
+		mask-image: url("/gems/stats.png");
+		-webkit-mask-image: url("/gems/stats.png");
+	}
+
+	/* Color overlay */
+	.tinted-gem::after {
+		content: "";
+		position: absolute;
+		inset: 0;
+		mix-blend-mode: multiply;
+		opacity: 1;
+		pointer-events: none;
+		mask-image: inherit;
+		-webkit-mask-image: inherit;
+		mask-repeat: inherit;
+		mask-size: inherit;
+		mask-position: inherit;
+	}
+}
+/* Role */
+.role > .tinted-gem.Assassin::after {
+	background-color: #ff0000;
+}
+.role > .tinted-gem.ADC::after {
+	background-color: #ffe761;
+}
+.role > .tinted-gem.Hybrid::after {
+	background-color: #c0aaff;
+}
+.role > .tinted-gem.Mage::after {
+	background-color: #8307e2;
+}
+.role > .tinted-gem.Support::after {
+	background-color: #33c9ff;
+}
+.role > .tinted-gem.Tank::after {
+	background-color: #15ff00;
+}
+.role > .tinted-gem.Bruiser::after {
+	background-color: #a80101;
+}
+.role > .tinted-gem.Sniper::after {
+	background-color: #ffaa7c;
+}
+/* Effects */
+.effects > .tinted-gem.Ultimate-Scaling::after {
+	background-color: #9c1111;
+}
+.effects > .tinted-gem.Slow::after {
+	background-color: #addaff;
+}
+.effects > .tinted-gem.Immobilize::after {
+	background-color: #008cff;
+}
+.effects > .tinted-gem.Immobilize-Enhancer::after {
+	background-color: #005aa3;
+}
+.effects > .tinted-gem.Shield::after {
+	background-color: #63ff75;
+}
+.effects > .tinted-gem.Burn::after {
+	background-color: #ff610c;
+}
+.effects > .tinted-gem.Bleed::after {
+	background-color: #ff0000;
+}
+.effects > .tinted-gem.Grievous::after {
+	background-color: #004813;
+}
+.effects > .tinted-gem.On-Hit::after {
+	background-color: #ffa448;
+}
+.effects > .tinted-gem.Block::after {
+	background-color: #ffccb7;
+}
+.effects > .tinted-gem.Damage-Steroid::after {
+	background-color: #ff9999;
+}
+.effects > .tinted-gem.Energized::after {
+	background-color: #f5ffa7;
+}
+.effects > .tinted-gem.Enhanced-Auto-Attack::after {
+	background-color: #cbff21;
+}
+.effects > .tinted-gem.Movement::after {
+	background-color: #00e5a4;
+}
+.effects > .tinted-gem.On-Takedown-Effect::after {
+	background-color: #ff5090;
+}
+.effects > .tinted-gem.Cooldown-Reduction::after {
+	background-color: #c09cff;
+}
+.effects > .tinted-gem.Auto-Reset::after {
+	background-color: #5f9200;
+}
+.effects > .tinted-gem.Execute::after {
+	background-color: white;
+}
+
+/* Playstyle */
+.playstyle > .tinted-gem.Stacking::after {
+	background-color: #d9baff;
+}
+.playstyle > .tinted-gem.Aggressive::after {
+	background-color: #ff0404;
+}
+.playstyle > .tinted-gem.Defensive::after {
+	background-color: #1b8800;
+}
+.playstyle > .tinted-gem.Auto-Attacking::after {
+	background-color: white;
+}
+.playstyle > .tinted-gem.Kiting::after {
+	background-color: #74e1ff;
+}
+.playstyle > .tinted-gem.Auto-Weaving::after {
+	background-color: #0aadda;
+}
+.playstyle > .tinted-gem.Spell-Heavy::after {
+	background-color: #7f55ff;
+}
+.playstyle > .tinted-gem.Positioning-Pattern::after {
+	background-color: #00485c;
+}
+
+/* Scalings */
+.scalings > .tinted-gem.Max-Health-Scaling::after {
+	background-color: #15ff00;
+}
+.scalings > .tinted-gem.Crit-Scaling::after {
+	background-color: #ffe761;
+}
+.scalings > .tinted-gem.Magic-Resist-Scaling::after {
+	background-color: #ff9dd0;
+}
+.scalings > .tinted-gem.Mana-Scaling::after {
+	background-color: #33c9ff;
+}
+.scalings > .tinted-gem.Armour-Scaling::after {
+	background-color: #ffccb7;
+}
+.scalings > .tinted-gem.Max-Health-Damage::after {
+	background-color: #890000;
+}
+.scalings > .tinted-gem.Missing-Health-Damage::after {
+	background-color: white;
+}
+.scalings > .tinted-gem.Current-Health-Damage::after {
+	background-color: #ff0000;
+}
+
+/* Plain Stats */
+.stats > .tinted-gem.Crit::after {
+	background-color: #ffe761;
+}
+.stats > .tinted-gem.Crit-Damage::after {
+	background-color: #fbb800;
+}
+.stats > .tinted-gem.Omnivamp::after {
+	background-color: #c98900;
+}
+.stats > .tinted-gem.Lifesteal::after {
+	background-color: #a80101;
+}
+.stats > .tinted-gem.AD::after {
+	background-color: #ff0000;
+}
+.stats > .tinted-gem.Armour::after {
+	background-color: #ffccb7;
+}
+.stats > .tinted-gem.Lethality::after {
+	background-color: #ffa178;
+}
+.stats > .tinted-gem.Armour-Pen::after {
+	background-color: #ff7438;
+}
+.stats > .tinted-gem.Armour-Shred::after {
+	background-color: #dc5a22;
+}
+.stats > .tinted-gem.Health::after {
+	background-color: #15ff00;
+}
+.stats > .tinted-gem.Health-Regen::after {
+	background-color: #0d9a00;
+}
+.stats > .tinted-gem.Heal-and-Shield-Power::after {
+	background-color: #0d7300;
+}
+.stats > .tinted-gem.Adaptive-Force::after {
+	background-color: #e7b2ff;
+}
+.stats > .tinted-gem.Ability-Haste::after {
+	background-color: #8307e2;
+}
+.stats > .tinted-gem.AP::after {
+	background-color: #7f55ff;
+}
+.stats > .tinted-gem.Tenacity::after {
+	background-color: #5300b9;
+}
+.stats > .tinted-gem.Range-Increase::after {
+	background-color: #00485c;
+}
+.stats > .tinted-gem.Move-Speed::after {
+	background-color: #00e5a4;
+}
+.stats > .tinted-gem.Attack-Speed::after {
+	background-color: white;
+}
+.stats > .tinted-gem.Mana::after {
+	background-color: #33c9ff;
+}
+.stats > .tinted-gem.Mana-Regen::after {
+	background-color: #a3e6ff;
+}
+.stats > .tinted-gem.Magic-Resist::after {
+	background-color: #ff9dd0;
+}
+.stats > .tinted-gem.Magic\ Pen::after {
+	background-color: #fa3192;
+}
+.stats > .tinted-gem.Magic-Resist-Shred::after {
+	background-color: #d30066;
+}
+
+/* Misc */
+.misc > .tinted-gem.Threshold::after {
+	background-color: #e7b2ff;
+}
+.misc > .tinted-gem.Gambling::after {
+	background-color: #ffe6a1;
+}
+.misc > .tinted-gem.Heal::after {
+	background-color: #0e7b00;
+}
+.misc > .tinted-gem.Income::after {
+	background-color: #dda200;
+}
+.misc > .tinted-gem.Win-More::after {
+	background-color: #00ff26;
+}
+.misc > .tinted-gem.True-Damage::after {
+	background-color: white;
+}
+.misc > .tinted-gem.Apex::after {
+	background-color: #0057c8;
+}
+.misc > .tinted-gem.Twinning::after {
+	background-color: #32ffd6;
+}
+.misc > .tinted-gem.Active::after {
+	background-color: #33c9ff;
+}
+.misc > .tinted-gem.Quest::after {
+	background-color: #ffccb7;
+}
+.misc > .tinted-gem.Targeted::after {
+	background-color: #ff773d;
+}
+.misc > .tinted-gem.Untargetability::after {
+	background-color: #fff04c;
+}
+.misc > .tinted-gem.Lil-Guys::after {
+	background-color: #aa16ff;
+}
+
+.misc > .tinted-gem.Dragon::after {
+	background-color: #ff0b0b;
+}
+
+.effects > .tinted-gem::after {
+	mask-image: url("/gems/effects.png");
+	-webkit-mask-image: url("/gems/effects.png");
+}
+.misc > .tinted-gem::after {
+	mask-image: url("/gems/misc.png");
+	-webkit-mask-image: url("/gems/misc.png");
+}
+.playstyle > .tinted-gem::after {
+	mask-image: url("/gems/playstyle.png");
+	-webkit-mask-image: url("/gems/playstyle.png");
+}
+.role > .tinted-gem::after {
+	mask-image: url("/gems/role.png");
+	-webkit-mask-image: url("/gems/role.png");
+}
+.scalings > .tinted-gem::after {
+	mask-image: url("/gems/scalings.png");
+	-webkit-mask-image: url("/gems/scalings.png");
+}
+.stats > .tinted-gem::after {
+	mask-image: url("/gems/stats.png");
+	-webkit-mask-image: url("/gems/stats.png");
 }
