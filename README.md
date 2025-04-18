@@ -150,6 +150,10 @@ See the pages here!
   <summary>AugmentAlchemy Mock(build helper page)</summary>
   <img src="/public/screenshots/loa-augment-alchemy-mock.png" alt="augment alchemy build helper mock" width="1000" height="700">
 </details>
+<details open>
+  <summary>AugmentAlchemy Beta</summary>
+  <img src="/public/screenshots/loa-AugmentAlchemy-beta.png" alt="augment alchemy build helper beta" width="1000" height="500">
+</details>
 
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
