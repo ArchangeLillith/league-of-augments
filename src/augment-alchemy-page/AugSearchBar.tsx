@@ -51,15 +51,14 @@ const AugSearchBar: React.FC<AugSearchBarProps> = ({
 				<div className="augment-alchemy-tile">
 					<AugmentTile aug={augment} toggleAug={() => {}} />
 				</div>
-				{augment.tags.length > 0 && (
-					<div className="bubble-box">
-						<>
-							{augment.tags.map((tag: string) => (
-								<div className={`${tag.replace(/\s+/g, "-")}`}></div>
-							))}
-						</>
-					</div>
-				)}
+				{augment.tags.map((tag, i) => {
+					if (typeof tag !== "string") {
+						console.warn("Unexpected tag value at index", i, tag);
+						return null;
+					}
+
+					return <div className={`${tag.replace(/\s+/g, "-")}`}></div>;
+				})}
 			</div>
 		);
 	}
