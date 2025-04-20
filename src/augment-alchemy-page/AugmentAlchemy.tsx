@@ -42,7 +42,7 @@ const AugmentAlchemy = () => {
 
 			//Now we can filter for the panel we're on if everything is defined and there
 			if (selected && selected.tags && selected.tags.length > 0) {
-				newSuggestedItems[key] = filterItems(selected, allItems);
+				newSuggestedItems[key] = filterItems(selected, allItems, pageData.showPrismatics);
 			} else {
 				newSuggestedItems[key];
 			}
@@ -65,6 +65,12 @@ const AugmentAlchemy = () => {
 				<button onClick={hideModal}>Close</button>
 			</div>
 		);
+	}
+	function togglePrismatics() {
+		setPageData((prev) => ({
+			...prev,
+			showPrismatics: !pageData.showPrismatics,
+		}));
 	}
 	function gemGlossary() {
 		showModal(
@@ -92,7 +98,14 @@ const AugmentAlchemy = () => {
 				<button className="modal-button" onClick={gemGlossary}>
 					Gem Glossary
 				</button>
-				<div>{/*Styling div*/}</div>
+				<div>
+					<label htmlFor="prismatic-toggle">Hide Prismatics</label>
+					<input
+						id="prismatic-toggle"
+						type="checkbox"
+						onChange={togglePrismatics}
+					/>
+				</div>
 				<div>{/*Styling div*/}</div>
 				<h1 className="augment-alchemy-title">~Augment Alchemy~</h1>
 				<button className="modal-button" onClick={advancedOptions}>

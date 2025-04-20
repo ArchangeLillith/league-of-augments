@@ -19,6 +19,7 @@ export type PageDataType = {
 		panel6: ItemType[] | null;
 		itemSet: Set<ItemType>;
 	};
+	showPrismatics: boolean;
 };
 
 export const initializePageData = {
@@ -40,11 +41,19 @@ export const initializePageData = {
 		panel6: null,
 		itemSet: new Set<ItemType>(),
 	},
+	showPrismatics: true,
 };
 
-export function filterItems(selectedAugment: Augment, allItems: ItemType[]) {
+export function filterItems(
+	selectedAugment: Augment,
+	allItems: ItemType[],
+	showPrismatics: boolean
+) {
 	//Declare the map we'll use to see how many tags something has in common
 	const itemMap: Record<number, number> = {};
+	if (!showPrismatics) {
+		allItems = allItems.filter((item) => item.tier !== "prismatic");
+	}
 
 	//Loop over the items to get ahold of each item!
 	for (let i = 0; i < allItems.length; i++) {
@@ -107,7 +116,7 @@ export const gemMap: Record<string, string> = {
 	"Adaptive Force": "stats",
 	ADC: "role",
 	Aggressive: "playstyle",
-	"AOE": "effects",
+	AOE: "effects",
 	AP: "stats",
 	"Apex Inventor Synergy": "misc",
 	Armour: "stats",
@@ -119,12 +128,12 @@ export const gemMap: Record<string, string> = {
 	"Auto Attacking": "playstyle",
 	"Auto Reset": "effects",
 	"Auto Weaving": "playstyle",
-	"Autocast": "misc",
+	Autocast: "misc",
 	Bleed: "effects",
 	Block: "effects",
 	Bruiser: "role",
 	Burn: "effects",
-	"Burst": "playstyle",
+	Burst: "playstyle",
 	"Cooldown Reduction": "effects",
 	Crit: "stats",
 	"Crit Damage": "stats",
@@ -169,7 +178,7 @@ export const gemMap: Record<string, string> = {
 	"On-Hit": "effects",
 	"Only Child": "playstyle",
 	"Positioning Pattern": "playstyle",
-	"Projectile": "effect",
+	Projectile: "effect",
 	Quest: "misc",
 	"Range Increase": "stats",
 	"Range Only": "misc",
@@ -179,7 +188,7 @@ export const gemMap: Record<string, string> = {
 	"Spell Heavy": "playstyle",
 	"Spell Weaving": "playstyle",
 	Stacking: "playstyle",
-	"Sticky": "playstyle",
+	Sticky: "playstyle",
 	"Summoner Spell Cooldown": "stats",
 	Support: "role",
 	Tank: "role",
