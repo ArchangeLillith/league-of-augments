@@ -1,14 +1,7 @@
 import { useEffect, useState } from "react";
-import { fetchItems } from "./services/items";
-
-interface Item {
-	item_id: number;
-	name: string;
-	tier: string;
-	cost: number;
-	sell: number;
-	[key: string]: string | number;
-}
+import { fetchItems } from "../services/items";
+import ItemIcon from "../componenets/ItemIcon";
+import { ItemType } from "../utils/types";
 
 //!we need to add both percent pen for armour and mr here if we reuse any of this!
 const statLabels: Record<string, string> = {
@@ -36,11 +29,11 @@ const statLabels: Record<string, string> = {
 };
 
 const ItemPage = () => {
-	const [items, setItems] = useState<Item[]>([]);
+	const [items, setItems] = useState<ItemType[]>([]);
 
 	useEffect(() => {
 		const getItems = async () => {
-			const data = await fetchItems();
+			const data = await fetchItems(true);
 			setItems(data);
 		};
 		getItems();
@@ -49,31 +42,7 @@ const ItemPage = () => {
 	return (
 		<div className="item-page">
 			{items.map((item) => (
-				<div className="item-card" key={item.item_id}>
-					<h3>{item.name}</h3>
-					<p>
-						<strong>Tier:</strong> {item.tier}
-					</p>
-					<p>
-						<strong>Cost:</strong> {item.cost}
-					</p>
-					<p>
-						<strong>Sell:</strong> {item.sell}
-					</p>
-					<div className="item-stats">
-						{Object.entries(statLabels).map(([key, label]) => {
-							const value = item[key];
-							if (typeof value === "number" && value !== 0) {
-								return (
-									<p key={key}>
-										<strong>{label}:</strong> {value}
-									</p>
-								);
-							}
-							return null;
-						})}
-					</div>
-				</div>
+				<ItemIcon item={item} augment={null} />
 			))}
 		</div>
 	);

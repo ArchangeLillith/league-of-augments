@@ -1,6 +1,6 @@
-import TooltipWrapper from "../componenets/TooltipWrapper";
+import TooltipWrapper from "./TooltipWrapper";
 import { Augment, ItemType } from "../utils/types";
-import { gemMap } from "./augmentAlchemy.utils";
+import { gemMap } from "../augment-alchemy-page/augmentAlchemy.utils";
 
 interface ItemIconProps {
 	item: ItemType;

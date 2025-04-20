@@ -1,7 +1,7 @@
 import { SetStateAction } from "react";
 import AugSearchBar from "./AugSearchBar";
 import { PageDataType } from "./augmentAlchemy.utils";
-import ItemIcon from "./ItemIcon";
+import ItemIcon from "../componenets/ItemIcon";
 
 interface AugmentPanelProps {
 	pageData: PageDataType;

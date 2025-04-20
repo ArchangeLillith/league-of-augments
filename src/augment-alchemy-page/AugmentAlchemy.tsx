@@ -6,7 +6,7 @@ import {
 	initializePageData,
 	PageDataType,
 } from "./augmentAlchemy.utils";
-import ItemIcon from "./ItemIcon";
+import ItemIcon from "../componenets/ItemIcon";
 import { useNavigate } from "react-router-dom";
 import { fetchItems } from "../services/items";
 import { ItemType } from "../utils/types";
@@ -42,7 +42,11 @@ const AugmentAlchemy = () => {
 
 			//Now we can filter for the panel we're on if everything is defined and there
 			if (selected && selected.tags && selected.tags.length > 0) {
-				newSuggestedItems[key] = filterItems(selected, allItems, pageData.showPrismatics);
+				newSuggestedItems[key] = filterItems(
+					selected,
+					allItems,
+					pageData.showPrismatics
+				);
 			} else {
 				newSuggestedItems[key];
 			}
@@ -56,7 +60,8 @@ const AugmentAlchemy = () => {
 				...newSuggestedItems,
 			},
 		}));
-	}, [pageData.selectedAugments]);
+		//This runs when we select augs and also when we change the prismatic selection state to ensure that on that click the items reflect the new selection
+	}, [pageData.selectedAugments, pageData.showPrismatics]);
 
 	function advancedOptions() {
 		showModal(
