@@ -10,12 +10,14 @@ import ItemIcon from "./ItemIcon";
 import { useNavigate } from "react-router-dom";
 import { fetchItems } from "../services/items";
 import { ItemType } from "../utils/types";
+import { useModal } from "../modalContext/ModalContext";
 
 const AugmentAlchemy = () => {
 	const [pageData, setPageData] = useState<PageDataType>(initializePageData);
 	const [allItems, setAllItems] = useState<ItemType[]>([]);
 	const panelArray = [1, 2, 3, 4, 5, 6];
 	const navigate = useNavigate();
+	const { showModal, hideModal } = useModal();
 
 	useEffect(() => {
 		const fetchData = async () => {
@@ -56,8 +58,29 @@ const AugmentAlchemy = () => {
 		}));
 	}, [pageData.selectedAugments]);
 
-	function showModal() {
-		console.log("MODAL");
+	function advancedOptions() {
+		showModal(
+			<div className="modal">
+				<h2>AdvancedOptions</h2>
+				<button onClick={hideModal}>Close</button>
+			</div>
+		);
+	}
+	function gemGlossary() {
+		showModal(
+			<div className="modal">
+				<h2>Gem Glossary</h2>
+				<button onClick={hideModal}>Close</button>
+			</div>
+		);
+	}
+	function tagGlossary() {
+		showModal(
+			<div className="modal">
+				<h2>Tag Glossary</h2>
+				<button onClick={hideModal}>Close</button>
+			</div>
+		);
 	}
 
 	return (
@@ -66,14 +89,16 @@ const AugmentAlchemy = () => {
 				<button className="home-button" onClick={() => navigate("/home")}>
 					Home
 				</button>
-				<div>{/*Styling div*/}</div>
+				<button className="modal-button" onClick={gemGlossary}>
+					Gem Glossary
+				</button>
 				<div>{/*Styling div*/}</div>
 				<div>{/*Styling div*/}</div>
 				<h1 className="augment-alchemy-title">~Augment Alchemy~</h1>
-				<button className="modal-button" onClick={showModal}>
+				<button className="modal-button" onClick={advancedOptions}>
 					Advanced Options
 				</button>
-				<button className="modal-button" onClick={showModal}>
+				<button className="modal-button" onClick={tagGlossary}>
 					Tag Glossary
 				</button>
 			</div>

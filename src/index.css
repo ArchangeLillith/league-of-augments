@@ -14,6 +14,28 @@
 	font-family: "Cinzel", serif;
 }
 
+.modal-backdrop {
+	position: fixed;
+	inset: 0;
+	background-color: rgba(0, 0, 0, 0.6);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	z-index: 9999;
+}
+
+.modal-content {
+	background-color: rgb(1, 0, 46);
+	border-radius: 10px;
+	padding: 2rem;
+	max-width: 500px;
+	border: 2px solid gold;
+	width: 90%;
+	box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+	position: relative;
+	z-index: 10000;
+}
+
 .search-with-tooltip {
 	position: relative;
 	display: inline-block;
@@ -1171,6 +1193,9 @@
 .effects > .tinted-gem.Ultimate-Scaling::after {
 	background-color: #9c1111;
 }
+.effects > .tinted-gem.AOE::after {
+	background-color: #d400f5;
+}
 .effects > .tinted-gem.Slow::after {
 	background-color: #addaff;
 }
@@ -1216,6 +1241,9 @@
 .effects > .tinted-gem.Cooldown-Reduction::after {
 	background-color: #c09cff;
 }
+.effects > .tinted-gem.Projectile::after {
+	background-color: #ed7bff;
+}
 .effects > .tinted-gem.Auto-Reset::after {
 	background-color: #5f9200;
 }
@@ -1230,8 +1258,17 @@
 .playstyle > .tinted-gem.Aggressive::after {
 	background-color: #ff0404;
 }
+.playstyle > .tinted-gem.Burst::after {
+	background-color: #7c0000;
+}
 .playstyle > .tinted-gem.Defensive::after {
 	background-color: #1b8800;
+}
+.playstyle > .tinted-gem.Sticky::after {
+	background-color: #5f9200;
+}
+.playstyle > .tinted-gem.Only-Child::after {
+	background-color: #ff9e4a;
 }
 .playstyle > .tinted-gem.Auto-Attacking::after {
 	background-color: white;
@@ -1342,11 +1379,14 @@
 .stats > .tinted-gem.Magic-Resist::after {
 	background-color: #ff9dd0;
 }
-.stats > .tinted-gem.Magic\ Pen::after {
+.stats > .tinted-gem.Magic-Pen::after {
 	background-color: #fa3192;
 }
 .stats > .tinted-gem.Magic-Resist-Shred::after {
 	background-color: #d30066;
+}
+.stats > .tinted-gem.Summoner-Spell-Cooldown::after {
+	background-color: #ff4afc;
 }
 
 /* Misc */
@@ -1367,6 +1407,9 @@
 }
 .misc > .tinted-gem.True-Damage::after {
 	background-color: white;
+}
+.misc > .tinted-gem.Autocast::after {
+	background-color: #002ad4;
 }
 .misc > .tinted-gem.Apex::after {
 	background-color: #0057c8;
@@ -1389,9 +1432,11 @@
 .misc > .tinted-gem.Lil-Guys::after {
 	background-color: #aa16ff;
 }
-
-.misc > .tinted-gem.Dragon::after {
+.misc > .tinted-gem.Range-Only::after {
 	background-color: #ff0b0b;
+}
+.misc > .tinted-gem.Dragon::after {
+	background-color: #5c5c5c;
 }
 
 .effects > .tinted-gem::after {

@@ -1,7 +1,13 @@
+// App.tsx
 import AppRoutes from "./AppRoutes";
+import { ModalProvider } from "./modalContext/ModalContext";
 
 const App = () => {
-	return <AppRoutes />;
+	return (
+		<ModalProvider>
+			<AppRoutes />
+		</ModalProvider>
+	);
 };
 
 export default App;
