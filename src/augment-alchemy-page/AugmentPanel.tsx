@@ -32,6 +32,7 @@ const AugmentPanel: React.FC<AugmentPanelProps> = ({
 									item={item}
 									key={item.item_id}
 									augment={pageData.selectedAugments[childKey]}
+									itemPage={false}
 								/>
 							))}
 						</>

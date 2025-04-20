@@ -42,7 +42,7 @@ const ItemPage = () => {
 	return (
 		<div className="item-page">
 			{items.map((item) => (
-				<ItemIcon item={item} augment={null} />
+				<ItemIcon item={item} augment={null} itemPage={true}/>
 			))}
 		</div>
 	);

@@ -5,9 +5,14 @@ import { gemMap } from "../augment-alchemy-page/augmentAlchemy.utils";
 interface ItemIconProps {
 	item: ItemType;
 	augment: Augment | null;
+	itemPage: boolean;
 }
 
-const ItemIcon: React.FC<ItemIconProps> = ({ item, augment }) => {
+const ItemIcon: React.FC<ItemIconProps> = ({
+	item,
+	augment,
+	itemPage = false,
+}) => {
 	console.log(`item`, item);
 	const matchingTags = [];
 	if (augment !== null && item.tags) {
@@ -26,26 +31,49 @@ const ItemIcon: React.FC<ItemIconProps> = ({ item, augment }) => {
 					<img src={item.url} className="sugg-item-img" />
 				</TooltipWrapper>
 			</div>
-			<div className="item-gem-box">
-				<>
-					{matchingTags.map((tag: string) => (
-						<>
-							<div className={`settings ${gemMap[tag]}`}>
-								{tag && (
-									<div className={`tinted-gem ${tag.replace(/\s+/g, "-")}`}>
-										<TooltipWrapper tooltipText={tag} gem={true}>
-											<img
-												src={`/gems/${gemMap[tag]}.png`}
-												className={`base-gem ${gemMap[tag]}`}
-											/>
-										</TooltipWrapper>
-									</div>
-								)}
-							</div>
-						</>
-					))}
-				</>
-			</div>
+			{itemPage ? (
+				<div className="item-gem-box">
+					<>
+						{item.tags.map((tag: string) => (
+							<>
+								<div className={`settings ${gemMap[tag]}`}>
+									{tag && (
+										<div className={`tinted-gem ${tag.replace(/\s+/g, "-")}`}>
+											<TooltipWrapper tooltipText={tag} gem={true}>
+												<img
+													src={`/gems/${gemMap[tag]}.png`}
+													className={`base-gem ${gemMap[tag]}`}
+												/>
+											</TooltipWrapper>
+										</div>
+									)}
+								</div>
+							</>
+						))}
+					</>
+				</div>
+			) : (
+				<div className="item-gem-box">
+					<>
+						{matchingTags.map((tag: string) => (
+							<>
+								<div className={`settings ${gemMap[tag]}`}>
+									{tag && (
+										<div className={`tinted-gem ${tag.replace(/\s+/g, "-")}`}>
+											<TooltipWrapper tooltipText={tag} gem={true}>
+												<img
+													src={`/gems/${gemMap[tag]}.png`}
+													className={`base-gem ${gemMap[tag]}`}
+												/>
+											</TooltipWrapper>
+										</div>
+									)}
+								</div>
+							</>
+						))}
+					</>
+				</div>
+			)}
 		</div>
 	);
 };
