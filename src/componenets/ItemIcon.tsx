@@ -25,56 +25,65 @@ const ItemIcon: React.FC<ItemIconProps> = ({
 		}
 	}
 	return (
-		<div className="suggested-item">
-			<div className="sugg-item-frame">
-				<TooltipWrapper item={true} itemObj={item} tooltipText={item.name}>
-					<img src={item.url} className="sugg-item-img" />
-				</TooltipWrapper>
-			</div>
-			{itemPage ? (
-				<div className="item-gem-box">
-					<>
-						{item.tags.map((tag: string) => (
+		<>
+			{item.name && (
+				<div className="suggested-item">
+					<div className="sugg-item-frame">
+						<TooltipWrapper item={true} itemObj={item} tooltipText={item.name}>
+							<img src={item.url} className="sugg-item-img" />
+						</TooltipWrapper>
+					</div>
+					{itemPage ? (
+						<div className="item-gem-box">
 							<>
-								<div className={`settings ${gemMap[tag]}`}>
-									{tag && (
-										<div className={`tinted-gem ${tag.replace(/\s+/g, "-")}`}>
-											<TooltipWrapper tooltipText={tag} gem={true}>
-												<img
-													src={`/gems/${gemMap[tag]}.png`}
-													className={`base-gem ${gemMap[tag]}`}
-												/>
-											</TooltipWrapper>
+								{item.tags.map((tag: string) => (
+									<>
+										<div className={`settings ${gemMap[tag]}`}>
+											{tag && (
+												<div
+													className={`tinted-gem ${tag.replace(/\s+/g, "-")}`}
+												>
+													<TooltipWrapper tooltipText={tag} gem={true}>
+														<img
+															src={`/gems/${gemMap[tag]}.png`}
+															className={`base-gem ${gemMap[tag]}`}
+														/>
+													</TooltipWrapper>
+												</div>
+											)}
 										</div>
-									)}
-								</div>
+									</>
+								))}
 							</>
-						))}
-					</>
-				</div>
-			) : (
-				<div className="item-gem-box">
-					<>
-						{matchingTags.map((tag: string) => (
+						</div>
+					) : (
+						<div className="item-gem-box">
 							<>
-								<div className={`settings ${gemMap[tag]}`}>
-									{tag && (
-										<div className={`tinted-gem ${tag.replace(/\s+/g, "-")}`}>
-											<TooltipWrapper tooltipText={tag} gem={true}>
-												<img
-													src={`/gems/${gemMap[tag]}.png`}
-													className={`base-gem ${gemMap[tag]}`}
-												/>
-											</TooltipWrapper>
-										</div>
-									)}
-								</div>
+								{matchingTags.length > 0 &&
+									matchingTags.map((tag: string) => (
+										<>
+											<div className={`settings ${gemMap[tag]}`}>
+												{tag && (
+													<div
+														className={`tinted-gem ${tag.replace(/\s+/g, "-")}`}
+													>
+														<TooltipWrapper tooltipText={tag} gem={true}>
+															<img
+																src={`/gems/${gemMap[tag]}.png`}
+																className={`base-gem ${gemMap[tag]}`}
+															/>
+														</TooltipWrapper>
+													</div>
+												)}
+											</div>
+										</>
+									))}
 							</>
-						))}
-					</>
+						</div>
+					)}
 				</div>
 			)}
-		</div>
+		</>
 	);
 };
 

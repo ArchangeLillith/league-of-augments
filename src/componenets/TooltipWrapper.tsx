@@ -42,7 +42,19 @@ const TooltipWrapper = ({
 		setHoverTimer(timer);
 	};
 
-	const handleMouseLeave = () => {
+	const handlePointerLeave = (e: React.PointerEvent<HTMLDivElement>) => {
+		const leavingTo = e.relatedTarget as Node | null;
+
+		if (
+			wrapperRef.current &&
+			tooltipRef.current &&
+			(wrapperRef.current.contains(leavingTo) ||
+				tooltipRef.current.contains(leavingTo))
+		) {
+			// Pointer still inside tooltip or wrapper, ignore
+			return;
+		}
+
 		if (hoverTimer) clearTimeout(hoverTimer);
 		setShowTooltip(false);
 	};
@@ -53,7 +65,7 @@ const TooltipWrapper = ({
 				ref={wrapperRef}
 				className={gem ? "tooltip-wrapper gem" : "tooltip-wrapper"}
 				onMouseEnter={handleMouseEnter}
-				onMouseLeave={handleMouseLeave}
+				onPointerLeave={handlePointerLeave}
 			>
 				{children}
 				{showTooltip && (
@@ -140,7 +152,7 @@ const TooltipWrapper = ({
 			ref={wrapperRef}
 			className={gem ? "tooltip-wrapper gem" : "tooltip-wrapper"}
 			onMouseEnter={handleMouseEnter}
-			onMouseLeave={handleMouseLeave}
+			onPointerLeave={handlePointerLeave}
 		>
 			{children}
 			{showTooltip && (

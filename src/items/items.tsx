@@ -40,11 +40,11 @@ const ItemPage = () => {
 	}, []);
 
 	return (
-		<div className="item-page">
+		<>
 			{items.map((item) => (
-				<ItemIcon item={item} augment={null} itemPage={true}/>
+				<ItemIcon item={item} augment={null} itemPage={true} />
 			))}
-		</div>
+		</>
 	);
 };
 

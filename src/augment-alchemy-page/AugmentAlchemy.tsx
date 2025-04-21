@@ -130,6 +130,7 @@ const AugmentAlchemy = () => {
 					/>
 				))}
 			</div>
+
 			<div className="bottom-container">{/* <ItemIcon /> */}</div>
 		</div>
 	);

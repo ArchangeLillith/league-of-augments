@@ -104,6 +104,8 @@
 
 .sugg-item-img {
 	width: 4rem;
+	z-index: 30;
+	display: block;
 }
 
 .item-page {
@@ -152,7 +154,7 @@
 	white-space: pre-line;
 	width: fit-content;
 	margin-top: 5px;
-	z-index: 10;
+	z-index: 45;
 	font-size: 0.8rem;
 	box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
 	pointer-events: none;
@@ -169,10 +171,15 @@
 	white-space: pre-line;
 	width: 350px;
 	margin-top: 5px;
-	z-index: 10;
+	z-index: 45;
 	font-size: 0.8rem;
 	box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
 	pointer-events: none;
+}
+
+.item-box-wrapper {
+	position: relative;
+	display: inline-block;
 }
 .tooltip-box--above {
 	top: auto;
@@ -1032,13 +1039,13 @@
 .settings.effects {
 	transition: transform 0.2s ease-out;
 }
-.settings.effects:hover {
+.settings .effects:hover {
 	transform: scale(1.2);
 }
 .settings.misc {
 	transition: transform 0.2s ease-out;
 }
-.settings.misc:hover {
+.settings .misc:hover {
 	transform: scale(1.2);
 }
 .settings.playstyle {
@@ -1050,19 +1057,19 @@
 .settings.role {
 	transition: transform 0.2s ease-out;
 }
-.settings.role:hover {
+.settings .role:hover {
 	transform: scale(1.2);
 }
 .settings.scalings {
 	transition: transform 0.2s ease-out;
 }
-.settings.scalings:hover {
+.settings .scalings:hover {
 	transform: scale(1.2);
 }
 .settings.stats {
 	transition: transform 0.2s ease-out;
 }
-.settings.stats:hover {
+.settings .stats:hover {
 	transform: scale(1.2);
 }
 /* Border mask behind the gem */

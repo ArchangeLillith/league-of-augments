@@ -24,9 +24,10 @@ const AugmentPanel: React.FC<AugmentPanelProps> = ({
 						childKey={childKey}
 					/>
 				</div>
-				<div className="item-container">
-					{pageData.suggestedItems[childKey] && (
+				{pageData.suggestedItems[childKey] && (
+					<div className="item-container">
 						<>
+						
 							{pageData.suggestedItems[childKey].map((item) => (
 								<ItemIcon
 									item={item}
@@ -36,8 +37,8 @@ const AugmentPanel: React.FC<AugmentPanelProps> = ({
 								/>
 							))}
 						</>
-					)}
-				</div>
+					</div>
+				)}
 			</div>
 		</div>
 	);
