@@ -13,77 +13,37 @@ const ItemIcon: React.FC<ItemIconProps> = ({
 	augment,
 	itemPage = false,
 }) => {
-	console.log(`item`, item);
-	const matchingTags = [];
-	if (augment !== null && item.tags) {
-		for (let tag of augment.tags) {
-			for (let itemTag of item.tags) {
-				if (itemTag === tag) {
-					matchingTags.push(itemTag);
-				}
-			}
-		}
-	}
+	if (!item.name) return null;
+
+	// Determine which tags to display
+	const displayTags = itemPage
+		? item.tags || []
+		: item.tags?.filter((tag) => augment?.tags?.includes(tag)) || [];
+
+	//Renders the gem so we don't bog down our actual return, haha
+	const renderGem = (tag: string) => (
+		<div className={`settings ${gemMap[tag]}`} key={tag}>
+			<div className={`tinted-gem ${tag.replace(/\s+/g, "-")}`}>
+				<TooltipWrapper tooltipText={tag} gem={true}>
+					<img
+						src={`/gems/${gemMap[tag]}.png`}
+						className={`base-gem ${gemMap[tag]}`}
+					/>
+				</TooltipWrapper>
+			</div>
+		</div>
+	);
+
 	return (
-		<>
-			{item.name && (
-				<div className="suggested-item">
-					<div className="sugg-item-frame">
-						<TooltipWrapper item={true} itemObj={item} tooltipText={item.name}>
-							<img src={item.url} className="sugg-item-img" />
-						</TooltipWrapper>
-					</div>
-					{itemPage ? (
-						<div className="item-gem-box">
-							<>
-								{item.tags.map((tag: string) => (
-									<>
-										<div className={`settings ${gemMap[tag]}`}>
-											{tag && (
-												<div
-													className={`tinted-gem ${tag.replace(/\s+/g, "-")}`}
-												>
-													<TooltipWrapper tooltipText={tag} gem={true}>
-														<img
-															src={`/gems/${gemMap[tag]}.png`}
-															className={`base-gem ${gemMap[tag]}`}
-														/>
-													</TooltipWrapper>
-												</div>
-											)}
-										</div>
-									</>
-								))}
-							</>
-						</div>
-					) : (
-						<div className="item-gem-box">
-							<>
-								{matchingTags.length > 0 &&
-									matchingTags.map((tag: string) => (
-										<>
-											<div className={`settings ${gemMap[tag]}`}>
-												{tag && (
-													<div
-														className={`tinted-gem ${tag.replace(/\s+/g, "-")}`}
-													>
-														<TooltipWrapper tooltipText={tag} gem={true}>
-															<img
-																src={`/gems/${gemMap[tag]}.png`}
-																className={`base-gem ${gemMap[tag]}`}
-															/>
-														</TooltipWrapper>
-													</div>
-												)}
-											</div>
-										</>
-									))}
-							</>
-						</div>
-					)}
-				</div>
-			)}
-		</>
+		<div className="suggested-item">
+			<div className="sugg-item-frame">
+				<TooltipWrapper item={true} itemObj={item} tooltipText={item.name}>
+					<img src={item.url} className="sugg-item-img" />
+				</TooltipWrapper>
+			</div>
+
+			<div className="item-gem-box">{displayTags.map(renderGem)}</div>
+		</div>
 	);
 };
 

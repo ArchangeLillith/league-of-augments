@@ -38,38 +38,30 @@ const HomePage = () => {
 
 	//The useEffect that filters the champs into the correct places. Filters the champ return from external API by the saved data from the user
 	useEffect(() => {
-		console.log(0);
 		const setup = async () => {
 			const champReturn = await fetchChampions();
 			if (!authState.userData) return;
-
-			console.log(1);
 			const { champsFirstPlace, champsWon, champsPlayed, champsWanted } =
 				authState;
 			setFirstPlace(
 				champReturn.filter((c) => champsFirstPlace.includes(c.name))
 			);
-			console.log(2);
 
 			setWonWith(champReturn.filter((c) => champsWon.includes(c.name)));
 			setPlayed(champReturn.filter((c) => champsPlayed.includes(c.name)));
 			setWantToPlay(champReturn.filter((c) => champsWanted.includes(c.name)));
-			console.log(3);
-
+			
 			const allTracked = new Set([
 				...champsFirstPlace,
 				...champsWon,
 				...champsPlayed,
 				...champsWanted,
 			]);
-			console.log(4);
 
 			setUncategorized(champReturn.filter((c) => !allTracked.has(c.name)));
-			console.log(5);
-
 			setReady(true);
 		};
-		console.log(0.5);
+
 		setup();
 	}, [authState.userData]);
 
@@ -103,9 +95,7 @@ const HomePage = () => {
 	//Drag handler, moves a champ from one place to another and updates authState as well so that data doesn't go stale
 	const handleDragEnd = (result: DropResult) => {
 		if (!result.destination || searchTerm) return;
-
 		const { source, destination } = result;
-
 		const lists = {
 			firstPlace: [...firstPlace],
 			wonWith: [...wonWith],

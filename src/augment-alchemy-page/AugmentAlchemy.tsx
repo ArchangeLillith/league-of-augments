@@ -6,11 +6,12 @@ import {
 	initializePageData,
 	PageDataType,
 } from "./augmentAlchemy.utils";
-import ItemIcon from "../componenets/ItemIcon";
+
 import { useNavigate } from "react-router-dom";
 import { fetchItems } from "../services/items";
 import { ItemType } from "../utils/types";
 import { useModal } from "../modalContext/ModalContext";
+import { gemGlossary, tagGlossary, advancedOptions } from "./ModalUtils";
 
 const AugmentAlchemy = () => {
 	const [pageData, setPageData] = useState<PageDataType>(initializePageData);
@@ -63,35 +64,11 @@ const AugmentAlchemy = () => {
 		//This runs when we select augs and also when we change the prismatic selection state to ensure that on that click the items reflect the new selection
 	}, [pageData.selectedAugments, pageData.showPrismatics]);
 
-	function advancedOptions() {
-		showModal(
-			<div className="modal">
-				<h2>AdvancedOptions</h2>
-				<button onClick={hideModal}>Close</button>
-			</div>
-		);
-	}
 	function togglePrismatics() {
 		setPageData((prev) => ({
 			...prev,
 			showPrismatics: !pageData.showPrismatics,
 		}));
-	}
-	function gemGlossary() {
-		showModal(
-			<div className="modal">
-				<h2>Gem Glossary</h2>
-				<button onClick={hideModal}>Close</button>
-			</div>
-		);
-	}
-	function tagGlossary() {
-		showModal(
-			<div className="modal">
-				<h2>Tag Glossary</h2>
-				<button onClick={hideModal}>Close</button>
-			</div>
-		);
 	}
 
 	return (
@@ -100,7 +77,10 @@ const AugmentAlchemy = () => {
 				<button className="home-button" onClick={() => navigate("/home")}>
 					Home
 				</button>
-				<button className="modal-button" onClick={gemGlossary}>
+				<button
+					className="modal-button"
+					onClick={() => gemGlossary(showModal, hideModal)}
+				>
 					Gem Glossary
 				</button>
 				<div>
@@ -113,10 +93,16 @@ const AugmentAlchemy = () => {
 				</div>
 				<div>{/*Styling div*/}</div>
 				<h1 className="augment-alchemy-title">~Augment Alchemy~</h1>
-				<button className="modal-button" onClick={advancedOptions}>
+				<button
+					className="modal-button"
+					onClick={() => advancedOptions(showModal, hideModal)}
+				>
 					Advanced Options
 				</button>
-				<button className="modal-button" onClick={tagGlossary}>
+				<button
+					className="modal-button"
+					onClick={() => tagGlossary(showModal, hideModal)}
+				>
 					Tag Glossary
 				</button>
 			</div>
@@ -131,7 +117,7 @@ const AugmentAlchemy = () => {
 				))}
 			</div>
 
-			<div className="bottom-container">{/* <ItemIcon /> */}</div>
+			<div className="bottom-container"></div>
 		</div>
 	);
 };

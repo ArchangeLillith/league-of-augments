@@ -14,6 +14,22 @@
 	font-family: "Cinzel", serif;
 }
 
+.gem-box {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	align-items: center;
+	img {
+		width: 45px;
+	}
+	.gem-tile {
+		display: flex;
+		flex-direction: column;
+		margin: 10px;
+		align-items: center;
+	}
+}
+
 .modal-backdrop {
 	position: fixed;
 	inset: 0;
