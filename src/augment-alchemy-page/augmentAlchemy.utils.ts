@@ -114,11 +114,15 @@ export function filterItems(
 			//Get a handle on the items from the allITems array as we only have their id and scor from the map thus far
 			const itemA = allItems.find((item) => item.item_id === a.item_id);
 			const itemB = allItems.find((item) => item.item_id === b.item_id);
-
+			console.log(itemA);
+			console.log(itemB);
 			//We set the values of the most important stat here
 			//We need to Number it cause they're strings currently
 			const itemAStatValue = Number(itemA?.[statKey]) ?? 0;
 			const itemBStatValue = Number(itemB?.[statKey]) ?? 0;
+
+			console.log(itemAStatValue)
+			console.log(itemBStatValue)
 
 			//Then we see which item has the better stats and return the one that wins
 			if (itemBStatValue !== itemAStatValue) {
