@@ -80,12 +80,10 @@ export function filterItems(
 			//Now we see if the item has the tag!
 			if (selectedItem.tags.includes(currentAugmentTag)) {
 				//It matched, now we see if out map has the item entry
-				console.log(
-					`Checking item_id: ${selectedItem.item_id}, current map:`,
-					itemMap
-				);
 				const id = Number(selectedItem.item_id);
-				if (itemMap[id]) {
+				console.log(`itemMap[${id}] =`, itemMap[id]);
+				console.log(`'${id}' in itemMap? i hate maaaaapssss`, id in itemMap);
+				if (id in itemMap) {
 					console.log(`We have it already in the map`);
 					itemMap[id] = itemMap[id] + 1 + j;
 				} else {
