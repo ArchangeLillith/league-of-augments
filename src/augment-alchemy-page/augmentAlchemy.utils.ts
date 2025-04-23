@@ -53,7 +53,6 @@ We need to filter by the highest number we cna pull out first!
 -run the loop
 -We'll increase the weight to 1+index, that'll track the weight of the tags with no omre logic!!
 -then we'll grab the top 4 and return~
-
 */
 
 export function filterItems(
@@ -62,9 +61,31 @@ export function filterItems(
 	showPrismatics: boolean
 ) {
 	//Declare the map we'll use to see how many tags something has in common
+	const cleanAugTags = selectedAugment.tags;
 	const itemMap: Record<number, number> = {};
+	//We'll first remove all the pris because we can remove the most here
 	if (!showPrismatics) {
 		allItems = allItems.filter((item) => item.tier !== "prismatic");
+	}
+	//Then we can see if it's a burn or autocast, in which case there are specific items for these
+	if (selectedAugment.tags.includes("Autocast") && showPrismatics) {
+		itemMap[13] = 9000;
+		cleanAugTags.filter((tag) => tag !== "Autocast");
+	}
+	if (selectedAugment.tags.includes("Burn") && showPrismatics) {
+		itemMap[17] = 9000;
+		cleanAugTags.filter((tag) => tag !== "Burn");
+	}
+	//Refactor - let's move this somewhere else, like a little floating thing so we don't bog down the 4 slots
+	//Then we can look at quests and add the items to the map
+	if (selectedAugment.augment_id === 285) {
+		//Adds heatsteel for heartsteel
+		itemMap[216] = 9000;
+	}
+	if (selectedAugment.augment_id === 287) {
+		//Adds rabadons and zhonya's for wooglets
+		itemMap[90] = 9000;
+		itemMap[97] = 9000;
 	}
 
 	//Let's see what order the tags are in, this should be by weight!
@@ -110,7 +131,7 @@ export function filterItems(
 		// Here the scores are the same, so we need to see who wins the tie breaker
 		//If we have a top stat tag (cause some won't) and we have that in the property map, proceed
 		if (topStatTag && statPropertyMap[topStatTag]) {
-			console.log(`We're now tie breaking! :D`)
+			console.log(`We're now tie breaking! :D`);
 			//Easier to grab this
 			const statKey = statPropertyMap[topStatTag];
 			//Get a handle on the items from the allITems array as we only have their id and scor from the map thus far
@@ -126,6 +147,14 @@ export function filterItems(
 			console.log(itemAStatValue);
 			console.log(itemBStatValue);
 
+			//Kinda hackey, we'll prioritize Rabadon's as the passive is better than flat AP
+			if (itemA?.item_id === 90 && topStatTag === "AP") {
+				return itemBStatValue - (itemAStatValue + 5000);
+			}
+			if (itemB?.item_id === 90 && topStatTag === "AP") {
+				return itemBStatValue + 5000 - itemAStatValue;
+			}
+
 			//Then we see which item has the better stats and return the one that wins
 			if (itemBStatValue !== itemAStatValue) {
 				return itemBStatValue - itemAStatValue;
@@ -136,7 +165,6 @@ export function filterItems(
 		return 0;
 	});
 
-	console.log("Sorted:", sortedItems);
 	//From there, we'll return an array of items with the additional key of score to have easy acess outside of thie function!
 	const topItems = sortedItems.map(({ item_id, score }) => {
 		const item = allItems.find((item) => item.item_id === item_id);
@@ -145,7 +173,7 @@ export function filterItems(
 			score,
 		};
 	});
-	console.log("Top 4:", topItems[0], topItems[1], topItems[2], topItems[3]);
+
 	return [
 		topItems[0] ?? {},
 		topItems[1] ?? {},
@@ -253,11 +281,11 @@ export const gemMap: Record<string, string> = {
 };
 
 const statPropertyMap: Record<string, keyof ItemType> = {
-	"AP": "ability_power",
+	AP: "ability_power",
 	"Ability Haste": "ability_haste",
 	Omnivamp: "omnivamp",
 	"Adaptive Force": "adaptive_force",
-	"AD": "attack_damage",
+	AD: "attack_damage",
 	"Crit Chance": "crit_chance",
 	"Crit Damage": "crit_damage",
 	"Attack Speed": "attack_speed",
