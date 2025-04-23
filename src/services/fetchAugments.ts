@@ -8,6 +8,9 @@ export const fetchAugments = async (
 	if (tags) {
 		const res = await fetch("/api/augments/includeTags");
 		const augments = await res.json();
+		for (let aug of augments) {
+			aug.tags = JSON.parse(aug.tags);
+		}
 		console.log("Augments and tags in frontend:", augments);
 		return augments;
 	} else {
