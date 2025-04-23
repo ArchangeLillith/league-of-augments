@@ -109,7 +109,8 @@ export function filterItems(
 
 		// Here the scores are the same, so we need to see who wins the tie breaker
 		//If we have a top stat tag (cause some won't) and we have that in the property map, proceed
-		if (topStatTag && statPropertyMap[topStatTag]) {
+		if (topStatTag) {
+			console.log(`We're now tie breaking! :D`);
 			//Easier to grab this
 			const statKey = statPropertyMap[topStatTag];
 			//Get a handle on the items from the allITems array as we only have their id and scor from the map thus far
@@ -135,9 +136,7 @@ export function filterItems(
 		return 0;
 	});
 
-	console.log(`sorted items:`, sortedItems);
-
-	console.log("sorted:", sortedItems);
+	console.log("Sorted:", sortedItems);
 	//From there, we'll return an array of items with the additional key of score to have easy acess outside of thie function!
 	const topItems = sortedItems.map(({ item_id, score }) => {
 		const item = allItems.find((item) => item.item_id === item_id);
@@ -146,7 +145,7 @@ export function filterItems(
 			score,
 		};
 	});
-	console.log("top", topItems);
+	console.log("Top 4:", topItems[0], topItems[1], topItems[2], topItems[3]);
 	return [
 		topItems[0] ?? {},
 		topItems[1] ?? {},
