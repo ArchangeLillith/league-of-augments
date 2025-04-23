@@ -119,7 +119,9 @@ export function filterItems(
 
 	//Here's where things get interesting. We're leveraging our gemMap to see what the highest stat is if there is one, and this should then filter the highest of the scored with that to break ties!
 	// Find the highest priority stat tag from the augment
-	const topStatTag = selectedAugment.tags.find((tag) => statTags.includes(tag));
+	const topStatTag = selectedAugment.tags
+		.reverse()
+		.find((tag) => statTags.includes(tag));
 	console.log("Top stat tag for tie-breaker:", topStatTag);
 
 	//Now we sort based on that tie breaker
@@ -131,21 +133,15 @@ export function filterItems(
 		// Here the scores are the same, so we need to see who wins the tie breaker
 		//If we have a top stat tag (cause some won't) and we have that in the property map, proceed
 		if (topStatTag && statPropertyMap[topStatTag]) {
-			console.log(`We're now tie breaking! :D`);
 			//Easier to grab this
 			const statKey = statPropertyMap[topStatTag];
 			//Get a handle on the items from the allITems array as we only have their id and scor from the map thus far
 			const itemA = allItems.find((item) => item.item_id === a.item_id);
 			const itemB = allItems.find((item) => item.item_id === b.item_id);
-			console.log(itemA);
-			console.log(itemB);
 			//We set the values of the most important stat here
 			//We need to Number it cause they're strings currently
 			const itemAStatValue = Number(itemA?.[statKey]) ?? 0;
 			const itemBStatValue = Number(itemB?.[statKey]) ?? 0;
-
-			console.log(itemAStatValue);
-			console.log(itemBStatValue);
 
 			//Kinda hackey, we'll prioritize Rabadon's as the passive is better than flat AP
 			if (itemA?.item_id === 90 && topStatTag === "AP") {
@@ -174,6 +170,7 @@ export function filterItems(
 		};
 	});
 
+	console.log("Top items:", topItems);
 	return [
 		topItems[0] ?? {},
 		topItems[1] ?? {},
