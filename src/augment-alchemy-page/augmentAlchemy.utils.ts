@@ -103,6 +103,7 @@ export function filterItems(
 
 	//Now we sort based on that tie breaker
 	const sortedItems = scoredItems.sort((a, b) => {
+		console.log("A:", a.score, "B:", b.score);
 		//If the scores aren't equal, a tie breaker isn't needed, we return them in the order of highest to lowest
 		if (b.score !== a.score) return b.score - a.score;
 
@@ -121,8 +122,8 @@ export function filterItems(
 			const itemAStatValue = Number(itemA?.[statKey]) ?? 0;
 			const itemBStatValue = Number(itemB?.[statKey]) ?? 0;
 
-			console.log(itemAStatValue)
-			console.log(itemBStatValue)
+			console.log(itemAStatValue);
+			console.log(itemBStatValue);
 
 			//Then we see which item has the better stats and return the one that wins
 			if (itemBStatValue !== itemAStatValue) {
