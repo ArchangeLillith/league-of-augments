@@ -109,8 +109,8 @@ export function filterItems(
 
 		// Here the scores are the same, so we need to see who wins the tie breaker
 		//If we have a top stat tag (cause some won't) and we have that in the property map, proceed
-		if (topStatTag) {
-			console.log(`We're now tie breaking! :D`);
+		if (topStatTag && statPropertyMap[topStatTag]) {
+			console.log(`We're now tie breaking! :D`)
 			//Easier to grab this
 			const statKey = statPropertyMap[topStatTag];
 			//Get a handle on the items from the allITems array as we only have their id and scor from the map thus far
@@ -253,11 +253,11 @@ export const gemMap: Record<string, string> = {
 };
 
 const statPropertyMap: Record<string, keyof ItemType> = {
-	"Ability Power": "ability_power",
+	"AP": "ability_power",
 	"Ability Haste": "ability_haste",
 	Omnivamp: "omnivamp",
 	"Adaptive Force": "adaptive_force",
-	"Attack Damage": "attack_damage",
+	"AD": "attack_damage",
 	"Crit Chance": "crit_chance",
 	"Crit Damage": "crit_damage",
 	"Attack Speed": "attack_speed",
