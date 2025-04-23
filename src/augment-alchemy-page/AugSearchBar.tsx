@@ -35,6 +35,7 @@ const AugSearchBar: React.FC<AugSearchBarProps> = ({
 
 	if (pageData.selectedAugments[childKey]?.name) {
 		const augment = pageData.selectedAugments[childKey];
+		const reversedTags = augment.tags.reverse();
 		return (
 			<div className="selected-augment-panel">
 				<button
@@ -52,7 +53,7 @@ const AugSearchBar: React.FC<AugSearchBarProps> = ({
 				<div className="augment-alchemy-tile">
 					<AugmentTile aug={augment} toggleAug={() => {}} />
 					<div className="aug-gem-box">
-						{augment.tags.map((tag) => (
+						{reversedTags.map((tag) => (
 							<>
 								<div className={`settings ${gemMap[tag]}`}>
 									{tag && (

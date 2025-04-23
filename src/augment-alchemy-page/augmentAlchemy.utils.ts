@@ -97,8 +97,10 @@ export function filterItems(
 		score,
 	}));
 
+	console.log(`scored items:`, scoredItems);
 	//We'll then sort that to give us the highest at the top
 	const sortedItems = scoredItems.sort((a, b) => b.score - a.score);
+	console.log(`sorted items:`, sortedItems);
 
 	console.log("sorted:", sortedItems);
 	//From there, we'll return an array of items with the additional key of score to have easy acess outside of thie function!
