@@ -31,13 +31,13 @@ const getAllAugs = async (): Promise<Augment[]> => {
 
 const getAllAugsWithTags = async (): Promise<Augment[]> => {
 	const augmentReturn: Augment[] = await Query(/* sql */ `
-		SELECT
+SELECT
   a.augment_id,
   a.name,
   a.description,
   a.tier,
   a.url,
-  COALESCE(JSON_ARRAYAGG(t.tag_name), JSON_ARRAY()) AS tags
+  COALESCE(JSON_ARRAYAGG(t.tag_name ORDER BY at.weight DESC), JSON_ARRAY()) AS tags
 FROM loa_augments a
 LEFT JOIN loa_augment_tags at ON a.augment_id = at.augment_id
 LEFT JOIN loa_tags t ON at.tag_id = t.tag_id

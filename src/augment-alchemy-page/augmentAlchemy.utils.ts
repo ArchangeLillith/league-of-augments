@@ -44,6 +44,18 @@ export const initializePageData = {
 	showPrismatics: true,
 };
 
+/*
+
+We need to filter by the highest number we cna pull out first!
+-excluded list gets kicked
+-prismatics go
+-then we can see if it;s a sort by champ, that will be it's own util
+-run the loop
+-We'll increase the weight to 1+index, that'll track the weight of the tags with no omre logic!!
+-then we'll grab the top 4 and return~
+
+*/
+
 export function filterItems(
 	selectedAugment: Augment,
 	allItems: ItemType[],
@@ -55,6 +67,8 @@ export function filterItems(
 		allItems = allItems.filter((item) => item.tier !== "prismatic");
 	}
 
+	//Let's see what order the tags are in, this should be by weight!
+	console.log("Selected aug tags:", selectedAugment.tags);
 	//Loop over the items to get ahold of each item!
 	for (let i = 0; i < allItems.length; i++) {
 		//Make it easier to reference the current item we're testing
@@ -68,10 +82,10 @@ export function filterItems(
 				//It matched, now we see if out map has the item entry
 				if (itemMap[selectedItem.item_id]) {
 					//The map has an entry! We'll add a count to the entry that's there
-					itemMap[selectedItem.item_id]++;
+					itemMap[selectedItem.item_id] += 1 + j;
 				} else {
 					//There's not an entry yet, we'll add one
-					itemMap[selectedItem.item_id] = 1;
+					itemMap[selectedItem.item_id] += 1 + j;
 				}
 			}
 		}
@@ -201,5 +215,3 @@ export const gemMap: Record<string, string> = {
 	Untargetability: "misc",
 	"Win More": "misc",
 };
-
-
