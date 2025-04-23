@@ -99,29 +99,31 @@ export function filterItems(
 
 	//Here's where things get interesting. We're leveraging our gemMap to see what the highest stat is if there is one, and this should then filter the highest of the scored with that to break ties!
 	// Find the highest priority stat tag from the augment
-	const statTags = Object.entries(gemMap)
-		.filter(([tag, category]) => category === "stats")
-		.map(([tag]) => tag);
-
 	const topStatTag = selectedAugment.tags.find((tag) => statTags.includes(tag));
-
 	console.log("Top stat tag for tie-breaker:", topStatTag);
 
-	//Now we sort based on that tie breaker 
+	//Now we sort based on that tie breaker
 	const sortedItems = scoredItems.sort((a, b) => {
+		//If the scores aren't equal, a tie breaker isn't needed, we return them in the order of highest to lowest
 		if (b.score !== a.score) return b.score - a.score;
 
-		// Tie-breaker logic:
-		if (topStatTag) {
+		// Here the scores are the same, so we need to see who wins the tie breaker
+		//If we have a top stat tag (cause some won't) and we have that in the property map, proceed
+		if (topStatTag && statPropertyMap[topStatTag]) {
+			//Easier to grab this
+			const statKey = statPropertyMap[topStatTag];
+			//Get a handle on the items from the allITems array as we only have their id and scor from the map thus far
 			const itemA = allItems.find((item) => item.item_id === a.item_id);
 			const itemB = allItems.find((item) => item.item_id === b.item_id);
 
-			const itemAHasTopStat = itemA?.tags.includes(topStatTag) ? 1 : 0;
-			const itemBHasTopStat = itemB?.tags.includes(topStatTag) ? 1 : 0;
+			//We set the values of the most important stat here
+			//We need to Number it cause they're strings currently
+			const itemAStatValue = Number(itemA?.[statKey]) ?? 0;
+			const itemBStatValue = Number(itemB?.[statKey]) ?? 0;
 
-			// Prefer items with the top stat tag
-			if (itemBHasTopStat !== itemAHasTopStat) {
-				return itemBHasTopStat - itemAHasTopStat;
+			//Then we see which item has the better stats and return the one that wins
+			if (itemBStatValue !== itemAStatValue) {
+				return itemBStatValue - itemAStatValue;
 			}
 		}
 
@@ -246,3 +248,51 @@ export const gemMap: Record<string, string> = {
 	Untargetability: "misc",
 	"Win More": "misc",
 };
+
+const statPropertyMap: Record<string, keyof ItemType> = {
+	"Ability Power": "ability_power",
+	"Ability Haste": "ability_haste",
+	Omnivamp: "omnivamp",
+	"Adaptive Force": "adaptive_force",
+	"Attack Damage": "attack_damage",
+	"Crit Chance": "crit_chance",
+	"Crit Damage": "crit_damage",
+	"Attack Speed": "attack_speed",
+	Lethality: "lethality",
+	Lifesteal: "lifesteal",
+	"Move Speed": "move_speed",
+	"Armour Pen": "armour_pen",
+	"Magic Pen": "magic_pen",
+	Health: "health",
+	Mana: "mana",
+	"Mana Regen": "mana_regen",
+	"Health Regen": "health_regen",
+	"Heal and Shield Power": "heal_and_shield_power",
+	Armour: "armour",
+	"Magic Resist": "magic_resist",
+	Tenacity: "tenacity",
+};
+
+const statTags = [
+	"Ability Power",
+	"Ability Haste",
+	"Omnivamp",
+	"Adaptive Force",
+	"Attack Damage",
+	"Crit Chance",
+	"Crit Damage",
+	"Attack Speed",
+	"Lethality",
+	"Lifesteal",
+	"Move Speed",
+	"Armour Pen",
+	"Magic Pen",
+	"Health",
+	"Mana",
+	"Mana Regen",
+	"Health Regen",
+	"Heal and Shield Power",
+	"Armour",
+	"Magic Resist",
+	"Tenacity",
+];
