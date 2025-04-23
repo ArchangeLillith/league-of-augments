@@ -82,10 +82,10 @@ export function filterItems(
 				//It matched, now we see if out map has the item entry
 				if (itemMap[selectedItem.item_id]) {
 					//The map has an entry! We'll add a count to the entry that's there
-					itemMap[selectedItem.item_id] += 1 + j;
+					itemMap[selectedItem.item_id] = itemMap[selectedItem.item_id] + 1 + j;
 				} else {
 					//There's not an entry yet, we'll add one
-					itemMap[selectedItem.item_id] += 1 + j;
+					itemMap[selectedItem.item_id] = 1 + j;
 				}
 			}
 		}
