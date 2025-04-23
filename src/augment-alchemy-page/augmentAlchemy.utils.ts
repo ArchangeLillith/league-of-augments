@@ -97,9 +97,38 @@ export function filterItems(
 		score,
 	}));
 
-	console.log(`scored items:`, scoredItems);
-	//We'll then sort that to give us the highest at the top
-	const sortedItems = scoredItems.sort((a, b) => b.score - a.score);
+	//Here's where things get interesting. We're leveraging our gemMap to see what the highest stat is if there is one, and this should then filter the highest of the scored with that to break ties!
+	// Find the highest priority stat tag from the augment
+	const statTags = Object.entries(gemMap)
+		.filter(([tag, category]) => category === "stats")
+		.map(([tag]) => tag);
+
+	const topStatTag = selectedAugment.tags.find((tag) => statTags.includes(tag));
+
+	console.log("Top stat tag for tie-breaker:", topStatTag);
+
+	//Now we sort based on that tie breaker 
+	const sortedItems = scoredItems.sort((a, b) => {
+		if (b.score !== a.score) return b.score - a.score;
+
+		// Tie-breaker logic:
+		if (topStatTag) {
+			const itemA = allItems.find((item) => item.item_id === a.item_id);
+			const itemB = allItems.find((item) => item.item_id === b.item_id);
+
+			const itemAHasTopStat = itemA?.tags.includes(topStatTag) ? 1 : 0;
+			const itemBHasTopStat = itemB?.tags.includes(topStatTag) ? 1 : 0;
+
+			// Prefer items with the top stat tag
+			if (itemBHasTopStat !== itemAHasTopStat) {
+				return itemBHasTopStat - itemAHasTopStat;
+			}
+		}
+
+		// No tie-breaker applicable, keep the order
+		return 0;
+	});
+
 	console.log(`sorted items:`, sortedItems);
 
 	console.log("sorted:", sortedItems);
