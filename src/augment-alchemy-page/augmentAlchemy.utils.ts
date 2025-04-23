@@ -81,9 +81,11 @@ export function filterItems(
 			if (selectedItem.tags.includes(currentAugmentTag)) {
 				//It matched, now we see if out map has the item entry
 				if (itemMap[selectedItem.item_id]) {
+					console.log(`We have it already in the map`)
 					//The map has an entry! We'll add a count to the entry that's there
 					itemMap[selectedItem.item_id] = itemMap[selectedItem.item_id] + 1 + j;
 				} else {
+					console.log(`creating in the map`)
 					//There's not an entry yet, we'll add one
 					itemMap[selectedItem.item_id] = 1 + j;
 				}
