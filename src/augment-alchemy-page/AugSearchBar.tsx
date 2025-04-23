@@ -71,7 +71,7 @@ const AugSearchBar: React.FC<AugSearchBarProps> = ({
 						))}
 					</div>
 				</div>
-				{augment.tags.map((tag, i) => {
+				{reversedTags.map((tag, i) => {
 					if (typeof tag !== "string") {
 						if (tag === null) {
 						}

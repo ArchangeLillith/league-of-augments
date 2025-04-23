@@ -274,12 +274,12 @@ const statPropertyMap: Record<string, keyof ItemType> = {
 };
 
 const statTags = [
-	"Ability Power",
+	"AP",
 	"Ability Haste",
 	"Omnivamp",
 	"Adaptive Force",
-	"Attack Damage",
-	"Crit Chance",
+	"AD",
+	"Crit",
 	"Crit Damage",
 	"Attack Speed",
 	"Lethality",
