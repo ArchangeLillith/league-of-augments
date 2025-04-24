@@ -11,6 +11,7 @@ export const fetchAugments = async (
 		for (let aug of augments) {
 			aug.tags = JSON.parse(aug.tags);
 		}
+		console.log("Augs fresh from backend:", augments);
 		return augments;
 	} else {
 		const res = await fetch("/api/augments/");

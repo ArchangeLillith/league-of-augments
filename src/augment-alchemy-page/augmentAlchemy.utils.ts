@@ -62,7 +62,7 @@ export function filterItems(
 ) {
 	//Declare the map we'll use to see how many tags something has in common
 	const cleanAugTags = selectedAugment.tags;
-	const reversedTags = selectedAugment.tags.reverse();
+	const reversedTags = [...selectedAugment.tags].reverse();
 	const itemMap: Record<number, number> = {};
 	//We'll first remove all the pris because we can remove the most here
 	if (!showPrismatics) {
