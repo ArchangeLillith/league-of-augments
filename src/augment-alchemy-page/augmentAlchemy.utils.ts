@@ -90,15 +90,15 @@ export function filterItems(
 	}
 
 	//Let's see what order the tags are in, this should be by weight!
-	console.log("Selected aug tags:", selectedAugment.tags);
+	console.log("Selected aug tags:", reversedTags);
 	//Loop over the items to get ahold of each item!
 	for (let i = 0; i < allItems.length; i++) {
 		//Make it easier to reference the current item we're testing
 		const selectedItem = allItems[i];
 		//Now we loop through the augments tags
-		for (let j = 0; j < selectedAugment.tags.length; j++) {
+		for (let j = 0; j < reversedTags.length; j++) {
 			//make it easier to refer back to the current augment tag
-			const currentAugmentTag = selectedAugment.tags[j];
+			const currentAugmentTag = reversedTags[j];
 			//Now we see if the item has the tag!
 			if (selectedItem.tags.includes(currentAugmentTag)) {
 				//It matched, now we see if out map has the item entry

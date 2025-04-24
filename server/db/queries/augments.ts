@@ -38,7 +38,7 @@ SELECT
   a.tier,
   a.url,
   COALESCE(
-    CONCAT('[', GROUP_CONCAT('"' , t.tag_name , '"' ORDER BY at.weight DESC), ']'),
+    CONCAT('[', GROUP_CONCAT('"' , t.tag_name , '"' ORDER BY at.weight ASC), ']'),
     JSON_ARRAY()
   ) AS tags
 FROM loa_augments a
