@@ -1,6 +1,5 @@
 import TooltipWrapper from "./TooltipWrapper";
-import { Augment, ItemType } from "../utils/types";
-import { gemMap } from "../augment-alchemy-page/augmentAlchemy.utils";
+import { Augment, ETagNames, gemMap, ItemType } from "../utils/types";
 
 interface ItemIconProps {
 	item: ItemType;
@@ -25,12 +24,12 @@ const ItemIcon: React.FC<ItemIconProps> = ({
 
 	//Renders the gem so we don't bog down our actual return, haha
 	const renderGem = (tag: string) => (
-		<div className={`settings ${gemMap[tag]}`} key={tag}>
+		<div className={`settings ${gemMap[tag as ETagNames]}`} key={tag}>
 			<div className={`tinted-gem ${tag.replace(/\s+/g, "-")}`}>
 				<TooltipWrapper tooltipText={tag} gem={true}>
 					<img
-						src={`/gems/${gemMap[tag]}.png`}
-						className={`base-gem ${gemMap[tag]}`}
+						src={`/gems/${gemMap[tag as ETagNames]}.png`}
+						className={`base-gem ${gemMap[tag as ETagNames]}`}
 					/>
 				</TooltipWrapper>
 			</div>
