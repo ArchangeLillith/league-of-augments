@@ -1,48 +1,10 @@
-import { Augment, ItemType } from "../utils/types";
-
-export type PageDataType = {
-	augments: Augment[];
-	selectedAugments: {
-		panel1: Augment | null;
-		panel2: Augment | null;
-		panel3: Augment | null;
-		panel4: Augment | null;
-		panel5: Augment | null;
-		panel6: Augment | null;
-	};
-	suggestedItems: {
-		panel1: ItemType[] | null;
-		panel2: ItemType[] | null;
-		panel3: ItemType[] | null;
-		panel4: ItemType[] | null;
-		panel5: ItemType[] | null;
-		panel6: ItemType[] | null;
-		itemSet: Set<ItemType>;
-	};
-	showPrismatics: boolean;
-};
-
-export const initializePageData = {
-	augments: [],
-	selectedAugments: {
-		panel1: null,
-		panel2: null,
-		panel3: null,
-		panel4: null,
-		panel5: null,
-		panel6: null,
-	},
-	suggestedItems: {
-		panel1: null,
-		panel2: null,
-		panel3: null,
-		panel4: null,
-		panel5: null,
-		panel6: null,
-		itemSet: new Set<ItemType>(),
-	},
-	showPrismatics: true,
-};
+import {
+	Augment,
+	ETagNames,
+	ItemType,
+	statPropertyMap,
+	statTags,
+} from "../utils/types";
 
 /*
 
@@ -61,22 +23,34 @@ export function filterItems(
 	showPrismatics: boolean
 ) {
 	//Declare the map we'll use to see how many tags something has in common
-	const cleanAugTags = selectedAugment.tags;
-	const reversedTags = [...selectedAugment.tags].reverse();
+	const cleanAugTags = selectedAugment.tags as ETagNames[];
 	const itemMap: Record<number, number> = {};
-	//We'll first remove all the pris because we can remove the most here
-	if (!showPrismatics) {
+
+
+	//We'll also ensure that the showPrismatics is on because we don't want to add these if it isn't
+	if (showPrismatics) {
+		//Then we can see if it's a burn or autocast, in which case there are specific items for these
+		if (selectedAugment.tags.includes("Autocast")) {
+			//We add Lightning Rod
+			itemMap[13] = 9000;
+			cleanAugTags.filter((tag) => tag !== "Autocast");
+		}
+		if (selectedAugment.tags.includes("Burn")) {
+			//We add Pyro Cloak
+			itemMap[17] = 9000;
+			cleanAugTags.filter((tag) => tag !== "Burn");
+		}
+		//THE BOISSSS
+		if (selectedAugment.tags.includes("Lil Guys")) {
+			//We add Reality Fracture
+			itemMap[19] = 9000;
+			cleanAugTags.filter((tag) => tag !== "Lil Guys");
+		}
+	} else {
+		//Here we know that showPrismatics is false, so we remove them
 		allItems = allItems.filter((item) => item.tier !== "prismatic");
 	}
-	//Then we can see if it's a burn or autocast, in which case there are specific items for these
-	if (selectedAugment.tags.includes("Autocast") && showPrismatics) {
-		itemMap[13] = 9000;
-		cleanAugTags.filter((tag) => tag !== "Autocast");
-	}
-	if (selectedAugment.tags.includes("Burn") && showPrismatics) {
-		itemMap[17] = 9000;
-		cleanAugTags.filter((tag) => tag !== "Burn");
-	}
+
 	//Refactor - let's move this somewhere else, like a little floating thing so we don't bog down the 4 slots
 	//Then we can look at quests and add the items to the map
 	if (selectedAugment.augment_id === 285) {
@@ -89,20 +63,21 @@ export function filterItems(
 		itemMap[97] = 9000;
 	}
 
-	//Let's see what order the tags are in, this should be by weight!
-	console.log("Selected aug tags:", reversedTags);
+	//Here we can reverse the order so we sort everything by what's least important first, meaning we don't need to filter a second time. We'll use the cleaned tags so we don't need to filter over any of the one off tags that are dedicated to an augment
+	const reversedTags = [...cleanAugTags].reverse() as ETagNames[];
+
 	//Loop over the items to get ahold of each item!
 	for (let i = 0; i < allItems.length; i++) {
 		//Make it easier to reference the current item we're testing
-		const selectedItem = allItems[i];
+		const currentItem = allItems[i];
 		//Now we loop through the augments tags
 		for (let j = 0; j < reversedTags.length; j++) {
 			//make it easier to refer back to the current augment tag
 			const currentAugmentTag = reversedTags[j];
 			//Now we see if the item has the tag!
-			if (selectedItem.tags.includes(currentAugmentTag)) {
+			if (currentItem.tags.includes(currentAugmentTag)) {
 				//It matched, now we see if out map has the item entry
-				const id = Number(selectedItem.item_id);
+				const id = Number(currentItem.item_id);
 				if (id in itemMap) {
 					itemMap[id] = itemMap[id] + 1 + j;
 				} else {
@@ -112,15 +87,16 @@ export function filterItems(
 		}
 	}
 
-	//Now we conver the map into an object that gives us an array of objects cooresponding to the id of the item and the number of tags that matched between the item and augment
+	//Now we convert the map into an object that gives us an array of objects cooresponding to the id of the item and the number of tags that matched between the item and augment
 	const scoredItems = Object.entries(itemMap).map(([item_id, score]) => ({
 		item_id: Number(item_id),
 		score,
 	}));
 
-	//Here's where things get interesting. We're leveraging our gemMap to see what the highest stat is if there is one, and this should then filter the highest of the scored with that to break ties!
-	// Find the highest priority stat tag from the augment
-	const topStatTag = reversedTags.find((tag) => statTags.includes(tag));
+	//Here's where things get interesting. We're finding the highest priority stat so we can then use that for the tie breaker
+	const topStatTag: ETagNames | undefined = (selectedAugment.tags as ETagNames[]).find((tag) =>
+		statTags.includes(tag)
+	);
 	console.log("Top stat tag for tie-breaker:", topStatTag);
 	console.log("Wer're sorting for:", selectedAugment.name);
 
@@ -129,12 +105,12 @@ export function filterItems(
 		//If the scores aren't equal, a tie breaker isn't needed, we return them in the order of highest to lowest
 		if (b.score !== a.score) return b.score - a.score;
 
-		// Here the scores are the same, so we need to see who wins the tie breaker
+		//When we get here, the scores are the same, so we need to see who wins the tie breaker
 		//If we have a top stat tag (cause some won't) and we have that in the property map, proceed
 		if (topStatTag && statPropertyMap[topStatTag]) {
 			//Easier to grab this
 			const statKey = statPropertyMap[topStatTag];
-			//Get a handle on the items from the allITems array as we only have their id and scor from the map thus far
+			//Get a handle on the items from the allItems array as we only have their id and score from the map thus far
 			const itemA = allItems.find((item) => item.item_id === a.item_id);
 			const itemB = allItems.find((item) => item.item_id === b.item_id);
 			//We set the values of the most important stat here
@@ -143,6 +119,8 @@ export function filterItems(
 			const itemBStatValue = Number(itemB?.[statKey]) ?? 0;
 
 			//Kinda hackey, we'll prioritize Rabadon's as the passive is better than flat AP
+			//This only works if the tie breaker is AP and the item in question is Rabadons
+			//We NEED to keep the 5000 under 9000. Doesn't matter the value, but we cannot eclipse the hard set items at the top (like lightning rod and reality fracture)
 			if (itemA?.item_id === 90 && topStatTag === "AP") {
 				return itemBStatValue - (itemAStatValue + 5000);
 			}
@@ -156,7 +134,7 @@ export function filterItems(
 			}
 		}
 
-		// No tie-breaker applicable, keep the order
+		// No stat to tie break by, typically this is because the augment doesn't care about raw stats, keep the order cause it doesn't matter
 		return 0;
 	});
 
@@ -182,144 +160,3 @@ export function filterItems(
 	// 	suggestedItems = suggestedItems.filter((item) => item.tags.includes(tag));
 	// }
 }
-
-export const gemMap: Record<string, string> = {
-	"Ability Haste": "stats",
-	Active: "misc",
-	AD: "stats",
-	"Adaptive Force": "stats",
-	ADC: "role",
-	Aggressive: "playstyle",
-	AOE: "effects",
-	AP: "stats",
-	"Apex Inventor Synergy": "misc",
-	Armour: "stats",
-	"Armour Pen": "stats",
-	"Armour Scaling": "scalings",
-	"Armour Shred": "stats",
-	Assassin: "role",
-	"Attack Speed": "stats",
-	"Auto Attacking": "playstyle",
-	"Auto Reset": "effects",
-	"Auto Weaving": "playstyle",
-	Autocast: "misc",
-	Bleed: "effects",
-	Block: "effects",
-	Bruiser: "role",
-	Burn: "effects",
-	Burst: "playstyle",
-	"Cooldown Reduction": "effects",
-	Crit: "stats",
-	"Crit Damage": "stats",
-	"Crit Scaling": "scalings",
-	"Current Health Damage": "scalings",
-	"Damage Steroid": "effects",
-	Defensive: "playstyle",
-	Dragon: "misc",
-	Energized: "effects",
-	"Enhanced Auto Attack": "effects",
-	Execute: "effects",
-	Gambling: "misc",
-	Grievous: "effects",
-	Heal: "effects",
-	"Heal and Shield Power": "stats",
-	Health: "stats",
-	"Health Regen": "stats",
-	Hybrid: "role",
-	Immobilize: "effects",
-	"Immobilize Enhancer": "effects",
-	Income: "misc",
-	Kiting: "playstyle",
-	Lethality: "stats",
-	Lifesteal: "stats",
-	"Lil Guys": "misc",
-	Mage: "role",
-	"Magic Pen": "stats",
-	"Magic Resist": "stats",
-	"Magic Resist Scaling": "scalings",
-	"Magic Resist Shred": "stats",
-	Mana: "stats",
-	"Mana Regen": "stats",
-	"Mana Scaling": "scalings",
-	"Max Health Damage": "scalings",
-	"Max Health Scaling": "scalings",
-	"Missing Health Damage": "scalings",
-	"Missing Health Scaling": "scalings",
-	"Move Speed": "stats",
-	Movement: "effects",
-	Omnivamp: "stats",
-	"On Takedown Effect": "effects",
-	"On-Hit": "effects",
-	"Only Child": "playstyle",
-	"Positioning Pattern": "playstyle",
-	Projectile: "effect",
-	Quest: "misc",
-	"Range Increase": "stats",
-	"Range Only": "misc",
-	Shield: "effects",
-	Slow: "effects",
-	Sniper: "role",
-	"Spell Heavy": "playstyle",
-	"Spell Weaving": "playstyle",
-	Stacking: "playstyle",
-	Sticky: "playstyle",
-	"Summoner Spell Cooldown": "stats",
-	Support: "role",
-	Tank: "role",
-	Targeted: "misc",
-	Tenacity: "stats",
-	Threshold: "misc",
-	"True Damage": "misc",
-	Twinning: "misc",
-	"Ultimate Scaling": "effects",
-	Untargetability: "misc",
-	"Win More": "misc",
-};
-
-const statPropertyMap: Record<string, keyof ItemType> = {
-	AP: "ability_power",
-	"Ability Haste": "ability_haste",
-	Omnivamp: "omnivamp",
-	"Adaptive Force": "adaptive_force",
-	AD: "attack_damage",
-	"Crit Chance": "crit_chance",
-	"Crit Damage": "crit_damage",
-	"Attack Speed": "attack_speed",
-	Lethality: "lethality",
-	Lifesteal: "lifesteal",
-	"Move Speed": "move_speed",
-	"Armour Pen": "armour_pen",
-	"Magic Pen": "magic_pen",
-	Health: "health",
-	Mana: "mana",
-	"Mana Regen": "mana_regen",
-	"Health Regen": "health_regen",
-	"Heal and Shield Power": "heal_and_shield_power",
-	Armour: "armour",
-	"Magic Resist": "magic_resist",
-	Tenacity: "tenacity",
-};
-
-const statTags = [
-	"AP",
-	"Ability Haste",
-	"Omnivamp",
-	"Adaptive Force",
-	"AD",
-	"Crit",
-	"Crit Damage",
-	"Attack Speed",
-	"Lethality",
-	"Lifesteal",
-	"Move Speed",
-	"Armour Pen",
-	"Magic Pen",
-	"Health",
-	"Mana",
-	"Mana Regen",
-	"Health Regen",
-	"Heal and Shield Power",
-	"Armour",
-	"Magic Resist",
-	"Tenacity",
-];
