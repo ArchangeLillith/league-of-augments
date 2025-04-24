@@ -123,10 +123,10 @@ export function filterItems(
 		.reverse()
 		.find((tag) => statTags.includes(tag));
 	console.log("Top stat tag for tie-breaker:", topStatTag);
+	console.log("Wer're sorting for:", selectedAugment.name);
 
 	//Now we sort based on that tie breaker
 	const sortedItems = scoredItems.sort((a, b) => {
-		console.log("A:", a.score, "B:", b.score);
 		//If the scores aren't equal, a tie breaker isn't needed, we return them in the order of highest to lowest
 		if (b.score !== a.score) return b.score - a.score;
 
