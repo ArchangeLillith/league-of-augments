@@ -3,13 +3,11 @@ import AugmentPanel from "./AugmentPanel";
 import { fetchAugments } from "../services/fetchAugments";
 import {
 	filterItems,
-	initializePageData,
-	PageDataType,
 } from "./augmentAlchemy.utils";
 
 import { useNavigate } from "react-router-dom";
 import { fetchItems } from "../services/items";
-import { ItemType } from "../utils/types";
+import { initializePageData, ItemType, PageDataType } from "../utils/types";
 import { useModal } from "../modalContext/ModalContext";
 import { gemGlossary, tagGlossary, advancedOptions } from "./ModalUtils";
 
