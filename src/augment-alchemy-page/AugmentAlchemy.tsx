@@ -1,9 +1,7 @@
 import { useState, useEffect } from "react";
 import AugmentPanel from "./AugmentPanel";
 import { fetchAugments } from "../services/fetchAugments";
-import {
-	filterItems,
-} from "./augmentAlchemy.utils";
+import { filterItems } from "./augmentAlchemy.utils";
 
 import { useNavigate } from "react-router-dom";
 import { fetchItems } from "../services/items";
