@@ -1,6 +1,6 @@
 import { SetStateAction, useState } from "react";
-import { Augment } from "../utils/types";
-import { gemMap, PageDataType } from "./augmentAlchemy.utils";
+import { Augment, ETagNames, gemMap, PageDataType } from "../utils/types";
+
 import AugmentTile from "../componenets/AugmentTile";
 import TooltipWrapper from "../componenets/TooltipWrapper";
 
@@ -54,13 +54,13 @@ const AugSearchBar: React.FC<AugSearchBarProps> = ({
 					<div className="aug-gem-box">
 						{augment.tags.map((tag) => (
 							<>
-								<div className={`settings ${gemMap[tag]}`}>
+								<div className={`settings ${gemMap[tag as ETagNames] }`}>
 									{tag && (
 										<div className={`tinted-gem ${tag.replace(/\s+/g, "-")}`}>
 											<TooltipWrapper tooltipText={tag} gem={true}>
 												<img
-													src={`/gems/${gemMap[tag]}.png`}
-													className={`base-gem ${gemMap[tag]}`}
+													src={`/gems/${gemMap[tag as ETagNames]}.png`}
+													className={`base-gem ${gemMap[tag as ETagNames]}`}
 												/>
 											</TooltipWrapper>
 										</div>
