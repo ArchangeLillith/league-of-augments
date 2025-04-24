@@ -62,6 +62,7 @@ export function filterItems(
 ) {
 	//Declare the map we'll use to see how many tags something has in common
 	const cleanAugTags = selectedAugment.tags;
+	const reversedTags = selectedAugment.tags.reverse();
 	const itemMap: Record<number, number> = {};
 	//We'll first remove all the pris because we can remove the most here
 	if (!showPrismatics) {
@@ -119,9 +120,7 @@ export function filterItems(
 
 	//Here's where things get interesting. We're leveraging our gemMap to see what the highest stat is if there is one, and this should then filter the highest of the scored with that to break ties!
 	// Find the highest priority stat tag from the augment
-	const topStatTag = selectedAugment.tags
-		.reverse()
-		.find((tag) => statTags.includes(tag));
+	const topStatTag = reversedTags.find((tag) => statTags.includes(tag));
 	console.log("Top stat tag for tie-breaker:", topStatTag);
 	console.log("Wer're sorting for:", selectedAugment.name);
 
