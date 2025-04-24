@@ -17,7 +17,7 @@ export function gemGlossary(
 	const gems = ["effects", "misc", "playstyle", "role", "scalings", "stats"];
 	showModal(
 		<div className="modal">
-			<h2>Gem Glossary</h2>
+			<h2 className="glossary-title">Gem Glossary</h2>
 			<div className="gem-box">
 				{gems.map((gem, index) => (
 					<div className="gem-tile">
@@ -37,7 +37,7 @@ export function tagGlossary(
 ) {
 	showModal(
 		<div className="modal">
-			<h2>Tag Glossary</h2>
+			<h2 className="glossary-title">Tag Glossary</h2>
 			<div className="scrollable-container">
 				<TagGlossaryDisplay />
 			</div>
@@ -64,43 +64,49 @@ const TagGlossaryDisplay = () => {
 		<div>
 			<input placeholder="Search tags..." />
 			<div>
-				<div>Stats</div>
-				<div>Inherant stats that come with items</div>
+				<h2 className="tag-title">Stats</h2>
+				<div className="tag-category-description">Inherant stats that come with items</div>
+				<br />
 				{statTags.map((tag) => (
 					<div key={tag}>{tag}</div>
 				))}
 			</div>
 			<div>
-				<div>Playstyle</div>
-				<div>Descriptions of style of play</div>
+				<h2 className="tag-title">Playstyle</h2>
+				<div  className="tag-category-description">Descriptions of style of play</div>
+				<br />
 				{playstyleTags.map((tag) => (
 					<div>{tag}</div>
 				))}
 			</div>
 			<div>
 				<div>Effects</div>
-				<div>Describes the extra stuff done other than stats</div>
+				<div className="tag-category-description">Describes the extra stuff done other than stats</div>
+				<br />
 				{effectsTags.map((tag) => (
 					<div>{tag}</div>
 				))}
 			</div>
 			<div>
-				<div>Scalings</div>
-				<div>Denotes that there's a point to build more of something</div>
+				<h2 className="tag-title">Scalings</h2>
+				<div className="tag-category-description">Denotes that there's a point to build more of something</div>
+				<br />
 				{scalingsTags.map((tag) => (
 					<div>{tag}</div>
 				))}
 			</div>
 			<div>
-				<div>Role</div>
-				<div>Defined by the role of the champ</div>
+				<h2 className="tag-title">Role</h2>
+				<div className="tag-category-description">Defined by the role of the champ</div>
+				<br />
 				{roleTags.map((tag) => (
 					<div>{tag}</div>
 				))}
 			</div>
 			<div>
-				<div>Misc</div>
-				<div>Tags that don't fit other categories</div>
+				<h2 className="tag-title">Misc</h2>
+				<div className="tag-category-description">Tags that don't fit other categories</div>
+				<br />
 				{miscTags.map((tag) => (
 					<div>{tag}</div>
 				))}
