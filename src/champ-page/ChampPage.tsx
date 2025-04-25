@@ -125,6 +125,14 @@ const ChampPage = () => {
 				name: title,
 			};
 		});
+		
+		const newBuilds = [...allBuilds];
+		for (let build of newBuilds) {
+			if (build.build_id === currentBuild!.build_id) {
+				build.name = title;
+			}
+		}
+		setAllBuilds(newBuilds);
 		setIsEditing(false);
 		setTriggerSave(triggerSave + 1);
 	};
@@ -155,6 +163,7 @@ const ChampPage = () => {
 			setSaveMessage("❌ Something went wrong in selecting that build");
 		}
 		setCurrentBuild(selectedBuild!);
+		setSelectedAugs([]);
 		setSelectedAugs(selectedBuild!.augments);
 	};
 
