@@ -8,6 +8,7 @@ import { AuthContext } from "../context/AuthProvider";
 import { fetchBuilds } from "../services/fetchBuilds";
 import TooltipWrapper from "../componenets/TooltipWrapper";
 import AugmentTile from "../componenets/AugmentTile";
+import { RiQuillPenAiFill } from "react-icons/ri";
 
 const ChampPage = () => {
 	// Context & routing
@@ -30,6 +31,9 @@ const ChampPage = () => {
 	const [currentBuild, setCurrentBuild] = useState<Build | null>(null);
 	const [allBuilds, setAllBuilds] = useState<Build[]>([]);
 	const [pageLoading, setPageLoading] = useState(true);
+	const [isEditing, setIsEditing] = useState<boolean>(false);
+	const [title, setTitle] = useState<string>("");
+	const [triggerSave, setTriggerSave] = useState<number>(0);
 
 	// Refs
 	const saveTimeout = useRef<number | null>(null);
@@ -46,12 +50,16 @@ const ChampPage = () => {
 		hasFetched.current = true;
 
 		const getInitialData = async () => {
-			const builds = await fetchBuilds(championName, authState.userData.id);
+			const builds: Build[] = await fetchBuilds(
+				championName,
+				authState.userData!.id
+			);
 			const augments = await fetchAugments();
 
 			setAllBuilds(builds);
 			setAllAugs(augments);
 			setCurrentBuild(builds[0]);
+			setTitle(builds[0].name);
 
 			if (builds[0]?.augments[0]?.augment_id) {
 				setSelectedAugs(builds[0].augments);
@@ -66,17 +74,18 @@ const ChampPage = () => {
 	useEffect(() => {
 		if (saveTimeout.current) clearTimeout(saveTimeout.current);
 		saveTimeout.current = setTimeout(() => {
-			saveAugments(selectedAugs);
+			saveBuild();
 		}, 2000);
-	}, [selectedAugs]);
+	}, [selectedAugs, triggerSave]);
 
-	const saveAugments = async (augs: Augment[]) => {
+	const saveBuild = async () => {
 		if (!authState.userData?.id) return;
 
 		const newDTO = {
 			user_id: authState.userData.id,
 			champ_name: championName,
-			newAugs: augs.map((a) => a.augment_id),
+			name: title,
+			newAugs: selectedAugs.map((a) => a.augment_id),
 		};
 
 		try {
@@ -87,8 +96,10 @@ const ChampPage = () => {
 			});
 			if (!res.ok) throw new Error("Save failed");
 			showSaveMessage("✅ Saved!");
+			return true;
 		} catch {
 			showSaveMessage("❌ Auto save error");
+			return false;
 		}
 	};
 
@@ -105,8 +116,51 @@ const ChampPage = () => {
 		);
 	};
 
+	const saveTitle = () => {
+		setCurrentBuild((prev) => {
+			if (!prev) return prev;
+
+			return {
+				...prev,
+				name: title,
+			};
+		});
+		setIsEditing(false);
+		setTriggerSave(triggerSave + 1);
+	};
 	const resetSelected = () => setSelectedAugs([]);
-	const addBuild = () => console.log("Adding build...");
+	const addBuild = async () => {
+		const buildSave = await saveBuild();
+		if (!buildSave) {
+			setSaveMessage("❌ Something went wrong while saving!");
+			return;
+		}
+		setCurrentBuild({
+			name: `New ${championName} Build`,
+			augments: [],
+			items: [],
+		});
+		setTitle(`New ${championName} Build`);
+		setAllBuilds((prev) => [
+			...prev,
+			{
+				name: `New ${championName} Build`,
+				augments: [],
+				items: [],
+			},
+		]);
+	};
+
+	const changeBuild = (buildId: string) => {
+		// const selectedBuild = allBuilds.find(
+		// 	(build) => build.id === Number(buildId)
+		// );
+		// if (!selectedBuild || selectedBuild === undefined) {
+		// 	setSaveMessage("❌ Something went wrong in selecting that build");
+		// }
+		// setCurrentBuild(selectedBuild!);
+		// setSelectedAugs(selectedBuild!.augments);
+	};
 
 	if (pageLoading) return <div>Loading...</div>;
 
@@ -137,11 +191,34 @@ const ChampPage = () => {
 						className="champ-icon"
 					/>
 				</div>
-				{currentBuild && <h1>{currentBuild.name}</h1>}
+				{currentBuild && !isEditing && (
+					<>
+						<h1>{currentBuild.name}</h1>
+						<button
+							onClick={() => setIsEditing(!isEditing)}
+							className="quill-btn"
+						>
+							<RiQuillPenAiFill />
+						</button>
+					</>
+				)}
+				{currentBuild && isEditing && (
+					<>
+						<input
+							value={title}
+							onChange={(e) => setTitle(e.currentTarget.value)}
+						></input>
+						<button onClick={saveTitle} className="quill-btn">
+							<RiQuillPenAiFill />
+						</button>
+					</>
+				)}
 				{allBuilds.length > 1 && (
-					<select>
+					<select onChange={(e) => changeBuild(e.target.id)}>
 						{allBuilds.map((build) => (
-							<option key={build.name}>{build.name}</option>
+							<option key={build.name} id={build.id!.toString()}>
+								{build.name}
+							</option>
 						))}
 					</select>
 				)}
@@ -157,7 +234,7 @@ const ChampPage = () => {
 					<div></div>
 					<div></div>
 					<h3 className="selected-augs-title">Selected Augments:</h3>
-					<button onClick={resetSelected}>Reset</button>
+					<button onClick={resetSelected}>Reset Augments</button>
 				</div>
 				{selectedAugs.length > 0 ? (
 					<div className="selected-augs">

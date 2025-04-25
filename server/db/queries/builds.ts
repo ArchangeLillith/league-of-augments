@@ -15,17 +15,18 @@ const upsertFullBuild = async (
 	await conn.beginTransaction();
 
 	try {
+		console.log("Name ot be added to db", name);
 		// Step 1: Insert or find build
-		//!HARDCODED HERE
 		const result: [ResultSetHeader, FieldPacket[]] = await conn.query(
 			`INSERT INTO loa_builds (user_id, champion_name, name)
 			 VALUES (?, ?, ?)
 			 ON DUPLICATE KEY UPDATE user_id = user_id`,
-			[user_id, champ_name, "TEST"]
+			[user_id, champ_name, name]
 		);
+		console.log("Result in the sql upsert function:", result);
+		console.log("TEST");
 		let buildId: number;
 		const insertId = result[0].insertId;
-		console.log("Result that's erroring:", result[0]);
 		if (insertId && insertId !== 0) {
 			// A new row was created
 			buildId = insertId;

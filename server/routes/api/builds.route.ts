@@ -13,7 +13,9 @@ router.post("/save", async (req, res) => {
 	const name: string = req.body.name;
 	const newAugs: number[] = req.body.newAugs;
 	const newItems: number[] = req.body.newAugs;
+	console.log(`We're now here`);
 	try {
+		console.log(`In the save route`);
 		const result = await db.builds.upsertFullBuild(
 			user_id,
 			champ_name,
@@ -23,25 +25,28 @@ router.post("/save", async (req, res) => {
 		);
 		res.json(result);
 	} catch (error) {
+		console.log(`We've errored here`);
 		console.error(error);
 	}
 });
 
 //POST /api/builds/
 router.post("/", async (req, res) => {
-	console.log("req.body:", req.body);
 	const user_id = Number(req.body.dto.user_id);
 	const champion_name = req.body.dto.champion_name;
 	try {
 		const result = await db.builds.returnBuild(user_id, champion_name);
-		console.log("builds route initial await", result);
+		console.log(
+			"/api/builds/, getting the builds for the user, builds are:",
+			result
+		);
 
 		if (result.length > 0) {
 			res.json(result);
 			return;
 		}
 
-    //If we get here, we don't have a single build for this champ so we make one
+		//If we get here, we don't have a single build for this champ so we make one
 		const upsertResult = await db.builds.upsertFullBuild(
 			user_id,
 			champion_name,

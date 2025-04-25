@@ -7,6 +7,7 @@ export type Build = {
 	name: string;
 	augments: Augment[];
 	items: number[];
+	id?: number;
 };
 
 export type ItemType = {

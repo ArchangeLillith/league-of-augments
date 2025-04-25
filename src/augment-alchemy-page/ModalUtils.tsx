@@ -85,6 +85,7 @@ export function advancedOptions(
 	);
 }
 
+//Tag glossary parent
 export function tagGlossary(
 	showModal: (content: React.ReactNode) => void,
 	hideModal: () => void
@@ -101,7 +102,9 @@ export function tagGlossary(
 }
 
 const TagGlossaryDisplay = () => {
+	//States
 	const [searchTerm, setSearchTerm] = useState<string>("");
+	//Object state to keep track of the tags
 	const [filteredTags, setFilteredTags] = useState(() => ({
 		stats: statTags,
 		effects: effectsTags,
@@ -111,6 +114,7 @@ const TagGlossaryDisplay = () => {
 		scalings: scalingsTags,
 	}));
 
+	//Our useeffcet that runs onchange for the search
 	useEffect(() => {
 		if (!searchTerm) {
 			// Reset if search is cleared
@@ -125,7 +129,9 @@ const TagGlossaryDisplay = () => {
 			return;
 		}
 
+		//Make the search lowercase
 		const lowerSearch = searchTerm.toLowerCase();
+		//We the set the states in the state object to a filtered list based on the search params that were captured onchange
 		setFilteredTags({
 			stats: statTags.filter((tag) => tag.toLowerCase().includes(lowerSearch)),
 			effects: effectsTags.filter((tag) =>
@@ -142,6 +148,7 @@ const TagGlossaryDisplay = () => {
 		});
 	}, [searchTerm]);
 
+	//This is the magic, we have the state here so when the filter runs this state will tell the component to rerender
 	const sectionMeta = {
 		stats: {
 			tags: filteredTags.stats,
@@ -231,6 +238,7 @@ const AccordionItem = ({
 	const [isOpen, setIsOpen] = useState(false);
 	const toggleAccordion = () => setIsOpen((prev) => !prev);
 
+	//Seprate return cause we want the stats to look different as they don't have descriptions
 	return (
 		<div
 			className={`accordion-item ${stats ? "stats" : ""} ${
