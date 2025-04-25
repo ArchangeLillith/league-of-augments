@@ -163,25 +163,40 @@ const ChampPage = () => {
 			championName,
 			authState.userData!.id
 		);
-		console.log("If I'm right this is all builds", newAllBuilds);
-		// setCurrentBuild(newBuild[0]);
-		// setTitle(newBuild[0].name);
-		// setAllBuilds((prev) => [...prev, newBuild[0]]);
+		//This could be an issue if you're looking for one
+		const newBuild = [...newAllBuilds].pop()!;
+		setChampPageState((prev) => ({
+			...prev,
+			allBuilds: newAllBuilds,
+			currentBuild: newBuild,
+			title: newBuild.name,
+		}));
 	};
 
-	// const changeBuild = (e: React.ChangeEvent<HTMLSelectElement>) => {
-	// 	const buildId = e.target.value;
-	// 	const selectedBuild = allBuilds.find(
-	// 		(build) => build.build_id === Number(buildId)
-	// 	);
-	// 	console.log(selectedBuild);
-	// 	if (!selectedBuild || selectedBuild === undefined) {
-	// 		setSaveMessage("❌ Something went wrong in selecting that build");
-	// 	}
-	// 	setCurrentBuild(selectedBuild!);
-	// 	setSelectedAugs([]);
-	// 	setSelectedAugs(selectedBuild!.augments);
-	// };
+	const changeBuild = (e: React.ChangeEvent<HTMLSelectElement>) => {
+		const buildId = e.target.value;
+		const selectedBuild = champPageState.allBuilds.find(
+			(build) => build.build_id === Number(buildId)
+		);
+		console.log(selectedBuild);
+		if (!selectedBuild || selectedBuild === undefined) {
+			setChampPageState((prev) => ({
+				...prev,
+				saveMessage: "❌ Error: Something went wrong in selecting that build",
+			}));
+		}
+		setChampPageState((prev) => {
+			if (selectedBuild === undefined) return prev;
+			return {
+				...prev,
+				currentBuild: selectedBuild,
+			};
+		});
+	};
+
+	const saveTitle = () => {
+		console.log("title");
+	};
 
 	if (champPageState.pageLoading) return <div>Loading...</div>;
 
@@ -238,13 +253,13 @@ const ChampPage = () => {
 								}))
 							}
 						></input>
-						{/* <button onClick={saveTitle} className="quill-btn">
+						<button onClick={saveTitle} className="quill-btn">
 							<RiQuillPenAiFill />
-						</button> */}
+						</button>
 					</>
 				)}
 
-				{/* {champPageState.allBuilds.length > 1 && (
+				{champPageState.allBuilds.length > 1 && (
 					<select onChange={(e) => changeBuild(e)}>
 						{champPageState.allBuilds.map((build) => (
 							<option key={build.name} value={build.build_id!.toString()}>
@@ -252,7 +267,7 @@ const ChampPage = () => {
 							</option>
 						))}
 					</select>
-				)} */}
+				)}
 				<div>
 					<button onClick={addBuild}>Add Build</button>
 				</div>
