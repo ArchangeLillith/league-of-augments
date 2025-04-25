@@ -146,9 +146,11 @@ const ChampPage = () => {
 	};
 
 	const changeBuild = (buildId: string) => {
+		console.log(buildId);
 		const selectedBuild = allBuilds.find(
 			(build) => build.build_id === Number(buildId)
 		);
+		console.log(selectedBuild);
 		if (!selectedBuild || selectedBuild === undefined) {
 			setSaveMessage("❌ Something went wrong in selecting that build");
 		}
