@@ -32,6 +32,7 @@ const ChampPage = () => {
 		pageLoading: boolean;
 		isEditing: boolean;
 		title: string;
+		selectedAugs: Augment[];
 	};
 
 	const ChampPageInitilizer = {
@@ -41,6 +42,7 @@ const ChampPage = () => {
 		pageLoading: true,
 		isEditing: false,
 		title: "",
+		selectedAugs: [],
 	};
 	//We only use references, we never need this to change except for the initial set
 	const [allAugs, setAllAugs] = useState<Augment[]>([]);
@@ -76,6 +78,7 @@ const ChampPage = () => {
 				allBuilds: builds,
 				pageLoading: false,
 				title: builds[0].name,
+				selectedAugs: builds[0].augments,
 			}));
 		};
 
@@ -88,7 +91,7 @@ const ChampPage = () => {
 		saveTimeout.current = setTimeout(() => {
 			saveBuild();
 		}, 2000);
-	}, [champPageState.currentBuild]);
+	}, [champPageState.currentBuild, champPageState.selectedAugs]);
 
 	const saveBuild = async () => {
 		if (!authState.userData?.id) return;
@@ -125,7 +128,7 @@ const ChampPage = () => {
 
 	const toggleAug = (aug: Augment) => {
 		//Get a handle on the old augs if there are any
-		const oldAugs = champPageState.currentBuild?.augments ?? [];
+		const oldAugs = champPageState.selectedAugs;
 		//Filter through and either remove or add the aug depending on if it's there
 		const newAugs = oldAugs.some((a) => a.augment_id === aug.augment_id)
 			? oldAugs.filter((a) => a.augment_id !== aug.augment_id)
@@ -134,20 +137,14 @@ const ChampPage = () => {
 		//Set the new augs to the currently selected build
 		setChampPageState((prev) => ({
 			...prev,
-			currentBuild: {
-				...prev.currentBuild,
-				augments: newAugs,
-			},
+			selectedAugs: newAugs,
 		}));
 	};
 
 	const resetSelected = () =>
 		setChampPageState((prev) => ({
 			...prev,
-			currentBuild: {
-				...prev.currentBuild,
-				augments: [],
-			},
+			selectedAugs: [],
 		}));
 
 	const addBuild = async () => {
@@ -170,6 +167,7 @@ const ChampPage = () => {
 			allBuilds: newAllBuilds,
 			currentBuild: newBuild,
 			title: newBuild.name,
+			selectedAugs: [],
 		}));
 	};
 
@@ -190,6 +188,7 @@ const ChampPage = () => {
 			return {
 				...prev,
 				currentBuild: selectedBuild,
+				selectedAugs: selectedBuild.augments,
 			};
 		});
 	};
@@ -282,9 +281,9 @@ const ChampPage = () => {
 					<h3 className="selected-augs-title">Selected Augments:</h3>
 					<button onClick={resetSelected}>Reset Augments</button>
 				</div>
-				{champPageState.currentBuild.augments.length > 0 ? (
+				{champPageState.selectedAugs.length > 0 ? (
 					<div className="selected-augs">
-						{champPageState.currentBuild.augments.map((aug) => (
+						{champPageState.selectedAugs.map((aug) => (
 							<div
 								className={`selected-aug-background ${aug.tier}`}
 								key={aug.augment_id}
