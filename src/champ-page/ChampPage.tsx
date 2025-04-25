@@ -152,14 +152,14 @@ const ChampPage = () => {
 	};
 
 	const changeBuild = (buildId: string) => {
-		// const selectedBuild = allBuilds.find(
-		// 	(build) => build.id === Number(buildId)
-		// );
-		// if (!selectedBuild || selectedBuild === undefined) {
-		// 	setSaveMessage("❌ Something went wrong in selecting that build");
-		// }
-		// setCurrentBuild(selectedBuild!);
-		// setSelectedAugs(selectedBuild!.augments);
+		const selectedBuild = allBuilds.find(
+			(build) => build.id === Number(buildId)
+		);
+		if (!selectedBuild || selectedBuild === undefined) {
+			setSaveMessage("❌ Something went wrong in selecting that build");
+		}
+		setCurrentBuild(selectedBuild!);
+		setSelectedAugs(selectedBuild!.augments);
 	};
 
 	if (pageLoading) return <div>Loading...</div>;
