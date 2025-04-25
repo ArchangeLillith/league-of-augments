@@ -22,7 +22,7 @@ export const fetchBuilds = async (
 export const getLastId = async (
 	user_id: number,
 	champion: string
-): Promise<any[]> => {
+): Promise<{ build_id: number }[]> => {
 	try {
 		const dto = {
 			champion_name: champion,

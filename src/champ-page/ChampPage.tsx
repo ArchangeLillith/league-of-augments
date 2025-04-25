@@ -141,6 +141,7 @@ const ChampPage = () => {
 			name: `New ${championName} Build`,
 			augments: [],
 			items: [],
+			id: lastId[0].build_id + 1,
 		});
 		setTitle(`New ${championName} Build`);
 		setAllBuilds((prev) => [
