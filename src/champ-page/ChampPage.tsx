@@ -148,7 +148,7 @@ const ChampPage = () => {
 	const changeBuild = (e: React.ChangeEvent<HTMLSelectElement>) => {
 		console.log(e);
 		console.log(e.target);
-		console.log(e.target.id);
+		console.log(e.target.value);
 		// const selectedBuild = allBuilds.find(
 		// 	(build) => build.build_id === Number(buildId)
 		// );
@@ -214,7 +214,7 @@ const ChampPage = () => {
 				{allBuilds.length > 1 && (
 					<select onChange={(e) => changeBuild(e)}>
 						{allBuilds.map((build) => (
-							<option key={build.name} id={build.build_id!.toString()}>
+							<option key={build.name} value={build.build_id!.toString()}>
 								{build.name}
 							</option>
 						))}
