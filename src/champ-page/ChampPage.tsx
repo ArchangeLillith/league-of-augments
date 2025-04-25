@@ -85,12 +85,8 @@ const ChampPage = () => {
 		getInitialData();
 	}, [authState.userData?.id, championName]);
 
-	// Debounced save effect
 	useEffect(() => {
-		if (saveTimeout.current) clearTimeout(saveTimeout.current);
-		saveTimeout.current = setTimeout(() => {
-			saveBuild();
-		}, 2000);
+		saveBuild();
 	}, [champPageState.currentBuild, champPageState.selectedAugs]);
 
 	const saveBuild = async () => {
@@ -230,6 +226,9 @@ const ChampPage = () => {
 				{champPageState.currentBuild && !champPageState.isEditing ? (
 					<>
 						<h1>{champPageState.currentBuild.name}</h1>
+						<p>{champPageState.currentBuild.build_id}</p>
+						<p>{JSON.stringify(champPageState.currentBuild.augments)}</p>
+						<p>{JSON.stringify(champPageState.selectedAugs)}</p>
 						<button
 							onClick={() =>
 								setChampPageState((prev) => ({
