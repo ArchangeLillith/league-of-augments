@@ -69,4 +69,17 @@ router.post("/", async (req, res) => {
 	}
 });
 
+router.post("/lastId", async (req, res) => {
+	const user_id = Number(req.body.dto.user_id);
+	const champion_name = req.body.dto.champion_name;
+	try {
+		const result = await db.builds.getLastId(user_id, champion_name);
+
+		res.json(result);
+	} catch (error) {
+		console.error("Unexpected error:", error);
+		res.status(500).json({ error: "Internal server error" });
+	}
+});
+
 export default router;

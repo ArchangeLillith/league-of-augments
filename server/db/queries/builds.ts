@@ -108,5 +108,16 @@ const returnBuild = (user_id: number, champ_name: string): Promise<any[]> =>
     `,
 		[champ_name, user_id]
 	);
+const getLastId = (user_id: number, champ_name: string): Promise<any[]> =>
+	Query<any>(
+		`
+    SELECT 
+    build_id from loa_builds
+		where champion_name = ? and user_id = ?
+    order by desc
+		limit 1
+    `,
+		[champ_name, user_id]
+	);
 
-export default { upsertFullBuild, returnBuild };
+export default { upsertFullBuild, returnBuild, getLastId };
