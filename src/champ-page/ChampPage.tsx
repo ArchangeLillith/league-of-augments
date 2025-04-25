@@ -145,17 +145,19 @@ const ChampPage = () => {
 		setAllBuilds((prev) => [...prev, newBuild[0]]);
 	};
 
-	const changeBuild = (buildId: string) => {
-		console.log(buildId);
-		const selectedBuild = allBuilds.find(
-			(build) => build.build_id === Number(buildId)
-		);
-		console.log(selectedBuild);
-		if (!selectedBuild || selectedBuild === undefined) {
-			setSaveMessage("❌ Something went wrong in selecting that build");
-		}
-		setCurrentBuild(selectedBuild!);
-		setSelectedAugs(selectedBuild!.augments);
+	const changeBuild = (e: React.ChangeEvent<HTMLSelectElement>) => {
+		console.log(e);
+		console.log(e.target);
+		console.log(e.target.id);
+		// const selectedBuild = allBuilds.find(
+		// 	(build) => build.build_id === Number(buildId)
+		// );
+		// console.log(selectedBuild);
+		// if (!selectedBuild || selectedBuild === undefined) {
+		// 	setSaveMessage("❌ Something went wrong in selecting that build");
+		// }
+		// setCurrentBuild(selectedBuild!);
+		// setSelectedAugs(selectedBuild!.augments);
 	};
 
 	if (pageLoading) return <div>Loading...</div>;
@@ -210,7 +212,7 @@ const ChampPage = () => {
 					</>
 				)}
 				{allBuilds.length > 1 && (
-					<select onChange={(e) => changeBuild(e.target.id)}>
+					<select onChange={(e) => changeBuild(e)}>
 						{allBuilds.map((build) => (
 							<option key={build.name} id={build.build_id!.toString()}>
 								{build.name}
