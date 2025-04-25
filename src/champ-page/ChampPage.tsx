@@ -146,18 +146,16 @@ const ChampPage = () => {
 	};
 
 	const changeBuild = (e: React.ChangeEvent<HTMLSelectElement>) => {
-		console.log(e);
-		console.log(e.target);
-		console.log(e.target.value);
-		// const selectedBuild = allBuilds.find(
-		// 	(build) => build.build_id === Number(buildId)
-		// );
-		// console.log(selectedBuild);
-		// if (!selectedBuild || selectedBuild === undefined) {
-		// 	setSaveMessage("❌ Something went wrong in selecting that build");
-		// }
-		// setCurrentBuild(selectedBuild!);
-		// setSelectedAugs(selectedBuild!.augments);
+		const buildId = e.target.value;
+		const selectedBuild = allBuilds.find(
+			(build) => build.build_id === Number(buildId)
+		);
+		console.log(selectedBuild);
+		if (!selectedBuild || selectedBuild === undefined) {
+			setSaveMessage("❌ Something went wrong in selecting that build");
+		}
+		setCurrentBuild(selectedBuild!);
+		setSelectedAugs(selectedBuild!.augments);
 	};
 
 	if (pageLoading) return <div>Loading...</div>;
