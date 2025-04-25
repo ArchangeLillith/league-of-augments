@@ -136,12 +136,13 @@ const ChampPage = () => {
 			return;
 		}
 		const lastId = await getLastId(authState.userData!.id, championName);
+		const newId =lastId[0].build_id + 1 
 		console.log("Last id:", lastId);
 		setCurrentBuild({
 			name: `New ${championName} Build`,
 			augments: [],
 			items: [],
-			id: lastId[0].build_id + 1,
+			id: newId,
 		});
 		setTitle(`New ${championName} Build`);
 		setAllBuilds((prev) => [
@@ -150,6 +151,7 @@ const ChampPage = () => {
 				name: `New ${championName} Build`,
 				augments: [],
 				items: [],
+				id: newId
 			},
 		]);
 	};
