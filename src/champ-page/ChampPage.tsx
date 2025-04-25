@@ -97,6 +97,7 @@ const ChampPage = () => {
 		if (!authState.userData?.id) return;
 
 		const newDTO = {
+			build_id: champPageState.currentBuild.build_id,
 			user_id: authState.userData.id,
 			champ_name: championName,
 			name: champPageState.title,

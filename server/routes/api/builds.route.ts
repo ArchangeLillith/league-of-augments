@@ -8,22 +8,20 @@ const router = express.Router();
 //POST api/builds/save
 router.post("/save", async (req, res) => {
 	console.log("Body:", req.body);
+	const build_id: number = req.body.build_id;
 	const user_id: number = req.body.user_id;
 	const champ_name: ChampionName = req.body.champ_name as ChampionName;
 	const name: string = req.body.name;
 	const newAugs: number[] = req.body.newAugs;
 	const newItems: number[] = req.body.newAugs;
-	console.log(`We're now here`);
 	try {
-		console.log(`In the save route`);
-		const result = await db.builds.upsertFullBuild(
-			user_id,
-			champ_name,
-			name,
-			newAugs,
-			newItems
-		);
-		res.json(result);
+		const result = await db.builds.saveExistingBuild(build_id, name, newAugs);
+		if (result.success === true) {
+			let allBuilds = db.builds.returnBuilds(user_id, champ_name);
+			res.json(allBuilds);
+		} else {
+			res.json(result);
+		}
 	} catch (error) {
 		console.log(`We've errored here`);
 		console.error(error);
@@ -35,7 +33,7 @@ router.post("/", async (req, res) => {
 	const user_id = Number(req.body.dto.user_id);
 	const champion_name = req.body.dto.champion_name;
 	try {
-		const result = await db.builds.returnBuild(user_id, champion_name);
+		const result = await db.builds.returnBuilds(user_id, champion_name);
 		console.log(
 			"/api/builds/, getting the builds for the user, builds are:",
 			result
@@ -47,12 +45,10 @@ router.post("/", async (req, res) => {
 		}
 
 		//If we get here, we don't have a single build for this champ so we make one
-		const upsertResult = await db.builds.upsertFullBuild(
+		const upsertResult = await db.builds.insertNewBuild(
 			user_id,
 			champion_name,
-			"TEST",
-			[],
-			[]
+			`New ${champion_name} Build`,
 		);
 
 		if (!upsertResult.success) {
@@ -61,7 +57,7 @@ router.post("/", async (req, res) => {
 			return;
 		}
 
-		const newResult = await db.builds.returnBuild(user_id, champion_name);
+		const newResult = await db.builds.returnBuilds(user_id, champion_name);
 		res.json(newResult);
 	} catch (error) {
 		console.error("Unexpected error:", error);
@@ -77,7 +73,7 @@ router.post("/new", async (req, res) => {
 		const upsertResult = await db.builds.insertNewBuild(
 			user_id,
 			champion_name,
-			`New ${champion_name} Build`,
+			`New ${champion_name} Build`
 		);
 
 		if (!upsertResult.success) {
@@ -86,7 +82,7 @@ router.post("/new", async (req, res) => {
 			return;
 		}
 
-		const newResult = await db.builds.returnBuild(user_id, champion_name);
+		const newResult = await db.builds.returnBuilds(user_id, champion_name);
 		res.json(newResult);
 	} catch (error) {
 		console.error("Unexpected error:", error);

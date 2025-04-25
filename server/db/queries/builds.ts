@@ -1,83 +1,37 @@
 import { FieldPacket, ResultSetHeader } from "mysql2";
-import { BuildTable } from "../../utils/types";
 import pool from "../pool";
 import { Query } from "../query";
 
-//Creates a build tied to a champ and a user allowing us to then tie augments and items to the build in another table
-const upsertFullBuild = async (
-	user_id: number,
-	champ_name: string,
+const saveExistingBuild = async (
+	build_id: number,
 	name: string,
-	augmentIds: number[],
-	itemIds: number[]
-): Promise<{ success: boolean; buildId?: number; error?: string }> => {
-	const conn = await pool.getConnection();
-	await conn.beginTransaction();
-
+	augmentIds: number[]
+): Promise<any> => {
 	try {
-		// Step 1: Insert or find build
-		const result: [ResultSetHeader, FieldPacket[]] = await conn.query(
-			`INSERT INTO loa_builds (user_id, champion_name, name)
-			 VALUES (?, ?, ?)
-			 ON DUPLICATE KEY UPDATE user_id = user_id`,
-			[user_id, champ_name, name]
-		);
-		console.log("Result in the sql upsert function:", result);
-		let buildId: number;
-		const insertId = result[0].insertId;
-		if (insertId && insertId !== 0) {
-			// A new row was created
-			buildId = insertId;
-		} else {
-			// No new row — fetch the existing one
-			const [rows] = (await conn.query(
-				`SELECT build_id FROM loa_builds WHERE user_id = ? AND champion_name = ?`,
-				[user_id, champ_name]
-			)) as [Array<{ build_id: number }>, any];
-
-			buildId = rows[0].build_id;
-		}
-
-		// Step 2: Replace augments
-		await conn.query(`DELETE FROM loa_build_augments WHERE build_id = ?`, [
-			buildId,
+		//Update build name
+		await Query<any>(`UPDATE loa_builds SET name = ? WHERE build_id = ?`, [
+			name,
+			build_id,
 		]);
 
-		if (augmentIds.length > 0) {
-			const augPlaceholders = augmentIds.map(() => `(?, ?)`).join(", ");
-			const augValues = augmentIds.flatMap((id) => [buildId, id]);
+		//Delete old augments
+		await Query<any>(`DELETE FROM loa_build_augments WHERE build_id = ?`, [
+			build_id,
+		]);
 
-			await conn.query(
-				`INSERT INTO loa_build_augments (build_id, augment_id)
-		 VALUES ${augPlaceholders}`,
-				augValues
+		//Insert new augments
+		if (augmentIds.length > 0) {
+			const values = augmentIds.map((id) => [build_id, id]);
+			await Query<any>(
+				`INSERT INTO loa_build_augments (build_id, augment_id) VALUES ?`,
+				[values]
 			);
 		}
-		//!Turn this on when we impliment item saving in builds
-		// // Step 3: Replace items
-		// await conn.query(`DELETE FROM loa_build_items WHERE build_id = ?`, [
-		// 	buildId,
-		// ]);
 
-		// if (itemIds.length > 0) {
-		// 	const itemPlaceholders = itemIds.map(() => `(?, ?)`).join(", ");
-		// 	const itemValues = itemIds.flatMap((id) => [buildId, id]);
-
-		// 	await conn.query(
-		// 		`INSERT INTO loa_build_items (build_id, item_id)
-		//  VALUES ${itemPlaceholders}`,
-		// 		itemValues
-		// 	);
-		// }
-
-		await conn.commit();
-		conn.release();
-		return { success: true, buildId };
-	} catch (err: any) {
-		await conn.rollback();
-		conn.release();
-		console.error("Build upsert error:", err);
-		return { success: false, error: err.message };
+		return { success: true };
+	} catch (err) {
+		console.error("Error saving build:", err);
+		return { success: false, error: err };
 	}
 };
 
@@ -86,31 +40,22 @@ const insertNewBuild = async (
 	champ_name: string,
 	name: string
 ): Promise<{ success: boolean; buildId?: number; error?: string }> => {
-	const conn = await pool.getConnection();
-	await conn.beginTransaction();
-
 	try {
-		// Step 1: Insert or find build
-		const result: [ResultSetHeader, FieldPacket[]] = await conn.query(
-			`INSERT INTO loa_builds (user_id, champion_name, name)
-			 VALUES (?, ?, ?)`,
+		const result = await Query<any>(
+			`INSERT INTO loa_builds (user_id, champion_name, name) VALUES (?, ?, ?)`,
 			[user_id, champ_name, name]
 		);
-		console.log("Result in the sql upsert function:", result);
-		const buildId = result[0].insertId;
 
-		await conn.commit();
-		conn.release();
+		const buildId = result.insertId;
+
 		return { success: true, buildId };
 	} catch (err: any) {
-		await conn.rollback();
-		conn.release();
-		console.error("Build upsert error:", err);
+		console.error("Build insert error:", err);
 		return { success: false, error: err.message };
 	}
 };
 
-const returnBuild = (user_id: number, champ_name: string): Promise<any[]> =>
+const returnBuilds = (user_id: number, champ_name: string): Promise<any[]> =>
 	Query<any>(
 		`
     SELECT 
@@ -136,4 +81,8 @@ const returnBuild = (user_id: number, champ_name: string): Promise<any[]> =>
 		[champ_name, user_id]
 	);
 
-export default { upsertFullBuild, returnBuild, insertNewBuild };
+export default {
+	returnBuilds,
+	insertNewBuild,
+	saveExistingBuild,
+};
