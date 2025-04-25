@@ -7,7 +7,7 @@ export type Build = {
 	name: string;
 	augments: Augment[];
 	items: number[];
-	id?: number;
+	build_id: number;
 };
 
 export type ItemType = {
@@ -352,7 +352,7 @@ const filterByValue = (value: EGemType): string[] => {
 };
 
 export const statTags = filterByValue(EGemType.stats);
-export const playstyleTags= filterByValue(EGemType.playstyle);
+export const playstyleTags = filterByValue(EGemType.playstyle);
 export const miscTags = filterByValue(EGemType.misc);
 export const roleTags = filterByValue(EGemType.role);
 export const effectsTags = filterByValue(EGemType.effects);

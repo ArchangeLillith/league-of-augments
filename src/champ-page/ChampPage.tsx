@@ -139,7 +139,7 @@ const ChampPage = () => {
 			championName,
 			authState.userData!.id
 		);
-		console.log(newBuild);
+		console.log("New build new me", newBuild);
 		setCurrentBuild(newBuild[0]);
 		setTitle(newBuild[0].name);
 		setAllBuilds((prev) => [...prev, newBuild[0]]);
@@ -147,7 +147,7 @@ const ChampPage = () => {
 
 	const changeBuild = (buildId: string) => {
 		const selectedBuild = allBuilds.find(
-			(build) => build.id === Number(buildId)
+			(build) => build.build_id === Number(buildId)
 		);
 		if (!selectedBuild || selectedBuild === undefined) {
 			setSaveMessage("❌ Something went wrong in selecting that build");
@@ -210,7 +210,7 @@ const ChampPage = () => {
 				{allBuilds.length > 1 && (
 					<select onChange={(e) => changeBuild(e.target.id)}>
 						{allBuilds.map((build) => (
-							<option key={build.name} id={build.id!.toString()}>
+							<option key={build.name} id={build.build_id!.toString()}>
 								{build.name}
 							</option>
 						))}
