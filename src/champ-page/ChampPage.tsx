@@ -5,7 +5,7 @@ import { Augment } from "../utils/types";
 import { fetchAugments } from "../services/fetchAugments";
 import { Build } from "../utils/types";
 import { AuthContext } from "../context/AuthProvider";
-import { fetchBuilds, getLastId } from "../services/fetchBuilds";
+import { fetchBuilds, writeNewBuild } from "../services/fetchBuilds";
 import TooltipWrapper from "../componenets/TooltipWrapper";
 import AugmentTile from "../componenets/AugmentTile";
 import { RiQuillPenAiFill } from "react-icons/ri";
@@ -135,25 +135,14 @@ const ChampPage = () => {
 			setSaveMessage("❌ Something went wrong while saving!");
 			return;
 		}
-		const lastId = await getLastId(authState.userData!.id, championName);
-		const newId =lastId[0].build_id + 1 
-		console.log("Last id:", lastId);
-		setCurrentBuild({
-			name: `New ${championName} Build`,
-			augments: [],
-			items: [],
-			id: newId,
-		});
-		setTitle(`New ${championName} Build`);
-		setAllBuilds((prev) => [
-			...prev,
-			{
-				name: `New ${championName} Build`,
-				augments: [],
-				items: [],
-				id: newId
-			},
-		]);
+		const newBuild: Build[] = await writeNewBuild(
+			championName,
+			authState.userData!.id
+		);
+		console.log(newBuild);
+		setCurrentBuild(newBuild[0]);
+		setTitle(newBuild[0].name);
+		setAllBuilds((prev) => [...prev, newBuild[0]]);
 	};
 
 	const changeBuild = (buildId: string) => {

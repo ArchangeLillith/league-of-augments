@@ -19,22 +19,23 @@ export const fetchBuilds = async (
 		throw error;
 	}
 };
-export const getLastId = async (
-	user_id: number,
-	champion: string
-): Promise<{ build_id: number }[]> => {
+export const writeNewBuild = async (
+	champion: string,
+	user_id: number
+): Promise<any[]> => {
 	try {
 		const dto = {
 			champion_name: champion,
 			user_id,
 		};
-		const id = await baseService.post("/api/builds/lastId", {
+		const builds = await baseService.post("/api/builds/new", {
 			dto,
 		});
-		console.log(id);
-		return id;
+		console.log(builds);
+		return builds;
 	} catch (error) {
 		console.error(`ERROR in auth.ts in services:`, error);
 		throw error;
 	}
 };
+

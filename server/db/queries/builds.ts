@@ -15,7 +15,6 @@ const upsertFullBuild = async (
 	await conn.beginTransaction();
 
 	try {
-		console.log("Name ot be added to db", name);
 		// Step 1: Insert or find build
 		const result: [ResultSetHeader, FieldPacket[]] = await conn.query(
 			`INSERT INTO loa_builds (user_id, champion_name, name)
@@ -24,7 +23,6 @@ const upsertFullBuild = async (
 			[user_id, champ_name, name]
 		);
 		console.log("Result in the sql upsert function:", result);
-		console.log("TEST");
 		let buildId: number;
 		const insertId = result[0].insertId;
 		if (insertId && insertId !== 0) {
@@ -82,6 +80,34 @@ const upsertFullBuild = async (
 		return { success: false, error: err.message };
 	}
 };
+const insertNewBuild = async (
+	user_id: number,
+	champ_name: string,
+	name: string
+): Promise<{ success: boolean; buildId?: number; error?: string }> => {
+	const conn = await pool.getConnection();
+	await conn.beginTransaction();
+
+	try {
+		// Step 1: Insert or find build
+		const result: [ResultSetHeader, FieldPacket[]] = await conn.query(
+			`INSERT INTO loa_builds (user_id, champion_name, name)
+			 VALUES (?, ?, ?)`,
+			[user_id, champ_name, name]
+		);
+		console.log("Result in the sql upsert function:", result);
+		const buildId = result[0].insertId;
+
+		await conn.commit();
+		conn.release();
+		return { success: true, buildId };
+	} catch (err: any) {
+		await conn.rollback();
+		conn.release();
+		console.error("Build upsert error:", err);
+		return { success: false, error: err.message };
+	}
+};
 
 const returnBuild = (user_id: number, champ_name: string): Promise<any[]> =>
 	Query<any>(
@@ -108,17 +134,5 @@ const returnBuild = (user_id: number, champ_name: string): Promise<any[]> =>
     `,
 		[champ_name, user_id]
 	);
-const getLastId = (user_id: number, champ_name: string): Promise<any[]> =>
-	Query<any>(
-		`
-    SELECT 
-  build_id 
-FROM loa_builds
-WHERE champion_name = ? AND user_id = ?
-ORDER BY build_id DESC
-LIMIT 1;
-    `,
-		[champ_name, user_id]
-	);
 
-export default { upsertFullBuild, returnBuild, getLastId };
+export default { upsertFullBuild, returnBuild, insertNewBuild };

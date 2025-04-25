@@ -69,13 +69,25 @@ router.post("/", async (req, res) => {
 	}
 });
 
-router.post("/lastId", async (req, res) => {
+//POST /api/builds/new
+router.post("/new", async (req, res) => {
 	const user_id = Number(req.body.dto.user_id);
 	const champion_name = req.body.dto.champion_name;
 	try {
-		const result = await db.builds.getLastId(user_id, champion_name);
+		const upsertResult = await db.builds.insertNewBuild(
+			user_id,
+			champion_name,
+			`New ${champion_name} Build`,
+		);
 
-		res.json(result);
+		if (!upsertResult.success) {
+			console.error("Build upsert failed:", upsertResult.error);
+			res.status(500).json({ error: upsertResult.error });
+			return;
+		}
+
+		const newResult = await db.builds.returnBuild(user_id, champion_name);
+		res.json(newResult);
 	} catch (error) {
 		console.error("Unexpected error:", error);
 		res.status(500).json({ error: "Internal server error" });
