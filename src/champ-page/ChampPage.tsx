@@ -25,15 +25,28 @@ const ChampPage = () => {
 	}
 
 	// State
-	const [selectedAugs, setSelectedAugs] = useState<Augment[]>([]);
+	type ChampPageState = {
+		saveMessage: string | null;
+		currentBuild: Build;
+		allBuilds: Build[];
+		pageLoading: boolean;
+		isEditing: boolean;
+		title: string;
+	};
+
+	const ChampPageInitilizer = {
+		saveMessage: null,
+		currentBuild: { name: "", augments: [], items: [], build_id: 0 },
+		allBuilds: [],
+		pageLoading: true,
+		isEditing: false,
+		title: "",
+	};
+	//We only use references, we never need this to change except for the initial set
 	const [allAugs, setAllAugs] = useState<Augment[]>([]);
-	const [saveMessage, setSaveMessage] = useState<string | null>(null);
-	const [currentBuild, setCurrentBuild] = useState<Build | null>(null);
-	const [allBuilds, setAllBuilds] = useState<Build[]>([]);
-	const [pageLoading, setPageLoading] = useState(true);
-	const [isEditing, setIsEditing] = useState<boolean>(false);
-	const [title, setTitle] = useState<string>("");
-	const [triggerSave, setTriggerSave] = useState<number>(0);
+	//A state for the page, toggles for visibility and controls for the UI as well as houses the data behind the page
+	const [champPageState, setChampPageState] =
+		useState<ChampPageState>(ChampPageInitilizer);
 
 	// Refs
 	const saveTimeout = useRef<number | null>(null);
@@ -54,17 +67,16 @@ const ChampPage = () => {
 				championName,
 				authState.userData!.id
 			);
+
 			const augments = await fetchAugments();
-
-			setAllBuilds(builds);
 			setAllAugs(augments);
-			setCurrentBuild(builds[0]);
-			setTitle(builds[0].name);
-
-			if (builds[0]?.augments[0]?.augment_id) {
-				setSelectedAugs(builds[0].augments);
-			}
-			setPageLoading(false);
+			setChampPageState((prev: ChampPageState) => ({
+				...prev,
+				currentBuild: builds[0],
+				allBuilds: builds,
+				pageLoading: false,
+				title: builds[0].name,
+			}));
 		};
 
 		getInitialData();
@@ -76,7 +88,7 @@ const ChampPage = () => {
 		saveTimeout.current = setTimeout(() => {
 			saveBuild();
 		}, 2000);
-	}, [selectedAugs, triggerSave]);
+	}, [champPageState.currentBuild]);
 
 	const saveBuild = async () => {
 		if (!authState.userData?.id) return;
@@ -84,8 +96,8 @@ const ChampPage = () => {
 		const newDTO = {
 			user_id: authState.userData.id,
 			champ_name: championName,
-			name: title,
-			newAugs: selectedAugs.map((a) => a.augment_id),
+			name: champPageState.title,
+			newAugs: champPageState.currentBuild?.augments.map((a) => a.augment_id),
 		};
 
 		try {
@@ -104,84 +116,88 @@ const ChampPage = () => {
 	};
 
 	const showSaveMessage = (message: string) => {
-		setSaveMessage(message);
-		setTimeout(() => setSaveMessage(null), 3000);
+		setChampPageState((prev) => ({ ...prev, saveMessage: message }));
+		setTimeout(
+			() => setChampPageState((prev) => ({ ...prev, saveMessage: null })),
+			3000
+		);
 	};
 
 	const toggleAug = (aug: Augment) => {
-		setSelectedAugs((prev) =>
-			prev.some((a) => a.augment_id === aug.augment_id)
-				? prev.filter((a) => a.augment_id !== aug.augment_id)
-				: [...prev, aug]
-		);
+		//Get a handle on the old augs if there are any
+		const oldAugs = champPageState.currentBuild?.augments ?? [];
+		//Filter through and either remove or add the aug depending on if it's there
+		const newAugs = oldAugs.some((a) => a.augment_id === aug.augment_id)
+			? oldAugs.filter((a) => a.augment_id !== aug.augment_id)
+			: [...oldAugs, aug];
+
+		//Set the new augs to the currently selected build
+		setChampPageState((prev) => ({
+			...prev,
+			currentBuild: {
+				...prev.currentBuild,
+				augments: newAugs,
+			},
+		}));
 	};
 
-	const saveTitle = () => {
-		setCurrentBuild((prev) => {
-			if (!prev) return prev;
+	const resetSelected = () =>
+		setChampPageState((prev) => ({
+			...prev,
+			currentBuild: {
+				...prev.currentBuild,
+				augments: [],
+			},
+		}));
 
-			return {
-				...prev,
-				name: title,
-			};
-		});
-		
-		const newBuilds = [...allBuilds];
-		for (let build of newBuilds) {
-			if (build.build_id === currentBuild!.build_id) {
-				build.name = title;
-			}
-		}
-		setAllBuilds(newBuilds);
-		setIsEditing(false);
-		setTriggerSave(triggerSave + 1);
-	};
-	const resetSelected = () => setSelectedAugs([]);
 	const addBuild = async () => {
 		const buildSave = await saveBuild();
 		if (!buildSave) {
-			setSaveMessage("❌ Something went wrong while saving!");
+			setChampPageState((prev) => ({
+				...prev,
+				saveMessage: "❌ Error: Something went wrong while saving!",
+			}));
 			return;
 		}
-		const newBuild: Build[] = await writeNewBuild(
+		const newAllBuilds: Build[] = await writeNewBuild(
 			championName,
 			authState.userData!.id
 		);
-		console.log("New build new me", newBuild);
-		setCurrentBuild(newBuild[0]);
-		setTitle(newBuild[0].name);
-		setAllBuilds((prev) => [...prev, newBuild[0]]);
+		console.log("If I'm right this is all builds", newAllBuilds);
+		// setCurrentBuild(newBuild[0]);
+		// setTitle(newBuild[0].name);
+		// setAllBuilds((prev) => [...prev, newBuild[0]]);
 	};
 
-	const changeBuild = (e: React.ChangeEvent<HTMLSelectElement>) => {
-		const buildId = e.target.value;
-		const selectedBuild = allBuilds.find(
-			(build) => build.build_id === Number(buildId)
-		);
-		console.log(selectedBuild);
-		if (!selectedBuild || selectedBuild === undefined) {
-			setSaveMessage("❌ Something went wrong in selecting that build");
-		}
-		setCurrentBuild(selectedBuild!);
-		setSelectedAugs([]);
-		setSelectedAugs(selectedBuild!.augments);
-	};
+	// const changeBuild = (e: React.ChangeEvent<HTMLSelectElement>) => {
+	// 	const buildId = e.target.value;
+	// 	const selectedBuild = allBuilds.find(
+	// 		(build) => build.build_id === Number(buildId)
+	// 	);
+	// 	console.log(selectedBuild);
+	// 	if (!selectedBuild || selectedBuild === undefined) {
+	// 		setSaveMessage("❌ Something went wrong in selecting that build");
+	// 	}
+	// 	setCurrentBuild(selectedBuild!);
+	// 	setSelectedAugs([]);
+	// 	setSelectedAugs(selectedBuild!.augments);
+	// };
 
-	if (pageLoading) return <div>Loading...</div>;
+	if (champPageState.pageLoading) return <div>Loading...</div>;
 
 	return (
 		<div>
 			{/* Save message popup */}
 			<div
 				className={`save-message
-					${saveMessage ? "save-message--visible" : "save-message--hidden"}
+					${champPageState.saveMessage ? "save-message--visible" : "save-message--hidden"}
 					${
-						saveMessage?.includes("error")
+						champPageState.saveMessage?.includes("error")
 							? "save-message--error"
 							: "save-message--success"
 					}`}
 			>
-				{saveMessage}
+				{champPageState.saveMessage}
 			</div>
 
 			{/* Champion & Build UI */}
@@ -196,37 +212,47 @@ const ChampPage = () => {
 						className="champ-icon"
 					/>
 				</div>
-				{currentBuild && !isEditing && (
+				{champPageState.currentBuild && !champPageState.isEditing ? (
 					<>
-						<h1>{currentBuild.name}</h1>
+						<h1>{champPageState.currentBuild.name}</h1>
 						<button
-							onClick={() => setIsEditing(!isEditing)}
+							onClick={() =>
+								setChampPageState((prev) => ({
+									...prev,
+									isEditing: true,
+								}))
+							}
 							className="quill-btn"
 						>
 							<RiQuillPenAiFill />
 						</button>
 					</>
-				)}
-				{currentBuild && isEditing && (
+				) : (
 					<>
 						<input
-							value={title}
-							onChange={(e) => setTitle(e.currentTarget.value)}
+							value={champPageState.title}
+							onChange={(e) =>
+								setChampPageState((prev) => ({
+									...prev,
+									title: e.currentTarget.value,
+								}))
+							}
 						></input>
-						<button onClick={saveTitle} className="quill-btn">
+						{/* <button onClick={saveTitle} className="quill-btn">
 							<RiQuillPenAiFill />
-						</button>
+						</button> */}
 					</>
 				)}
-				{allBuilds.length > 1 && (
+
+				{/* {champPageState.allBuilds.length > 1 && (
 					<select onChange={(e) => changeBuild(e)}>
-						{allBuilds.map((build) => (
+						{champPageState.allBuilds.map((build) => (
 							<option key={build.name} value={build.build_id!.toString()}>
 								{build.name}
 							</option>
 						))}
 					</select>
-				)}
+				)} */}
 				<div>
 					<button onClick={addBuild}>Add Build</button>
 				</div>
@@ -241,9 +267,9 @@ const ChampPage = () => {
 					<h3 className="selected-augs-title">Selected Augments:</h3>
 					<button onClick={resetSelected}>Reset Augments</button>
 				</div>
-				{selectedAugs.length > 0 ? (
+				{champPageState.currentBuild.augments.length > 0 ? (
 					<div className="selected-augs">
-						{selectedAugs.map((aug) => (
+						{champPageState.currentBuild.augments.map((aug) => (
 							<div
 								className={`selected-aug-background ${aug.tier}`}
 								key={aug.augment_id}
