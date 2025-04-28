@@ -89,7 +89,7 @@ const ChampPage = () => {
 	}, [authState.userData?.id, championName]);
 
 	useEffect(() => {
-		console.log(`save called here`);
+		saveBuild();
 	}, [champPageState.currentBuild, champPageState.selectedAugs]);
 
 	const saveBuild = async () => {
@@ -204,7 +204,6 @@ const ChampPage = () => {
 				? { ...build, name: champPageState.title }
 				: build
 		);
-		saveBuild();
 		setChampPageState((prev) => ({
 			...prev,
 			allBuilds: newAllBuilds,
