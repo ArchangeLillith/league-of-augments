@@ -5,7 +5,11 @@ import { Augment } from "../utils/types";
 import { fetchAugments } from "../services/fetchAugments";
 import { Build } from "../utils/types";
 import { AuthContext } from "../context/AuthProvider";
-import { fetchBuilds, writeNewBuild } from "../services/fetchBuilds";
+import {
+	fetchBuilds,
+	fetchOneBuild,
+	writeNewBuild,
+} from "../services/fetchBuilds";
 import TooltipWrapper from "../componenets/TooltipWrapper";
 import AugmentTile from "../componenets/AugmentTile";
 import { RiQuillPenAiFill } from "react-icons/ri";
@@ -169,11 +173,9 @@ const ChampPage = () => {
 		}));
 	};
 
-	const changeBuild = (e: React.ChangeEvent<HTMLSelectElement>) => {
-		const buildId = e.target.value;
-		const selectedBuild = champPageState.allBuilds.find(
-			(build) => build.build_id === Number(buildId)
-		);
+	const changeBuild = async (e: React.ChangeEvent<HTMLSelectElement>) => {
+		const buildId = Number(e.target.value);
+		const [selectedBuild]: Build[] = await fetchOneBuild(buildId);
 		console.log(selectedBuild);
 		if (!selectedBuild || selectedBuild === undefined) {
 			setChampPageState((prev) => ({
@@ -181,12 +183,18 @@ const ChampPage = () => {
 				saveMessage: "❌ Error: Something went wrong in selecting that build",
 			}));
 		}
+
+		const newAllBuilds = champPageState.allBuilds.map((build) =>
+			build.build_id === selectedBuild.build_id ? selectedBuild : build
+		);
+		
 		setChampPageState((prev) => {
 			if (selectedBuild === undefined) return prev;
 			return {
 				...prev,
 				currentBuild: selectedBuild,
 				selectedAugs: selectedBuild.augments,
+				allBuilds: newAllBuilds,
 			};
 		});
 	};
