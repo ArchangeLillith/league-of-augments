@@ -51,7 +51,6 @@ const ChampPage = () => {
 		useState<ChampPageState>(ChampPageInitilizer);
 
 	// Refs
-	const saveTimeout = useRef<number | null>(null);
 	const hasFetched = useRef(false);
 
 	// Derived aug lists
@@ -97,7 +96,7 @@ const ChampPage = () => {
 			user_id: authState.userData.id,
 			champ_name: championName,
 			name: champPageState.title,
-			newAugs: champPageState.currentBuild?.augments.map((a) => a.augment_id),
+			newAugs: champPageState.selectedAugs.map((a) => a.augment_id),
 		};
 
 		try {

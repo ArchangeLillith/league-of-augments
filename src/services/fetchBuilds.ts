@@ -35,7 +35,12 @@ export const writeNewBuild = async (
 		const builds = await baseService.post("/api/builds/new", {
 			dto,
 		});
-		console.log(builds);
+		for (let build of builds) {
+			if (build.augments[0].augment_id === null) {
+				build.augments = [];
+			}
+		}
+
 		return builds;
 	} catch (error) {
 		console.error(`ERROR in auth.ts in services:`, error);
