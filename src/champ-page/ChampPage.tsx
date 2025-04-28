@@ -194,6 +194,7 @@ const ChampPage = () => {
 				currentBuild: selectedBuild,
 				selectedAugs: selectedBuild.augments,
 				allBuilds: newAllBuilds,
+				title: selectedBuild.name,
 			};
 		});
 	};
