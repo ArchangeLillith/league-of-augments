@@ -201,7 +201,7 @@ const ChampPage = () => {
 
 	const saveTitle = () => {
 		const newAllBuilds = champPageState.allBuilds.map((build) =>
-			build.name === champPageState.currentBuild.name
+			build.build_id === champPageState.currentBuild.build_id
 				? { ...build, name: champPageState.title }
 				: build
 		);
