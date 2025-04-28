@@ -89,7 +89,7 @@ const ChampPage = () => {
 	}, [champPageState.currentBuild, champPageState.selectedAugs]);
 
 	const saveBuild = async () => {
-		if (!authState.userData?.id) return;
+		if (hasFetched.current || !authState.userData?.id) return;
 
 		const newDTO = {
 			build_id: champPageState.currentBuild.build_id,
@@ -228,8 +228,6 @@ const ChampPage = () => {
 					<>
 						<h1>{champPageState.currentBuild.name}</h1>
 						<p>{champPageState.currentBuild.build_id}</p>
-						<p>{JSON.stringify(champPageState.currentBuild.augments)}</p>
-						<p>{JSON.stringify(champPageState.selectedAugs)}</p>
 						<button
 							onClick={() =>
 								setChampPageState((prev) => ({
