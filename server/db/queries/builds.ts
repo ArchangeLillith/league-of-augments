@@ -21,7 +21,7 @@ const saveExistingBuild = async (
 		if (augmentIds.length > 0) {
 			const values = augmentIds.map((id) => [build_id, id]);
 			await Query<any>(
-				`INSERT INTO loa_build_augments (build_id, augment_id) VALUES ?`,
+				`INSERT INTO loa_build_augments (build_id, augment_id) VALUES ?,?`,
 				[values]
 			);
 		}
