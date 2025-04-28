@@ -34,10 +34,6 @@ router.post("/", async (req, res) => {
 	const champion_name = req.body.dto.champion_name;
 	try {
 		const result = await db.builds.returnBuilds(user_id, champion_name);
-		console.log(
-			"/api/builds/, getting the builds for the user, builds are:",
-			result
-		);
 
 		if (result.length > 0) {
 			res.json(result);

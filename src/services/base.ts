@@ -52,7 +52,6 @@ const get = (url: string) => {
 	return json(url, "GET");
 };
 const post = (url: string, payload: object) => {
-	console.log(`PAYLOAD in base service:`, payload);
 	return json(url, "POST", payload);
 };
 const put = (url: string, payload: object) => {
