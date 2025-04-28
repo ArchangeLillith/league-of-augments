@@ -177,6 +177,7 @@ const ChampPage = () => {
 
 	const changeBuild = async (e: React.ChangeEvent<HTMLSelectElement>) => {
 		const buildId = Number(e.target.value);
+		console.log("Build ID????", buildId)
 		const [selectedBuild]: Build[] = await fetchOneBuild(buildId);
 		console.log(selectedBuild);
 		if (!selectedBuild || selectedBuild === undefined) {

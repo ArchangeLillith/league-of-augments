@@ -1,10 +1,12 @@
 import baseService from "./base";
 
 export const fetchOneBuild = async (buildId: number): Promise<any[]> => {
+	console.log("Fetch one build,", buildId);
 	try {
 		const builds = await baseService.post("/api/builds/one", {
 			build_id: buildId,
 		});
+		console.log(builds);
 		for (let build of builds) {
 			if (build.augments[0].augment_id === null) {
 				build.augments = [];
