@@ -89,7 +89,7 @@ const ChampPage = () => {
 	}, [authState.userData?.id, championName]);
 
 	useEffect(() => {
-		saveBuild();
+		console.log(`save called here`);
 	}, [champPageState.currentBuild, champPageState.selectedAugs]);
 
 	const saveBuild = async () => {
@@ -265,10 +265,10 @@ const ChampPage = () => {
 							onChange={(e) =>
 								setChampPageState((prev) => ({
 									...prev,
-									title: e.currentTarget.value,
+									title: e.target.value,
 								}))
 							}
-						></input>
+						/>
 						<button onClick={saveTitle} className="quill-btn">
 							<RiQuillPenAiFill />
 						</button>
