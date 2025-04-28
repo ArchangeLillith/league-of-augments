@@ -19,10 +19,17 @@ const saveExistingBuild = async (
 
 		//Insert new augments
 		if (augmentIds.length > 0) {
-			const values = augmentIds.map((id) => [build_id, id]);
+			const values = augmentIds.map((id) => [build_id, id]); // [[build_id, augment_id], ...]
+
+			// Flatten the array for query params
+			const flatValues = values.flat(); // [build_id, id1, build_id, id2, ...]
+
+			// Build the placeholders string: "(?, ?), (?, ?), ..."
+			const placeholders = values.map(() => "(?, ?)").join(", ");
+
 			await Query<any>(
-				`INSERT INTO loa_build_augments (build_id, augment_id) VALUES ?,?`,
-				[values]
+				`INSERT INTO loa_build_augments (build_id, augment_id) VALUES ${placeholders}`,
+				flatValues
 			);
 		}
 
