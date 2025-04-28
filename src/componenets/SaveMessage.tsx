@@ -1,8 +1,9 @@
 interface SaveMessageProps {
 	saveMessage: string | null;
+	error: boolean;
 }
 
-const SaveMessage = (props: SaveMessageProps) => {
+const SaveMessage = (props: SaveMessageProps, error = false) => {
 	return (
 		<div
 			className={`save-message
@@ -12,10 +13,11 @@ const SaveMessage = (props: SaveMessageProps) => {
 									: "save-message--hidden"
 							}
               ${
-								props.saveMessage?.includes("error")
+								props.saveMessage?.includes("error") || error
 									? "save-message--error"
 									: "save-message--success"
-							}`}
+							}
+            `}
 		>
 			{props.saveMessage}
 		</div>

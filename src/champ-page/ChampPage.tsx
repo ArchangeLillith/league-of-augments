@@ -9,13 +9,13 @@ import { fetchBuilds, writeNewBuild } from "../services/fetchBuilds";
 import TooltipWrapper from "../componenets/TooltipWrapper";
 import AugmentTile from "../componenets/AugmentTile";
 import { RiQuillPenAiFill } from "react-icons/ri";
-import SaveMessage from "./components/SaveMessage";
+import SaveMessage from "../componenets/SaveMessage";
 import {
 	changeBuild,
 	resetSelected,
 	saveTitle,
-	showSaveMessage,
 } from "./champPage.utils";
+import { showSaveMessage } from "../utils/saveMessageSet";
 
 const ChampPage = () => {
 	// Context & routing

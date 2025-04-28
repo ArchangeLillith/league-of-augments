@@ -1,5 +1,5 @@
 import { SetStateAction } from "react";
-import { Augment, Build, ChampPageState } from "../utils/types";
+import { Build, ChampPageState } from "../utils/types";
 import { fetchOneBuild } from "../services/fetchBuilds";
 
 //Resets handler for selected augs
@@ -67,14 +67,4 @@ export const changeBuild = async (
 	});
 };
 
-//This governs the save message appearing and dissappearing
-export const showSaveMessage = (
-	message: string,
-	setChampPageState: React.Dispatch<SetStateAction<ChampPageState>>
-) => {
-	setChampPageState((prev) => ({ ...prev, saveMessage: message }));
-	setTimeout(
-		() => setChampPageState((prev) => ({ ...prev, saveMessage: null })),
-		3000
-	);
-};
+

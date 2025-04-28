@@ -3,15 +3,17 @@ import { AuthContext } from "../context/AuthProvider";
 import loginService from "./login.api";
 import registerService from "../services/register";
 import { useNavigate } from "react-router-dom";
+import SaveMessage from "../componenets/SaveMessage";
+import { showSaveMessage } from "../utils/saveMessageSet";
 
 const Login = () => {
 	const { loginToAuthState } = useContext(AuthContext);
 	const [username, setUsername] = useState<string>("");
 	const [password, setPassword] = useState<string>("");
 	const [confirmPass, setConfirmPass] = useState<string>("");
+	const [error, setError] = useState<string | null>(null);
 	const [state, setState] = useState<"login" | "register">("login");
 	const navigate = useNavigate();
-	const [errorMessage, setErrorMessage] = useState("");
 
 	const toggleState = (e: React.MouseEvent<HTMLButtonElement>) => {
 		e.preventDefault();
@@ -25,10 +27,7 @@ const Login = () => {
 	const register = async (e: React.MouseEvent<HTMLButtonElement>) => {
 		e.preventDefault();
 		if (password !== confirmPass) {
-			setErrorMessage("Passwords don't match!");
-			setTimeout(() => {
-				setErrorMessage("");
-			}, 2500);
+			showSaveMessage("Passwords don't match!", null, setError);
 			return;
 		}
 
@@ -41,7 +40,7 @@ const Login = () => {
 			loginToAuthState(token);
 			navigate("/home");
 		} catch (error) {
-			console.error("Error logging in:", error);
+			showSaveMessage("Incorrect username or password!", null, setError);
 		}
 	};
 	const login = async (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -56,12 +55,13 @@ const Login = () => {
 			loginToAuthState(token);
 			navigate("/home");
 		} catch (error) {
-			console.error("Error logging in:", error);
+			showSaveMessage("Incorrect username or password!", null, setError);
 		}
 	};
 
 	const loginHtml = (
 		<div className="login-html">
+			<SaveMessage saveMessage={error} error={true}/>
 			<input
 				placeholder="Username"
 				className="login-input"
@@ -85,18 +85,7 @@ const Login = () => {
 	);
 	const registerHtml = (
 		<div className="register-html">
-			<div
-				className={`
-			save-message
-			${
-				errorMessage
-					? "save-message--visible save-message--error"
-					: "save-message--hidden"
-			}
-		`}
-			>
-				{errorMessage}
-			</div>
+			<SaveMessage saveMessage={error} error={true}/>
 			<input
 				placeholder="Username"
 				type="text"
