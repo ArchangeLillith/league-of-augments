@@ -87,7 +87,7 @@ const returnBuilds = (user_id: number, champ_name: string): Promise<any[]> =>
     `,
 		[champ_name, user_id]
 	);
-const returnOneBuild = (build_id): Promise<any[]> =>
+const returnOneBuild = (build_id: number): Promise<any[]> =>
 	Query<any>(
 		`
     SELECT 
@@ -113,11 +113,9 @@ const returnOneBuild = (build_id): Promise<any[]> =>
 		[build_id]
 	);
 
-	
-
 export default {
 	returnBuilds,
 	insertNewBuild,
 	saveExistingBuild,
-	returnOneBuild
+	returnOneBuild,
 };
