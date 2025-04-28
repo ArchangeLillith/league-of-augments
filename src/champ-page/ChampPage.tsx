@@ -89,7 +89,7 @@ const ChampPage = () => {
 	}, [champPageState.currentBuild, champPageState.selectedAugs]);
 
 	const saveBuild = async () => {
-		if (hasFetched.current || !authState.userData?.id) return;
+		if (!hasFetched.current || !authState.userData?.id) return;
 
 		const newDTO = {
 			build_id: champPageState.currentBuild.build_id,
