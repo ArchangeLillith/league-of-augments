@@ -90,7 +90,8 @@ router.post("/new", async (req, res) => {
 //POST /api/builds/one
 router.post("/one", async (req, res) => {
 	console.log("In the builds /one router");
-	const build_id = req.body.userId;
+	const build_id = req.body.build_id;
+	console
 	try {
 		const result = await db.builds.returnOneBuild(build_id);
 		res.json(result);
