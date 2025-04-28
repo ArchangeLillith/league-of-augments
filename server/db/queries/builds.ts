@@ -1,5 +1,3 @@
-import { FieldPacket, ResultSetHeader } from "mysql2";
-import pool from "../pool";
 import { Query } from "../query";
 
 const saveExistingBuild = async (

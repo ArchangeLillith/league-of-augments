@@ -99,6 +99,8 @@ const ChampPage = () => {
 			newAugs: champPageState.selectedAugs.map((a) => a.augment_id),
 		};
 
+		console.log(`Trying to save with this DTO:`, newDTO);
+
 		try {
 			const res = await fetch(`/api/builds/save`, {
 				method: "POST",
@@ -260,7 +262,7 @@ const ChampPage = () => {
 				{champPageState.allBuilds.length > 1 && (
 					<select onChange={(e) => changeBuild(e)}>
 						{champPageState.allBuilds.map((build) => (
-							<option key={build.name} value={build.build_id!.toString()}>
+							<option key={build.build_id} value={build.build_id!.toString()}>
 								{build.name}
 							</option>
 						))}

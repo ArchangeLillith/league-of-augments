@@ -15,6 +15,7 @@ router.post("/save", async (req, res) => {
 	const newAugs: number[] = req.body.newAugs;
 	const newItems: number[] = req.body.newAugs;
 	try {
+		console.log(`REQ.body,`, req.body);
 		const result = await db.builds.saveExistingBuild(build_id, name, newAugs);
 		if (result.success === true) {
 			let allBuilds = db.builds.returnBuilds(user_id, champ_name);
@@ -44,7 +45,7 @@ router.post("/", async (req, res) => {
 		const upsertResult = await db.builds.insertNewBuild(
 			user_id,
 			champion_name,
-			`New ${champion_name} Build`,
+			`New ${champion_name} Build`
 		);
 
 		if (!upsertResult.success) {
