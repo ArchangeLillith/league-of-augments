@@ -10,12 +10,8 @@ import TooltipWrapper from "../componenets/TooltipWrapper";
 import AugmentTile from "../componenets/AugmentTile";
 import { RiQuillPenAiFill } from "react-icons/ri";
 import SaveMessage from "../componenets/SaveMessage";
-import {
-	changeBuild,
-	resetSelected,
-	saveTitle,
-} from "./champPage.utils";
-import { showSaveMessage } from "../utils/saveMessageSet";
+import { changeBuild, resetSelected, saveTitle } from "./champPage.utils";
+import { showSaveMessage } from "../utils/saveMessage";
 
 const ChampPage = () => {
 	// Context & routing
@@ -23,6 +19,12 @@ const ChampPage = () => {
 	const { state } = useLocation();
 	const navigate = useNavigate();
 	const titleRef = useRef<HTMLInputElement>(null);
+	//Guard to ensure no one gets here that shouldn't
+	useEffect(() => {
+		if (authState.userData === null || !authState.authenticated) {
+			navigate("/");
+		}
+	}, []);
 
 	// Guard: return if state is invalid
 	const championName = state?.name;

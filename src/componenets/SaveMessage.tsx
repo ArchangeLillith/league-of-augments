@@ -1,6 +1,6 @@
 interface SaveMessageProps {
 	saveMessage: string | null;
-	error: boolean;
+	error?: boolean;
 }
 
 const SaveMessage = (props: SaveMessageProps, error = false) => {

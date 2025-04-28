@@ -4,6 +4,7 @@ import Login from "./login-page/Login";
 import HomePage from "./home-page/HomePage";
 import ItemPage from "./items/items";
 import AugmentAlchemy from "./augment-alchemy-page/AugmentAlchemy";
+import NotFoundPage from "./not-found-page/NotFoundPage";
 
 export const ROUTE_PATHS = {
 	LOGIN: "/",
@@ -20,6 +21,7 @@ const AppRoutes = () => {
 		{ path: ROUTE_PATHS.CHAMP_PAGE, element: <ChampPage /> },
 		{ path: ROUTE_PATHS.ITEMS, element: <ItemPage /> },
 		{ path: ROUTE_PATHS.AUGMENT_ALCHEMY, element: <AugmentAlchemy /> },
+		{ path: "*", element: <NotFoundPage /> },
 	]);
 
 	return routes;

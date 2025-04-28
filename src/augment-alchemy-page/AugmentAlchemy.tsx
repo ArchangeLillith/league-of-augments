@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import AugmentPanel from "./AugmentPanel";
 import { fetchAugments } from "../services/fetchAugments";
 import { filterItems } from "./augmentAlchemy.utils";
@@ -8,8 +8,10 @@ import { fetchItems } from "../services/items";
 import { initializePageData, ItemType, PageDataType } from "../utils/types";
 import { useModal } from "../modalContext/ModalContext";
 import { gemGlossary, tagGlossary, advancedOptions } from "./ModalUtils";
+import { AuthContext } from "../context/AuthProvider";
 
 const AugmentAlchemy = () => {
+	const { authState } = useContext(AuthContext);
 	const [pageData, setPageData] = useState<PageDataType>(initializePageData);
 	const [allItems, setAllItems] = useState<ItemType[]>([]);
 	const panelArray = [1, 2, 3, 4, 5, 6];
@@ -17,6 +19,11 @@ const AugmentAlchemy = () => {
 	const { showModal, hideModal } = useModal();
 
 	useEffect(() => {
+		//Guard to ensure no one gets here that shouldn't, even though it wont' break anyhting I'd rather a user register to use this service
+		if (authState.userData === null || !authState.authenticated) {
+			navigate("/");
+		}
+
 		const fetchData = async () => {
 			const items = await fetchItems(true);
 			const augments = await fetchAugments(true);

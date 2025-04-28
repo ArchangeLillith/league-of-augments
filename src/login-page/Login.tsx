@@ -4,7 +4,8 @@ import loginService from "./login.api";
 import registerService from "../services/register";
 import { useNavigate } from "react-router-dom";
 import SaveMessage from "../componenets/SaveMessage";
-import { showSaveMessage } from "../utils/saveMessageSet";
+import { showSaveMessage } from "../utils/saveMessage";
+
 
 const Login = () => {
 	const { loginToAuthState } = useContext(AuthContext);
@@ -61,7 +62,7 @@ const Login = () => {
 
 	const loginHtml = (
 		<div className="login-html">
-			<SaveMessage saveMessage={error} error={true}/>
+			<SaveMessage saveMessage={error} error={true} />
 			<input
 				placeholder="Username"
 				className="login-input"
@@ -85,7 +86,7 @@ const Login = () => {
 	);
 	const registerHtml = (
 		<div className="register-html">
-			<SaveMessage saveMessage={error} error={true}/>
+			<SaveMessage saveMessage={error} error={true} />
 			<input
 				placeholder="Username"
 				type="text"

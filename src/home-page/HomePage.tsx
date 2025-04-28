@@ -24,6 +24,13 @@ const HomePage = () => {
 	const [hasSavedOnce, setHasSavedOnce] = useState(false);
 	const [showTooltip, setShowTooltip] = useState(false);
 
+	//Guard to ensure no one gets here that shouldn't
+	useEffect(() => {
+		if (authState.userData === null || !authState.authenticated) {
+			navigate("/");
+		}
+	}, []);
+
 	//A hackey way to make sure we don't accidentally overwrite the database with the initilization blank values
 	useEffect(() => {
 		if (ready && !hasSavedOnce) {
@@ -50,7 +57,7 @@ const HomePage = () => {
 			setWonWith(champReturn.filter((c) => champsWon.includes(c.name)));
 			setPlayed(champReturn.filter((c) => champsPlayed.includes(c.name)));
 			setWantToPlay(champReturn.filter((c) => champsWanted.includes(c.name)));
-			
+
 			const allTracked = new Set([
 				...champsFirstPlace,
 				...champsWon,
@@ -226,7 +233,7 @@ const HomePage = () => {
 	//Our body of the page!
 	return (
 		<div className={`page-container ${searchTerm ? "no-drag" : ""}`}>
-			{ready ? (
+			{ready && (
 				<DragDropContext onDragEnd={handleDragEnd}>
 					<div className="champ-top-section">
 						<div className="search-with-tooltip">
@@ -288,9 +295,6 @@ const HomePage = () => {
 						filterChamps(uncategorized)
 					)}
 				</DragDropContext>
-			) : (
-				// Fallback for if something goes wrong or loading takes a whille
-				<p>Loading champs...</p>
 			)}
 		</div>
 	);
