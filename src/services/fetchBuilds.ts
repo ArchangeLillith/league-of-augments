@@ -1,5 +1,22 @@
 import baseService from "./base";
 
+export const fetchOneBuild = async (buildId: number): Promise<any[]> => {
+	try {
+		const builds = await baseService.post("/api/builds", {
+			build_id: buildId,
+		});
+		for (let build of builds) {
+			if (build.augments[0].augment_id === null) {
+				build.augments = [];
+			}
+		}
+		return builds;
+	} catch (error) {
+		console.error(`ERROR in auth.ts in services:`, error);
+		throw error;
+	}
+};
+
 export const fetchBuilds = async (
 	champion: string,
 	user_id: number

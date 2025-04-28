@@ -87,4 +87,17 @@ router.post("/new", async (req, res) => {
 	}
 });
 
+//POST /api/builds/one
+router.post("/one", async (req, res) => {
+	const build_id = req.body.userId;
+	try {
+		const result = await db.builds.returnOneBuild(build_id);
+		res.json(result);
+		return;
+	} catch (error) {
+		console.error("Unexpected error:", error);
+		res.status(500).json({ error: "Internal server error" });
+	}
+});
+
 export default router;

@@ -27,6 +27,8 @@ const saveExistingBuild = async (
 			// Build the placeholders string: "(?, ?), (?, ?), ..."
 			const placeholders = values.map(() => "(?, ?)").join(", ");
 
+			console.log(`placeholders:`, placeholders);
+			console.log(`augs:`, values);
 			await Query<any>(
 				`INSERT INTO loa_build_augments (build_id, augment_id) VALUES ${placeholders}`,
 				flatValues
@@ -85,9 +87,37 @@ const returnBuilds = (user_id: number, champ_name: string): Promise<any[]> =>
     `,
 		[champ_name, user_id]
 	);
+const returnOneBuild = (build_id): Promise<any[]> =>
+	Query<any>(
+		`
+    SELECT 
+      b.build_id,
+      b.user_id,
+      b.champion_name,
+      b.name,
+      JSON_ARRAYAGG(
+        JSON_OBJECT(
+          'augment_id', a.augment_id,
+          'name', a.name,
+          'description', a.description,
+          'url', a.url,
+          'tier', a.tier
+        )
+      ) AS augments
+    FROM loa_builds b
+    LEFT JOIN loa_build_augments ba ON b.build_id = ba.build_id
+    LEFT JOIN loa_augments a ON ba.augment_id = a.augment_id
+    WHERE b.build_id = ?
+    GROUP BY b.build_id
+    `,
+		[build_id]
+	);
+
+	
 
 export default {
 	returnBuilds,
 	insertNewBuild,
 	saveExistingBuild,
+	returnOneBuild
 };
