@@ -37,7 +37,6 @@ const ChampPage = () => {
 		isEditing: boolean;
 		title: string;
 		selectedAugs: Augment[];
-		showSave: boolean;
 	};
 
 	const ChampPageInitilizer = {
@@ -47,7 +46,6 @@ const ChampPage = () => {
 		pageLoading: true,
 		isEditing: false,
 		title: "",
-		showSave: false,
 		selectedAugs: [],
 	};
 	//We only use references, we never need this to change except for the initial set
@@ -91,7 +89,7 @@ const ChampPage = () => {
 	}, [authState.userData?.id, championName]);
 
 	useEffect(() => {
-		setChampPageState((prev) => ({ ...prev, showSave: true }));
+		saveBuild();
 	}, [champPageState.currentBuild, champPageState.selectedAugs]);
 
 	const saveBuild = async () => {
@@ -101,11 +99,9 @@ const ChampPage = () => {
 			build_id: champPageState.currentBuild.build_id,
 			user_id: authState.userData.id,
 			champ_name: championName,
-			name: champPageState.title,
+			name: champPageState.currentBuild.name,
 			newAugs: champPageState.selectedAugs.map((a) => a.augment_id),
 		};
-
-		console.log(`Trying to save with this DTO:`, newDTO);
 
 		try {
 			const res = await fetch(`/api/builds/save`, {
@@ -177,7 +173,7 @@ const ChampPage = () => {
 
 	const changeBuild = async (e: React.ChangeEvent<HTMLSelectElement>) => {
 		const buildId = Number(e.target.value);
-		console.log("Build ID????", buildId)
+		console.log("Build ID????", buildId);
 		const [selectedBuild]: Build[] = await fetchOneBuild(buildId);
 		console.log(selectedBuild);
 		if (!selectedBuild || selectedBuild === undefined) {
@@ -203,7 +199,18 @@ const ChampPage = () => {
 	};
 
 	const saveTitle = () => {
-		console.log("title");
+		const newAllBuilds = champPageState.allBuilds.map((build) =>
+			build.name === champPageState.currentBuild.name
+				? { ...build, name: champPageState.title }
+				: build
+		);
+		saveBuild();
+		setChampPageState((prev) => ({
+			...prev,
+			allBuilds: newAllBuilds,
+			currentBuild: { ...prev.currentBuild, name: prev.title },
+			isEditing: false,
+		}));
 	};
 
 	if (champPageState.pageLoading) return <div>Loading...</div>;
@@ -267,8 +274,6 @@ const ChampPage = () => {
 						</button>
 					</>
 				)}
-
-				{champPageState.showSave && (<button onClick={saveBuild}>Save!</button>)}
 
 				{champPageState.allBuilds.length > 1 && (
 					<select onChange={(e) => changeBuild(e)}>
