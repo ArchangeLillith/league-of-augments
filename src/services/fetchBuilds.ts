@@ -2,7 +2,7 @@ import baseService from "./base";
 
 export const fetchOneBuild = async (buildId: number): Promise<any[]> => {
 	try {
-		const builds = await baseService.post("/api/builds", {
+		const builds = await baseService.post("/api/builds/one", {
 			build_id: buildId,
 		});
 		for (let build of builds) {

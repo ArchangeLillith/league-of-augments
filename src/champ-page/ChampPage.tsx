@@ -37,6 +37,7 @@ const ChampPage = () => {
 		isEditing: boolean;
 		title: string;
 		selectedAugs: Augment[];
+		showSave: boolean;
 	};
 
 	const ChampPageInitilizer = {
@@ -46,6 +47,7 @@ const ChampPage = () => {
 		pageLoading: true,
 		isEditing: false,
 		title: "",
+		showSave: false,
 		selectedAugs: [],
 	};
 	//We only use references, we never need this to change except for the initial set
@@ -89,7 +91,7 @@ const ChampPage = () => {
 	}, [authState.userData?.id, championName]);
 
 	useEffect(() => {
-		saveBuild();
+		setChampPageState((prev) => ({ ...prev, showSave: true }));
 	}, [champPageState.currentBuild, champPageState.selectedAugs]);
 
 	const saveBuild = async () => {
@@ -187,7 +189,7 @@ const ChampPage = () => {
 		const newAllBuilds = champPageState.allBuilds.map((build) =>
 			build.build_id === selectedBuild.build_id ? selectedBuild : build
 		);
-		
+
 		setChampPageState((prev) => {
 			if (selectedBuild === undefined) return prev;
 			return {
@@ -264,6 +266,8 @@ const ChampPage = () => {
 						</button>
 					</>
 				)}
+
+				{champPageState.showSave && (<button onClick={saveBuild}>Save!</button>)}
 
 				{champPageState.allBuilds.length > 1 && (
 					<select onChange={(e) => changeBuild(e)}>
