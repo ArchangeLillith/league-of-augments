@@ -11,6 +11,27 @@ export type Build = {
 };
 
 
+	// State
+	export type ChampPageState = {
+		saveMessage: string | null;
+		currentBuild: Build;
+		allBuilds: Build[];
+		pageLoading: boolean;
+		isEditing: boolean;
+		title: string;
+		selectedAugs: Augment[];
+	};
+
+	export const ChampPageInitilizer = {
+		saveMessage: null,
+		currentBuild: { name: "", augments: [], items: [], build_id: 0 },
+		allBuilds: [],
+		pageLoading: true,
+		isEditing: false,
+		title: "",
+		selectedAugs: [],
+	};
+
 export type ItemType = {
 	item_id: number;
 	name: string;
