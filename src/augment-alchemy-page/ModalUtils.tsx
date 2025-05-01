@@ -181,7 +181,7 @@ const TagGlossaryDisplay = () => {
 				placeholder="Search a tag..."
 				value={searchTerm}
 				onChange={(e) => setSearchTerm(e.target.value)}
-				className="champ-search-input"
+				className="search-input"
 			/>
 			{Object.entries(sectionMeta).map(([key, meta]) => (
 				<Accordion key={key} sectionName={key} meta={meta} />

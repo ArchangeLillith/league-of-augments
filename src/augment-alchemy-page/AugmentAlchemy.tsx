@@ -36,8 +36,8 @@ const AugmentAlchemy = () => {
 		// }
 		//! PUT THIS BACK AFTER DEVWORK!!!!!!!!!!!!!!!!!!!!!!
 		const fetchData = async () => {
-			const items = await fetchItems(true);
-			const augments = await fetchAugments(true);
+			const items = await fetchItems(true, true);
+			const augments = await fetchAugments(true, true);
 			setPageData((prev) => ({ ...prev, augments }));
 			setAllItems(items);
 		};
@@ -109,7 +109,7 @@ const AugmentAlchemy = () => {
 	return (
 		<div className="augment-alchemy-page">
 			<div className="augment-alchemy-header">
-				<button className="home-button" onClick={() => navigate("/home")}>
+				<button className="gold-button" onClick={() => navigate("/home")}>
 					<FaHome className="home-btn-aa" />
 				</button>
 				<button onClick={openModal}>Advanced Options</button>
@@ -132,13 +132,13 @@ const AugmentAlchemy = () => {
 					<option>100</option>
 				</select>
 				<button
-					className="modal-button"
+					className="gold-button"
 					onClick={() => gemGlossary(showModal, hideModal)}
 				>
 					Gem Glossary
 				</button>
 				<button
-					className="modal-button"
+					className="gold-button"
 					onClick={() => tagGlossary(showModal, hideModal)}
 				>
 					Tag Glossary

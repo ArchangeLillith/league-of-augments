@@ -20,11 +20,11 @@ const ChampPage = () => {
 	const navigate = useNavigate();
 	const titleRef = useRef<HTMLInputElement>(null);
 	//Guard to ensure no one gets here that shouldn't
-	useEffect(() => {
-		if (authState.userData === null || !authState.authenticated) {
-			navigate("/");
-		}
-	}, []);
+	// useEffect(() => {
+	// 	if (authState.userData === null || !authState.authenticated) {
+	// 		navigate("/");
+	// 	}
+	// }, []);
 
 	// Guard: return if state is invalid
 	const championName = state?.name;
@@ -175,7 +175,7 @@ const ChampPage = () => {
 	if (champPageState.pageLoading) return <div>Loading...</div>;
 
 	return (
-		<div>
+		<div className="champ-page">
 			<SaveMessage saveMessage={champPageState.saveMessage} />
 
 			{/* Champion & Build UI */}
@@ -242,17 +242,18 @@ const ChampPage = () => {
 					</select>
 				)}
 				<div>
-					<button onClick={addBuild}>Add Build</button>
+					<button className="gold-button" onClick={addBuild}>
+						Add Build
+					</button>
 				</div>
 			</div>
 
 			{/* Selected Augments */}
 			<div className="container-selected-aug">
 				<div className="selected-augs-top">
-					{/* Styling divs for space */}
 					<h3 className="selected-augs-title">Selected Augments:</h3>
 					<button
-						className="reset-btn"
+						className="reset-btn gold-button"
 						onClick={() => resetSelected(setChampPageState)}
 					>
 						Reset Augments

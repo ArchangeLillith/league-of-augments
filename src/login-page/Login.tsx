@@ -79,7 +79,7 @@ const Login = () => {
 					setPassword(e.currentTarget.value);
 				}}
 			></input>
-			<button className="login-submit-button" type="submit" onClick={login}>
+			<button className="gold-button" type="submit" onClick={login}>
 				Log in
 			</button>
 		</div>

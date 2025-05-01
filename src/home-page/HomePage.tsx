@@ -24,12 +24,12 @@ const HomePage = () => {
 	const [hasSavedOnce, setHasSavedOnce] = useState(false);
 	const [showTooltip, setShowTooltip] = useState(false);
 
-	//Guard to ensure no one gets here that shouldn't
-	useEffect(() => {
-		if (authState.userData === null || !authState.authenticated) {
-			navigate("/");
-		}
-	}, []);
+	// //Guard to ensure no one gets here that shouldn't
+	// useEffect(() => {
+	// 	if (authState.userData === null || !authState.authenticated) {
+	// 		navigate("/");
+	// 	}
+	// }, []);
 
 	//A hackey way to make sure we don't accidentally overwrite the database with the initilization blank values
 	useEffect(() => {
@@ -196,7 +196,7 @@ const HomePage = () => {
 						{...provided.droppableProps}
 						className="droppable-container"
 					>
-						<p className="category-title">{title}</p>
+						<p className="home-page-subtitle">{title}</p>
 						<div className="champ-container">
 							{champs.map((champ, index) => (
 								<Draggable
@@ -232,10 +232,10 @@ const HomePage = () => {
 
 	//Our body of the page!
 	return (
-		<div className={`page-container ${searchTerm ? "no-drag" : ""}`}>
+		<div className={`home-page-container ${searchTerm ? "no-drag" : ""}`}>
 			{ready && (
 				<DragDropContext onDragEnd={handleDragEnd}>
-					<div className="champ-top-section">
+					<div className="home-top-section">
 						<div className="search-with-tooltip">
 							<input
 								type="text"
@@ -249,7 +249,7 @@ const HomePage = () => {
 										setTimeout(() => setShowTooltip(false), 4500);
 									}
 								}}
-								className="champ-search-input"
+								className="search-input"
 							/>
 							{searchTerm && showTooltip && (
 								<div className="search-tooltip">
@@ -257,19 +257,19 @@ const HomePage = () => {
 								</div>
 							)}
 						</div>
-						<button className="alphebetize-button" onClick={sortChamps}>
+						<button className="gold-button" onClick={sortChamps}>
 							Alphebetize!
 						</button>
 						<button
-							className="alphebetize-button"
+							className="gold-button"
 							onClick={() => navigate("/augment-alchemy")}
 						>
 							Build Helper
 						</button>
-						<div className="won-with">
+						<div className="home-page-subtitle">
 							First Place: <span className="margin-2">{firstPlace.length}</span>
 						</div>
-						<button className="logout-button" onClick={logout}>
+						<button className="gold-button" onClick={logout}>
 							Log Out
 						</button>
 					</div>
