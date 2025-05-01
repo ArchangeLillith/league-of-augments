@@ -74,6 +74,10 @@ const AugmentAlchemy = () => {
 				...prev.suggestedItems,
 				...newSuggestedItems,
 			},
+			readOnlySuggItems: {
+				...prev.readOnlySuggItems,
+				...newSuggestedItems,
+			},
 		}));
 		//This runs when we select augs and also when we change the prismatic selection state to ensure that on that click the items reflect the new selection
 	}, [pageData.selectedAugments, pageData.showPrismatics]);
@@ -86,7 +90,7 @@ const AugmentAlchemy = () => {
 				...prev.readOnlySuggItems,
 			},
 		}));
-	}
+	};
 
 	const openModal = () => setIsModalOpen(true);
 	const closeModal = () => setIsModalOpen(false);
@@ -104,7 +108,9 @@ const AugmentAlchemy = () => {
 					<FaHome className="home-btn-aa" />
 				</button>
 				<button onClick={openModal}>Advanced Options</button>
-				{pageData.advancedOptions && (<button onClick={removeAdvancedOptions}>X</button>)}
+				{pageData.advancedOptions && (
+					<button onClick={removeAdvancedOptions}>X</button>
+				)}
 				<div>
 					<label htmlFor="prismatic-toggle">Hide Prismatics</label>
 					<input
@@ -114,9 +120,7 @@ const AugmentAlchemy = () => {
 					/>
 				</div>
 				<h1 className="augment-alchemy-title">~Augment Alchemy~</h1>
-				{
-
-				}
+				{}
 				<button
 					className="modal-button"
 					onClick={() => gemGlossary(showModal, hideModal)}
