@@ -72,19 +72,6 @@ export function gemGlossary(
 	);
 }
 
-export function advancedOptions(
-	showModal: (content: React.ReactNode) => void,
-	hideModal: () => void
-) {
-	showModal(
-		<>
-			<h2>Advanced Options</h2>
-			<div>Coming soon!</div>
-			<button onClick={hideModal}>Close</button>
-		</>
-	);
-}
-
 //Tag glossary parent
 export function tagGlossary(
 	showModal: (content: React.ReactNode) => void,
@@ -108,10 +95,10 @@ const TagGlossaryDisplay = () => {
 	const [filteredTags, setFilteredTags] = useState(() => ({
 		stats: statTags,
 		effects: effectsTags,
-		misc: miscTags,
 		role: roleTags,
 		playstyle: playstyleTags,
 		scalings: scalingsTags,
+		misc: miscTags,
 	}));
 
 	//Our useeffcet that runs onchange for the search
@@ -121,10 +108,10 @@ const TagGlossaryDisplay = () => {
 			setFilteredTags({
 				stats: statTags,
 				effects: effectsTags,
-				misc: miscTags,
 				role: roleTags,
 				playstyle: playstyleTags,
 				scalings: scalingsTags,
+				misc: miscTags,
 			});
 			return;
 		}
@@ -156,16 +143,16 @@ const TagGlossaryDisplay = () => {
 			subtitle: "Inherent stats that come with items",
 			stats: true,
 		},
+		scalings: {
+			tags: filteredTags.scalings,
+			title: "Scalings",
+			subtitle: "Denotes that there's a point to build more of something",
+			stats: false,
+		},
 		effects: {
 			tags: filteredTags.effects,
 			title: "Effects",
 			subtitle: "Describes the extra stuff done other than stats",
-			stats: false,
-		},
-		misc: {
-			tags: filteredTags.misc,
-			title: "Misc",
-			subtitle: "Tags that don't fit other categories",
 			stats: false,
 		},
 		role: {
@@ -180,10 +167,10 @@ const TagGlossaryDisplay = () => {
 			subtitle: "Descriptions of style of play",
 			stats: false,
 		},
-		scalings: {
-			tags: filteredTags.scalings,
-			title: "Scalings",
-			subtitle: "Denotes that there's a point to build more of something",
+		misc: {
+			tags: filteredTags.misc,
+			title: "Misc",
+			subtitle: "Tags that don't fit other categories",
 			stats: false,
 		},
 	};

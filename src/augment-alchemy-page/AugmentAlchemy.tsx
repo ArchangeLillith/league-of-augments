@@ -5,25 +5,36 @@ import { filterItems } from "./augmentAlchemy.utils";
 
 import { useNavigate } from "react-router-dom";
 import { fetchItems } from "../services/items";
-import { initializePageData, ItemType, PageDataType } from "../utils/types";
+import {
+	AdvancedOptionChoices,
+	advancedOptionChoicesInitializer,
+	initializePageData,
+	ItemType,
+	PageDataType,
+} from "../utils/types";
 import { useModal } from "../modalContext/ModalContext";
-import { gemGlossary, tagGlossary, advancedOptions } from "./ModalUtils";
+import { gemGlossary, tagGlossary } from "./ModalUtils";
 import { AuthContext } from "../context/AuthProvider";
+import { FaHome } from "react-icons/fa";
+import AdvancedOptionsModal from "./AdvancedOptionsModal";
 
 const AugmentAlchemy = () => {
 	const { authState } = useContext(AuthContext);
 	const [pageData, setPageData] = useState<PageDataType>(initializePageData);
+	const [advancedOptionChoices, setAdvancedOptionsChoices] =
+		useState<AdvancedOptionChoices>(advancedOptionChoicesInitializer);
+	const [isModalOpen, setIsModalOpen] = useState(false);
 	const [allItems, setAllItems] = useState<ItemType[]>([]);
 	const panelArray = [1, 2, 3, 4, 5, 6];
 	const navigate = useNavigate();
 	const { showModal, hideModal } = useModal();
 
 	useEffect(() => {
-		//Guard to ensure no one gets here that shouldn't, even though it wont' break anyhting I'd rather a user register to use this service
-		if (authState.userData === null || !authState.authenticated) {
-			navigate("/");
-		}
-
+		// //Guard to ensure no one gets here that shouldn't, even though it wont' break anyhting I'd rather a user register to use this service
+		// if (authState.userData === null || !authState.authenticated) {
+		// 	navigate("/");
+		// }
+		//! PUT THIS BACK AFTER DEVWORK!!!!!!!!!!!!!!!!!!!!!!
 		const fetchData = async () => {
 			const items = await fetchItems(true);
 			const augments = await fetchAugments(true);
@@ -67,6 +78,8 @@ const AugmentAlchemy = () => {
 		//This runs when we select augs and also when we change the prismatic selection state to ensure that on that click the items reflect the new selection
 	}, [pageData.selectedAugments, pageData.showPrismatics]);
 
+	const openModal = () => setIsModalOpen(true);
+	const closeModal = () => setIsModalOpen(false);
 	function togglePrismatics() {
 		setPageData((prev) => ({
 			...prev,
@@ -78,14 +91,9 @@ const AugmentAlchemy = () => {
 		<div className="augment-alchemy-page">
 			<div className="augment-alchemy-header">
 				<button className="home-button" onClick={() => navigate("/home")}>
-					Home
+					<FaHome className="home-btn-aa" />
 				</button>
-				<button
-					className="modal-button"
-					onClick={() => gemGlossary(showModal, hideModal)}
-				>
-					Gem Glossary
-				</button>
+				<button onClick={openModal}>Advanced Options</button>
 				<div>
 					<label htmlFor="prismatic-toggle">Hide Prismatics</label>
 					<input
@@ -94,20 +102,23 @@ const AugmentAlchemy = () => {
 						onChange={togglePrismatics}
 					/>
 				</div>
-				<div>{/*Styling div*/}</div>
 				<h1 className="augment-alchemy-title">~Augment Alchemy~</h1>
 				<button
 					className="modal-button"
-					onClick={() => advancedOptions(showModal, hideModal)}
+					onClick={() => gemGlossary(showModal, hideModal)}
 				>
-					Advanced Options
+					Gem Glossary
 				</button>
+				{/* Styling div */}
+				<div></div>
 				<button
 					className="modal-button"
 					onClick={() => tagGlossary(showModal, hideModal)}
 				>
 					Tag Glossary
 				</button>
+				{/* Styling div */}
+				<div></div>
 			</div>
 			<div className="augment-panel-container">
 				{panelArray.map((index) => (
@@ -121,6 +132,15 @@ const AugmentAlchemy = () => {
 			</div>
 
 			<div className="bottom-container"></div>
+			{isModalOpen && (
+				<AdvancedOptionsModal
+					pageData={pageData}
+					setPageData={setPageData}
+					advancedOptionChoices={advancedOptionChoices}
+					setAdvancedOptionChoices={setAdvancedOptionsChoices}
+					onClose={closeModal}
+				/>
+			)}
 		</div>
 	);
 };

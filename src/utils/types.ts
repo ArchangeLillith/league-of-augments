@@ -10,136 +10,25 @@ export type Build = {
 	build_id: number;
 };
 
-
-	// State
-	export type ChampPageState = {
-		saveMessage: string | null;
-		currentBuild: Build;
-		allBuilds: Build[];
-		pageLoading: boolean;
-		isEditing: boolean;
-		title: string;
-		selectedAugs: Augment[];
-	};
-
-	export const ChampPageInitilizer = {
-		saveMessage: null,
-		currentBuild: { name: "", augments: [], items: [], build_id: 0 },
-		allBuilds: [],
-		pageLoading: true,
-		isEditing: false,
-		title: "",
-		selectedAugs: [],
-	};
-
-export type ItemType = {
-	item_id: number;
-	name: string;
-	tier: "starting" | "prismatic" | "legendary" | "boot";
-	cost: number;
-	sell: number;
-	ability_power: number;
-	ability_haste: number;
-	omnivamp: number;
-	adaptive_force: number;
-	attack_damage: number;
-	crit_chance: number;
-	crit_damage: number;
-	attack_speed: number;
-	lethality: number;
-	lifesteal: number;
-	move_speed: number;
-	armour_pen: number;
-	magic_pen: number;
-	health: number;
-	mana: number;
-	mana_regen: number;
-	health_regen: number;
-	heal_and_shield_power: number;
-	armour: number;
-	magic_resist: number;
-	tenacity: number;
-	url: string;
-	tags: ETagNames[];
+// State
+export type ChampPageState = {
+	saveMessage: string | null;
+	currentBuild: Build;
+	allBuilds: Build[];
+	pageLoading: boolean;
+	isEditing: boolean;
+	title: string;
+	selectedAugs: Augment[];
 };
 
-export type Augment = {
-	name: string;
-	augment_id: number;
-	description: string;
-	tier: "Silver" | "Gold" | "Prismatic";
-	url: null | string;
-	tags: string[];
-};
-
-export type UserLoginObject = {
-	userData: {
-		username: string;
-		id: number;
-	};
-	champsWon: string[];
-	champsFirstPlace: string[];
-	champsPlayed: string[];
-	champsWanted: string[];
-	settings: any;
-};
-
-export type AuthState = {
-	authenticated: boolean;
-	userData: user | null;
-	champsWon: string[];
-	champsFirstPlace: string[];
-	champsPlayed: string[];
-	champsWanted: string[];
-	settings: {};
-};
-
-export interface WrapperProps {
-	children: React.ReactNode;
-}
-
-export type PageDataType = {
-	augments: Augment[];
-	selectedAugments: {
-		panel1: Augment | null;
-		panel2: Augment | null;
-		panel3: Augment | null;
-		panel4: Augment | null;
-		panel5: Augment | null;
-		panel6: Augment | null;
-	};
-	suggestedItems: {
-		panel1: ItemType[] | null;
-		panel2: ItemType[] | null;
-		panel3: ItemType[] | null;
-		panel4: ItemType[] | null;
-		panel5: ItemType[] | null;
-		panel6: ItemType[] | null;
-		itemSet: Set<ItemType>;
-	};
-	showPrismatics: boolean;
-};
-
-export const initializePageData = {
-	augments: [],
-	selectedAugments: {
-		panel1: null,
-		panel2: null,
-		panel3: null,
-		panel4: null,
-		panel5: null,
-		panel6: null,
-	},
-	suggestedItems: {
-		panel1: null,
-		panel2: null,
-		panel3: null,
-		panel4: null,
-		panel5: null,
-		panel6: null,
-		itemSet: new Set<ItemType>(),
-	},
-	showPrismatics: true,
+export const ChampPageInitilizer = {
+	saveMessage: null,
+	currentBuild: { name: "", augments: [], items: [], build_id: 0 },
+	allBuilds: [],
+	pageLoading: true,
+	isEditing: false,
+	title: "",
+	selectedAugs: [],
 };
 
 export enum ETagNames {
@@ -238,6 +127,308 @@ export enum ETagNames {
 	Curse = "Curse",
 }
 
+export type ItemType = {
+	item_id: number;
+	name: string;
+	tier: "starting" | "prismatic" | "legendary" | "boot";
+	cost: number;
+	sell: number;
+	ability_power: number;
+	ability_haste: number;
+	omnivamp: number;
+	adaptive_force: number;
+	attack_damage: number;
+	crit_chance: number;
+	crit_damage: number;
+	attack_speed: number;
+	lethality: number;
+	lifesteal: number;
+	move_speed: number;
+	armour_pen: number;
+	magic_pen: number;
+	health: number;
+	mana: number;
+	mana_regen: number;
+	health_regen: number;
+	heal_and_shield_power: number;
+	armour: number;
+	magic_resist: number;
+	tenacity: number;
+	url: string;
+	tags: ETagNames[];
+};
+
+export type Augment = {
+	name: string;
+	augment_id: number;
+	description: string;
+	tier: "Silver" | "Gold" | "Prismatic";
+	url: null | string;
+	tags: string[];
+};
+
+export type UserLoginObject = {
+	userData: {
+		username: string;
+		id: number;
+	};
+	champsWon: string[];
+	champsFirstPlace: string[];
+	champsPlayed: string[];
+	champsWanted: string[];
+	settings: any;
+};
+
+export type AuthState = {
+	authenticated: boolean;
+	userData: user | null;
+	champsWon: string[];
+	champsFirstPlace: string[];
+	champsPlayed: string[];
+	champsWanted: string[];
+	settings: {};
+};
+
+export interface WrapperProps {
+	children: React.ReactNode;
+}
+
+export const advancedOptionChoicesInitializer = {
+	stats: {
+		[ETagNames.AbilityHaste]: false,
+		[ETagNames.AD]: false,
+		[ETagNames.AdaptiveForce]: false,
+		[ETagNames.AP]: false,
+		[ETagNames.Armour]: false,
+		[ETagNames.ArmourPen]: false,
+		[ETagNames.ArmourShred]: false,
+		[ETagNames.AttackSpeed]: false,
+		[ETagNames.Crit]: false,
+		[ETagNames.CritDamage]: false,
+		[ETagNames.HealAndShieldPower]: false,
+		[ETagNames.Health]: false,
+		[ETagNames.HealthRegen]: false,
+		[ETagNames.Lethality]: false,
+		[ETagNames.Lifesteal]: false,
+		[ETagNames.MagicPen]: false,
+		[ETagNames.MagicResist]: false,
+		[ETagNames.MagicResistShred]: false,
+		[ETagNames.Mana]: false,
+		[ETagNames.ManaRegen]: false,
+		[ETagNames.MoveSpeed]: false,
+		[ETagNames.Omnivamp]: false,
+		[ETagNames.RangeIncrease]: false,
+		[ETagNames.SummonerSpellCooldown]: false,
+		[ETagNames.Tenacity]: false,
+	},
+	scalings: {
+		[ETagNames.ArmourScaling]: false,
+		[ETagNames.CritScaling]: false,
+		[ETagNames.MagicResistScaling]: false,
+		[ETagNames.ManaScaling]: false,
+		[ETagNames.MaxHealthScaling]: false,
+		[ETagNames.MissingHealthScaling]: false,
+	},
+	effects: {
+		[ETagNames.AOE]: false,
+		[ETagNames.AutoReset]: false,
+		[ETagNames.Bleed]: false,
+		[ETagNames.Block]: false,
+		[ETagNames.Burn]: false,
+		[ETagNames.CooldownReduction]: false,
+		[ETagNames.CurrentHealthDamage]: false,
+		[ETagNames.DamageSteroid]: false,
+		[ETagNames.Energized]: false,
+		[ETagNames.EnhancedAutoAttack]: false,
+		[ETagNames.Execute]: false,
+		[ETagNames.Grievous]: false,
+		[ETagNames.Heal]: false,
+		[ETagNames.Immobilize]: false,
+		[ETagNames.ImmobilizeEnhancer]: false,
+		[ETagNames.MaxHealthDamage]: false,
+		[ETagNames.MissingHealthDamage]: false,
+		[ETagNames.Movement]: false,
+		[ETagNames.OnTakedownEffect]: false,
+		[ETagNames.OnHit]: false,
+		[ETagNames.Projectile]: false,
+		[ETagNames.Shield]: false,
+		[ETagNames.Slow]: false,
+		[ETagNames.UltimateScaling]: false,
+	},
+	role: {
+		[ETagNames.ADC]: false,
+		[ETagNames.Assassin]: false,
+		[ETagNames.Bruiser]: false,
+		[ETagNames.Hybrid]: false,
+		[ETagNames.Mage]: false,
+		[ETagNames.Sniper]: false,
+		[ETagNames.Support]: false,
+		[ETagNames.Tank]: false,
+	},
+	playstyle: {
+		[ETagNames.Aggressive]: false,
+		[ETagNames.AutoAttacking]: false,
+		[ETagNames.AutoWeaving]: false,
+		[ETagNames.Burst]: false,
+		[ETagNames.Defensive]: false,
+		[ETagNames.Kiting]: false,
+		[ETagNames.OnlyChild]: false,
+		[ETagNames.PositioningPattern]: false,
+		[ETagNames.SpellHeavy]: false,
+		[ETagNames.SpellWeaving]: false,
+		[ETagNames.Stacking]: false,
+		[ETagNames.Sticky]: false,
+	},
+	misc: {
+		[ETagNames.Active]: false,
+		[ETagNames.Targeted]: false,
+		[ETagNames.TrueDamage]: false,
+		[ETagNames.Untargetability]: false,
+		[ETagNames.LongRange]: false,
+		[ETagNames.Twinning]: false,
+	},
+};
+
+export type AdvancedOptionChoices = {
+	stats: {
+		[ETagNames.AbilityHaste]: boolean;
+		[ETagNames.AD]: boolean;
+		[ETagNames.AdaptiveForce]: boolean;
+		[ETagNames.AP]: boolean;
+		[ETagNames.Armour]: boolean;
+		[ETagNames.ArmourPen]: boolean;
+		[ETagNames.ArmourShred]: boolean;
+		[ETagNames.AttackSpeed]: boolean;
+		[ETagNames.Crit]: boolean;
+		[ETagNames.CritDamage]: boolean;
+		[ETagNames.HealAndShieldPower]: boolean;
+		[ETagNames.Health]: boolean;
+		[ETagNames.HealthRegen]: boolean;
+		[ETagNames.Lethality]: boolean;
+		[ETagNames.Lifesteal]: boolean;
+		[ETagNames.MagicPen]: boolean;
+		[ETagNames.MagicResist]: boolean;
+		[ETagNames.MagicResistShred]: boolean;
+		[ETagNames.Mana]: boolean;
+		[ETagNames.ManaRegen]: boolean;
+		[ETagNames.MoveSpeed]: boolean;
+		[ETagNames.Omnivamp]: boolean;
+		[ETagNames.RangeIncrease]: boolean;
+		[ETagNames.SummonerSpellCooldown]: boolean;
+		[ETagNames.Tenacity]: boolean;
+	};
+	scalings: {
+		[ETagNames.ArmourScaling]: boolean;
+		[ETagNames.CritScaling]: boolean;
+		[ETagNames.MagicResistScaling]: boolean;
+		[ETagNames.ManaScaling]: boolean;
+		[ETagNames.MaxHealthScaling]: boolean;
+		[ETagNames.MissingHealthScaling]: boolean;
+	};
+	effects: {
+		[ETagNames.AOE]: boolean;
+		[ETagNames.AutoReset]: boolean;
+		[ETagNames.Bleed]: boolean;
+		[ETagNames.Block]: boolean;
+		[ETagNames.Burn]: boolean;
+		[ETagNames.CooldownReduction]: boolean;
+		[ETagNames.CurrentHealthDamage]: boolean;
+		[ETagNames.DamageSteroid]: boolean;
+		[ETagNames.Energized]: boolean;
+		[ETagNames.EnhancedAutoAttack]: boolean;
+		[ETagNames.Execute]: boolean;
+		[ETagNames.Grievous]: boolean;
+		[ETagNames.Heal]: boolean;
+		[ETagNames.Immobilize]: boolean;
+		[ETagNames.ImmobilizeEnhancer]: boolean;
+		[ETagNames.MaxHealthDamage]: boolean;
+		[ETagNames.MissingHealthDamage]: boolean;
+		[ETagNames.Movement]: boolean;
+		[ETagNames.OnTakedownEffect]: boolean;
+		[ETagNames.OnHit]: boolean;
+		[ETagNames.Projectile]: boolean;
+		[ETagNames.Shield]: boolean;
+		[ETagNames.Slow]: boolean;
+		[ETagNames.UltimateScaling]: boolean;
+	};
+	role: {
+		[ETagNames.ADC]: boolean;
+		[ETagNames.Assassin]: boolean;
+		[ETagNames.Bruiser]: boolean;
+		[ETagNames.Hybrid]: boolean;
+		[ETagNames.Mage]: boolean;
+		[ETagNames.Sniper]: boolean;
+		[ETagNames.Support]: boolean;
+		[ETagNames.Tank]: boolean;
+	};
+	playstyle: {
+		[ETagNames.Aggressive]: boolean;
+		[ETagNames.AutoAttacking]: boolean;
+		[ETagNames.AutoWeaving]: boolean;
+		[ETagNames.Burst]: boolean;
+		[ETagNames.Defensive]: boolean;
+		[ETagNames.Kiting]: boolean;
+		[ETagNames.OnlyChild]: boolean;
+		[ETagNames.PositioningPattern]: boolean;
+		[ETagNames.SpellHeavy]: boolean;
+		[ETagNames.SpellWeaving]: boolean;
+		[ETagNames.Stacking]: boolean;
+		[ETagNames.Sticky]: boolean;
+	};
+	misc: {
+		[ETagNames.Active]: boolean;
+		[ETagNames.Targeted]: boolean;
+		[ETagNames.TrueDamage]: boolean;
+		[ETagNames.Untargetability]: boolean;
+		[ETagNames.LongRange]: boolean;
+		[ETagNames.Twinning]: boolean;
+	};
+};
+
+export type PageDataType = {
+	augments: Augment[];
+	selectedAugments: {
+		panel1: Augment | null;
+		panel2: Augment | null;
+		panel3: Augment | null;
+		panel4: Augment | null;
+		panel5: Augment | null;
+		panel6: Augment | null;
+	};
+	suggestedItems: {
+		panel1: ItemType[] | null;
+		panel2: ItemType[] | null;
+		panel3: ItemType[] | null;
+		panel4: ItemType[] | null;
+		panel5: ItemType[] | null;
+		panel6: ItemType[] | null;
+		itemSet: Set<ItemType>;
+	};
+	showPrismatics: boolean;
+};
+
+export const initializePageData = {
+	augments: [],
+	selectedAugments: {
+		panel1: null,
+		panel2: null,
+		panel3: null,
+		panel4: null,
+		panel5: null,
+		panel6: null,
+	},
+	suggestedItems: {
+		panel1: null,
+		panel2: null,
+		panel3: null,
+		panel4: null,
+		panel5: null,
+		panel6: null,
+		itemSet: new Set<ItemType>(),
+	},
+	showPrismatics: true,
+};
+
 export enum EGemType {
 	stats = "stats",
 	playstyle = "playstyle",
@@ -305,9 +496,9 @@ export const gemMap: Record<ETagNames, EGemType> = {
 	[ETagNames.Mana]: EGemType.stats,
 	[ETagNames.ManaRegen]: EGemType.stats,
 	[ETagNames.ManaScaling]: EGemType.scalings,
-	[ETagNames.MaxHealthDamage]: EGemType.scalings,
+	[ETagNames.MaxHealthDamage]: EGemType.effects,
 	[ETagNames.MaxHealthScaling]: EGemType.scalings,
-	[ETagNames.MissingHealthDamage]: EGemType.scalings,
+	[ETagNames.MissingHealthDamage]: EGemType.effects,
 	[ETagNames.MissingHealthScaling]: EGemType.scalings,
 	[ETagNames.MoveSpeed]: EGemType.stats,
 	[ETagNames.Movement]: EGemType.effects,

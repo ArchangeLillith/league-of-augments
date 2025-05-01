@@ -29,6 +29,41 @@
 		align-items: center;
 	}
 }
+.advanced-options-modal {
+	display: flex;
+	flex-direction: row;
+	right: 32rem;
+	left: auto;
+	top: 10%;
+	position: absolute;
+	.modal-content {
+		display: flex;
+		padding-bottom: 4rem;
+		padding-top: 4rem;
+		flex-direction: row;
+		min-width: 800px;
+		.scrollable-container {
+			width: 200%;
+		}
+	}
+}
+.advanced-modal-title {
+	position: absolute;
+	top: 0;
+	left: 30%;
+	right: auto;
+}
+.close-btn {
+	position: absolute;
+	bottom: 1rem;
+	left: 50%;
+	right: auto;
+}
+
+.left-advanced-modal-box {
+	width: 100%;
+	min-width: 400px;
+}
 
 .modal-backdrop {
 	position: fixed;
@@ -46,7 +81,6 @@
 	border-radius: 10px;
 	padding: 2rem;
 	max-width: fit-content;
-	padding: 2rem;
 	border: 2px solid gold;
 	box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
 	position: relative;
@@ -236,6 +270,10 @@
 	flex-direction: column;
 	padding-bottom: 2rem;
 }
+
+.augment-alchemy-page {
+	position: relative;
+}
 .augment-alchemy-header {
 	display: flex;
 	flex-direction: row;
@@ -261,6 +299,11 @@
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
+}
+
+.home-btn-aa {
+	width: 20px;
+	height: 20px;
 }
 
 .not-found-container {
@@ -731,6 +774,16 @@
 	);
 	pointer-events: none;
 	z-index: 0;
+}
+
+.advanced-stat-box {
+	display: flex;
+	flex-direction: column;
+}
+
+.tag-box {
+	display: flex;
+	flex-direction: row;
 }
 
 .login-submit-button {

@@ -1,7 +1,10 @@
+import { SetStateAction } from "react";
 import {
+	AdvancedOptionChoices,
 	Augment,
 	ETagNames,
 	ItemType,
+	PageDataType,
 	statPropertyMap,
 	statTags,
 } from "../utils/types";
@@ -25,7 +28,6 @@ export function filterItems(
 	//Declare the map we'll use to see how many tags something has in common
 	const cleanAugTags = selectedAugment.tags as ETagNames[];
 	const itemMap: Record<number, number> = {};
-
 
 	//We'll also ensure that the showPrismatics is on because we don't want to add these if it isn't
 	if (showPrismatics) {
@@ -94,9 +96,9 @@ export function filterItems(
 	}));
 
 	//Here's where things get interesting. We're finding the highest priority stat so we can then use that for the tie breaker
-	const topStatTag: ETagNames | undefined = (selectedAugment.tags as ETagNames[]).find((tag) =>
-		statTags.includes(tag)
-	);
+	const topStatTag: ETagNames | undefined = (
+		selectedAugment.tags as ETagNames[]
+	).find((tag) => statTags.includes(tag));
 	console.log("Top stat tag for tie-breaker:", topStatTag);
 	console.log("Wer're sorting for:", selectedAugment.name);
 
@@ -148,15 +150,70 @@ export function filterItems(
 	});
 
 	console.log("Top items:", topItems);
-	return [
-		topItems[0] ?? {},
-		topItems[1] ?? {},
-		topItems[2] ?? {},
-		topItems[3] ?? {},
-	];
+	return topItems;
 
 	//This will ensure every tag is matching, will be used if a harsh comparison option is toggled in advanced settings
 	// for (let tag of selectedAugment.tags) {
 	// 	suggestedItems = suggestedItems.filter((item) => item.tags.includes(tag));
 	// }
 }
+
+export const applyUserFilters = (
+	advancedOptionChoices: AdvancedOptionChoices,
+	pageData: PageDataType,
+	setPageData: React.Dispatch<SetStateAction<PageDataType>>
+) => {
+	const chosenOptions: string[] = [];
+	const advancedKey = [
+		"stats",
+		"playstyle",
+		"role",
+		"scalings",
+		"effects",
+		"misc",
+	] as const;
+	for (let i = 0; i < advancedKey.length; i++) {
+		let key = advancedKey[i];
+		let optionGroup = advancedOptionChoices[key];
+
+		for (let [tag, isSelected] of Object.entries(optionGroup)) {
+			if (isSelected) {
+				chosenOptions.push(tag);
+			}
+		}
+	}
+	//We'll make a copy of the current items to modify
+	let newSuggestedItems = { ...pageData.suggestedItems };
+
+	//Loop to see which panel we're doing
+	for (let i = 1; i <= 6; i++) {
+		//Get the key for the panel
+		const key = `panel${i}` as keyof typeof pageData.selectedAugments;
+
+		//Easy handle on the selected augments
+		const selected = pageData.selectedAugments[key];
+		//This is just for the null check but gives us a nice handle in the current panel too I guess
+		let currentPanelItems = newSuggestedItems[key];
+		//If we don't have an augment selected, or if we don't have tags for the selected augment, or if we don't have any advanced options this won't continue
+		if (selected && selected.tags && currentPanelItems) {
+			//Now we can filter for the panel we're on since everything is defined and there
+
+			//Loop over the array of advanced option tags
+			for (let j = 0; j < chosenOptions.length; j++) {
+				//Set current panel items to a filtered version
+				currentPanelItems = currentPanelItems.filter((item) => {
+					//Filter the ones that have that tag
+					item.tags.includes(chosenOptions[j] as ETagNames);
+				});
+			}
+		}
+		//Set the state!
+		setPageData((prev) => ({
+			...prev,
+			suggestedItems: {
+				...prev.suggestedItems,
+				[key]: currentPanelItems,
+			},
+		}));
+	}
+};
