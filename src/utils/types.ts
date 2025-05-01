@@ -387,6 +387,7 @@ export type AdvancedOptionChoices = {
 
 export type PageDataType = {
 	advancedOptions: boolean;
+	displayNumber: number;
 	augments: Augment[];
 	selectedAugments: {
 		panel1: Augment | null;
@@ -419,6 +420,7 @@ export type PageDataType = {
 
 export const initializePageData = {
 	advancedOptions: false,
+	displayNumber: 4,
 	augments: [],
 	selectedAugments: {
 		panel1: null,

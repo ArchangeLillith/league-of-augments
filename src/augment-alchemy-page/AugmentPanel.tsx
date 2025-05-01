@@ -28,14 +28,18 @@ const AugmentPanel: React.FC<AugmentPanelProps> = ({
 				{pageData.suggestedItems[childKey] && (
 					<div className="item-container">
 						<>
-							{pageData.suggestedItems[childKey].map((item) => (
-								<ItemIcon
-									item={item}
-									key={item.item_id}
-									augment={pageData.selectedAugments[childKey]}
-									itemPage={false}
-								/>
-							))}
+							{pageData.suggestedItems[childKey].map((item, index) => {
+								while (index < pageData.displayNumber) {
+									return (
+										<ItemIcon
+											item={item}
+											key={item.item_id}
+											augment={pageData.selectedAugments[childKey]}
+											itemPage={false}
+										/>
+									);
+								}
+							})}
 						</>
 					</div>
 				)}
