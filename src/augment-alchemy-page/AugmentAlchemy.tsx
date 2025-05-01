@@ -93,8 +93,8 @@ const AugmentAlchemy = () => {
 		setAdvancedOptionsChoices(advancedOptionChoicesInitializer);
 	};
 	const changeDisplayNumber = (e: React.ChangeEvent<HTMLSelectElement>) => {
-		const chosenNumber = e.target.value;
-		console.log(chosenNumber);
+		let chosenNumber = e.target.value;
+		setPageData((prev) => ({ ...prev, displayNumber: Number(chosenNumber) }));
 	};
 
 	const openModal = () => setIsModalOpen(true);
@@ -125,20 +125,18 @@ const AugmentAlchemy = () => {
 					/>
 				</div>
 				<h1 className="augment-alchemy-title">~Augment Alchemy~</h1>
-				{}
+				<select value={pageData.displayNumber} onChange={changeDisplayNumber}>
+					<option>4</option>
+					<option>8</option>
+					<option>12</option>
+					<option>100</option>
+				</select>
 				<button
 					className="modal-button"
 					onClick={() => gemGlossary(showModal, hideModal)}
 				>
 					Gem Glossary
 				</button>
-				{/* Styling div */}
-				<select value={pageData.displayNumber} onChange={changeDisplayNumber}>
-					<option>4</option>
-					<option>8</option>
-					<option>12</option>
-					<option>All</option>
-				</select>
 				<button
 					className="modal-button"
 					onClick={() => tagGlossary(showModal, hideModal)}
