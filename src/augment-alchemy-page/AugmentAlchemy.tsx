@@ -76,7 +76,7 @@ const AugmentAlchemy = () => {
 			},
 		}));
 		//This runs when we select augs and also when we change the prismatic selection state to ensure that on that click the items reflect the new selection
-	}, [pageData.selectedAugments, pageData.showPrismatics, pageData.forceRerender]);
+	}, [pageData.selectedAugments, pageData.showPrismatics]);
 
 	const openModal = () => setIsModalOpen(true);
 	const closeModal = () => setIsModalOpen(false);

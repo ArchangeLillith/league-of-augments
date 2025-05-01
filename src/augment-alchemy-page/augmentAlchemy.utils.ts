@@ -222,7 +222,6 @@ export const applyUserFilters = (
 		);
 		setPageData((prev) => ({
 			...prev,
-			forceRerender: prev.forceRerender + 1,
 			suggestedItems: {
 				...prev.suggestedItems,
 				[key]: currentPanelItems,
