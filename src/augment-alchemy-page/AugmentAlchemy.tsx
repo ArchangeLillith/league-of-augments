@@ -74,9 +74,17 @@ const AugmentAlchemy = () => {
 				...prev.suggestedItems,
 				...newSuggestedItems,
 			},
+			readOnlySuggItems: {
+				...prev.readOnlySuggItems,
+				...newSuggestedItems,
+			},
 		}));
 		//This runs when we select augs and also when we change the prismatic selection state to ensure that on that click the items reflect the new selection
-	}, [pageData.selectedAugments, pageData.showPrismatics]);
+	}, [
+		pageData.selectedAugments,
+		pageData.showPrismatics,
+		pageData.suggestedItems,
+	]);
 
 	const openModal = () => setIsModalOpen(true);
 	const closeModal = () => setIsModalOpen(false);
