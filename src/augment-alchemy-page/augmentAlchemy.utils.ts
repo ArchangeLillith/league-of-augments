@@ -201,7 +201,12 @@ export const applyUserFilters = (
 			for (let j = 0; j < chosenOptions.length; j++) {
 				//Set current panel items to a filtered version
 				currentPanelItems = currentPanelItems.filter((item) => {
-					console.log(`in the filter, loking for:`, chosenOptions[j])
+					console.log(`in the filter, loking for:`, chosenOptions[j]);
+					console.log(`The item tags:`, item.tags);
+					console.log(
+						"Will be true if tag is found:",
+						item.tags.includes(chosenOptions[j] as ETagNames)
+					);
 					//Filter the ones that have that tag
 					item.tags.includes(chosenOptions[j] as ETagNames);
 				});
