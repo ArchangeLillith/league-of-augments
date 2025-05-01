@@ -44,7 +44,6 @@ const AdvancedOptionsModal: React.FC<Props> = ({
 
 	const closeAndCalculate = () => {
 		applyUserFilters(advancedOptionChoices, pageData, setPageData, setAdvancedOptionChoices);
-		
 		onClose();
 	};
 	return (

@@ -90,6 +90,7 @@ const AugmentAlchemy = () => {
 				...prev.readOnlySuggItems,
 			},
 		}));
+		setAdvancedOptionsChoices(advancedOptionChoicesInitializer);
 	};
 
 	const openModal = () => setIsModalOpen(true);
@@ -157,7 +158,6 @@ const AugmentAlchemy = () => {
 					advancedOptionChoices={advancedOptionChoices}
 					setAdvancedOptionChoices={setAdvancedOptionsChoices}
 					onClose={closeModal}
-					
 				/>
 			)}
 		</div>
