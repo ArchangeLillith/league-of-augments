@@ -157,7 +157,7 @@ const AugmentAlchemy = () => {
 					advancedOptionChoices={advancedOptionChoices}
 					setAdvancedOptionChoices={setAdvancedOptionsChoices}
 					onClose={closeModal}
-					removeAdvancedOptions={removeAdvancedOptions}
+					
 				/>
 			)}
 		</div>

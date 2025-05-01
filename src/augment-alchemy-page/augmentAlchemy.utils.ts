@@ -161,8 +161,7 @@ export function filterItems(
 export const applyUserFilters = (
 	advancedOptionChoices: AdvancedOptionChoices,
 	pageData: PageDataType,
-	setPageData: React.Dispatch<SetStateAction<PageDataType>>,
-	removeAdvancedOptions: () => void
+	setPageData: React.Dispatch<SetStateAction<PageDataType>>
 ) => {
 	const chosenOptions: string[] = [];
 	const advancedKey = [
@@ -184,7 +183,13 @@ export const applyUserFilters = (
 		}
 	}
 	if (chosenOptions.length === 0) {
-		removeAdvancedOptions();
+		setPageData((prev) => ({
+			...prev,
+			advancedOptions: false,
+			suggestedItems: {
+				...prev.readOnlySuggItems,
+			},
+		}));
 	}
 
 	//Loop to see which panel we're doing
