@@ -182,6 +182,14 @@ export const applyUserFilters = (
 			}
 		}
 	}
+	if (chosenOptions.length === 0) {
+		setPageData((prev) => ({
+			...prev,
+			suggestedItems: {
+				...prev.readOnlySuggItems,
+			},
+		}));
+	}
 
 	//Loop to see which panel we're doing
 	for (let i = 1; i <= 6; i++) {

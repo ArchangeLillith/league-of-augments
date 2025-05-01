@@ -404,6 +404,15 @@ export type PageDataType = {
 		panel6: ItemType[] | null;
 		itemSet: Set<ItemType>;
 	};
+	readOnlySuggItems: {
+		panel1: ItemType[] | null;
+		panel2: ItemType[] | null;
+		panel3: ItemType[] | null;
+		panel4: ItemType[] | null;
+		panel5: ItemType[] | null;
+		panel6: ItemType[] | null;
+		itemSet: Set<ItemType>;
+	};
 	showPrismatics: boolean;
 };
 
@@ -418,6 +427,15 @@ export const initializePageData = {
 		panel6: null,
 	},
 	suggestedItems: {
+		panel1: null,
+		panel2: null,
+		panel3: null,
+		panel4: null,
+		panel5: null,
+		panel6: null,
+		itemSet: new Set<ItemType>(),
+	},
+	readOnlySuggItems: {
 		panel1: null,
 		panel2: null,
 		panel3: null,
