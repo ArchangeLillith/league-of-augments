@@ -194,6 +194,7 @@ export const applyUserFilters = (
 		const selected = pageData.selectedAugments[key];
 		//This is just for the null check but gives us a nice handle in the current panel too I guess
 		let currentPanelItems = newSuggestedItems[key];
+		console.log(`Curent panel items`, currentPanelItems);
 		//If we don't have an augment selected, or if we don't have tags for the selected augment, or if we don't have any advanced options this won't continue
 		if (selected && selected.tags && currentPanelItems) {
 			//Now we can filter for the panel we're on since everything is defined and there
@@ -206,8 +207,13 @@ export const applyUserFilters = (
 					item.tags.includes(chosenOptions[j] as ETagNames);
 				});
 			}
+			console.log(`current panle items after for filter:`, currentPanelItems);
 		}
 		//Set the state!
+		console.log(
+			`current panel items right before setstate:`,
+			currentPanelItems
+		);
 		setPageData((prev) => ({
 			...prev,
 			suggestedItems: {
