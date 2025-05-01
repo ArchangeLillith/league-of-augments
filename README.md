@@ -114,9 +114,9 @@ When a champion portrait is clicked instead of dragged, it opens a build page fo
 - [x] Style the pages
 - [x] Tag items and augments
 - [x] Add tags to the database
-- [ ] Create the AugmentAlchemy page (build helper)
+- [x] Create the AugmentAlchemy page (build helper)
 - [ ] Create a win tracking page where users can register wins and fun stats!
-- [ ] Add a 404 page
+- [x] Add a 404 page
 
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
