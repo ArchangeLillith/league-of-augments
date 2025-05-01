@@ -15,7 +15,6 @@ type Props = {
 	pageData: PageDataType;
 	setPageData: React.Dispatch<SetStateAction<PageDataType>>;
 	onClose: () => void;
-
 };
 
 const AdvancedOptionsModal: React.FC<Props> = ({
@@ -24,7 +23,6 @@ const AdvancedOptionsModal: React.FC<Props> = ({
 	advancedOptionChoices,
 	setAdvancedOptionChoices,
 	onClose,
-	
 }) => {
 	const resetAdvancedOptions = () => {
 		setAdvancedOptionChoices(advancedOptionChoicesInitializer);
@@ -45,8 +43,9 @@ const AdvancedOptionsModal: React.FC<Props> = ({
 	};
 
 	const closeAndCalculate = () => {
+		applyUserFilters(advancedOptionChoices, pageData, setPageData, setAdvancedOptionChoices);
+		
 		onClose();
-		applyUserFilters(advancedOptionChoices, pageData, setPageData);
 	};
 	return (
 		<div className="advanced-options-modal">

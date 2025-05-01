@@ -1,6 +1,7 @@
 import { SetStateAction } from "react";
 import {
 	AdvancedOptionChoices,
+	advancedOptionChoicesInitializer,
 	Augment,
 	ETagNames,
 	ItemType,
@@ -161,7 +162,8 @@ export function filterItems(
 export const applyUserFilters = (
 	advancedOptionChoices: AdvancedOptionChoices,
 	pageData: PageDataType,
-	setPageData: React.Dispatch<SetStateAction<PageDataType>>
+	setPageData: React.Dispatch<SetStateAction<PageDataType>>,
+	setAdvancedOptionChoices: React.Dispatch<SetStateAction<AdvancedOptionChoices>>
 ) => {
 	const chosenOptions: string[] = [];
 	const advancedKey = [
@@ -183,6 +185,7 @@ export const applyUserFilters = (
 		}
 	}
 	if (chosenOptions.length === 0) {
+		setAdvancedOptionChoices(advancedOptionChoicesInitializer);
 		setPageData((prev) => ({
 			...prev,
 			advancedOptions: false,
