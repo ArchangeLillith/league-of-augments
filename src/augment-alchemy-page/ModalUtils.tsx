@@ -67,7 +67,9 @@ export function gemGlossary(
 					</div>
 				))}
 			</div>
-			<button onClick={hideModal}>Close</button>
+			<button className="close-btn" onClick={hideModal}>
+				Close
+			</button>
 		</>
 	);
 }
@@ -83,7 +85,9 @@ export function tagGlossary(
 			<div className="scrollable-container">
 				<TagGlossaryDisplay />
 			</div>
-			<button onClick={hideModal}>Close</button>
+			<button className="close-btn" onClick={hideModal}>
+				Close
+			</button>
 		</>
 	);
 }

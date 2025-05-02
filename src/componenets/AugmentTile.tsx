@@ -6,7 +6,7 @@ interface AugmentTileProps {
 	toggleAug: (aug: Augment) => void;
 }
 
-const AugmentTile:React.FC<AugmentTileProps> = ({ aug, toggleAug }) => {
+const AugmentTile: React.FC<AugmentTileProps> = ({ aug, toggleAug }) => {
 	return (
 		<div className={`btn-aug-background ${aug.tier}`} key={aug.augment_id}>
 			<TooltipWrapper tooltipText={`${aug.description}`}>

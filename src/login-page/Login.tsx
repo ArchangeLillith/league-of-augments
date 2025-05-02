@@ -6,7 +6,6 @@ import { useNavigate } from "react-router-dom";
 import SaveMessage from "../componenets/SaveMessage";
 import { showSaveMessage } from "../utils/saveMessage";
 
-
 const Login = () => {
 	const { loginToAuthState } = useContext(AuthContext);
 	const [username, setUsername] = useState<string>("");
@@ -28,7 +27,7 @@ const Login = () => {
 	const register = async (e: React.MouseEvent<HTMLButtonElement>) => {
 		e.preventDefault();
 		if (password !== confirmPass) {
-			showSaveMessage("Passwords don't match!", null, setError);
+			showSaveMessage("Error: Passwords don't match!", null, setError);
 			return;
 		}
 
@@ -41,7 +40,7 @@ const Login = () => {
 			loginToAuthState(token);
 			navigate("/home");
 		} catch (error) {
-			showSaveMessage("Incorrect username or password!", null, setError);
+			showSaveMessage("Error: Incorrect username or password!", null, setError);
 		}
 	};
 	const login = async (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -56,7 +55,7 @@ const Login = () => {
 			loginToAuthState(token);
 			navigate("/home");
 		} catch (error) {
-			showSaveMessage("Incorrect username or password!", null, setError);
+			showSaveMessage("Error: Incorrect username or password!", null, setError);
 		}
 	};
 

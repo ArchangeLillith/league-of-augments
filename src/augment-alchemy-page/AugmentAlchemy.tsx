@@ -112,9 +112,13 @@ const AugmentAlchemy = () => {
 				<button className="gold-button" onClick={() => navigate("/home")}>
 					<FaHome className="home-btn-aa" />
 				</button>
-				<button onClick={openModal}>Advanced Options</button>
+				<button className="gold-button" onClick={openModal}>
+					Advanced Options
+				</button>
 				{pageData.advancedOptions && (
-					<button onClick={removeAdvancedOptions}>X</button>
+					<button className="clear-button" onClick={removeAdvancedOptions}>
+						Clear Adv. Options
+					</button>
 				)}
 				<div>
 					<label htmlFor="prismatic-toggle">Hide Prismatics</label>
@@ -125,7 +129,11 @@ const AugmentAlchemy = () => {
 					/>
 				</div>
 				<h1 className="augment-alchemy-title">~Augment Alchemy~</h1>
-				<select value={pageData.displayNumber} onChange={changeDisplayNumber}>
+				<select
+					className="item-number-select"
+					value={pageData.displayNumber}
+					onChange={changeDisplayNumber}
+				>
 					<option>4</option>
 					<option>8</option>
 					<option>12</option>

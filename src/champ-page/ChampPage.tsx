@@ -121,7 +121,7 @@ const ChampPage = () => {
 			showSaveMessage("✅ Saved!", setChampPageState);
 			return true;
 		} catch {
-			showSaveMessage("❌ Auto save error", setChampPageState);
+			showSaveMessage("❌Error: Auto save error", setChampPageState);
 			return false;
 		}
 	};
@@ -181,7 +181,10 @@ const ChampPage = () => {
 			{/* Champion & Build UI */}
 			<div className="top-champ-container">
 				<div className="flex-row">
-					<button className="btn-home" onClick={() => navigate("/home")}>
+					<button
+						className="gold-button champ-page"
+						onClick={() => navigate("/home")}
+					>
 						<FaHome className="btn-icon" />
 					</button>
 					<img
@@ -200,7 +203,7 @@ const ChampPage = () => {
 									isEditing: true,
 								}));
 							}}
-							className="quill-btn"
+							className="gold-button"
 						>
 							<RiQuillPenAiFill />
 						</button>
@@ -216,7 +219,7 @@ const ChampPage = () => {
 						<input
 							value={champPageState.title}
 							ref={titleRef}
-							className="title-input"
+							className="login-input"
 							onChange={(e) =>
 								setChampPageState((prev) => ({
 									...prev,
@@ -224,7 +227,7 @@ const ChampPage = () => {
 								}))
 							}
 						/>
-						<button type="submit" className="quill-btn">
+						<button type="submit" className="gold-button">
 							<RiQuillPenAiFill />
 						</button>
 					</form>
@@ -268,7 +271,7 @@ const ChampPage = () => {
 							>
 								<TooltipWrapper tooltipText={`${aug.description}`}>
 									<button
-										className="btn-aug-selected"
+										className="btn-aug selected"
 										onClick={() => toggleAug(aug)}
 										id={aug.name}
 									>

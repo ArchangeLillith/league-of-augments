@@ -3,7 +3,14 @@ interface SaveMessageProps {
 	error?: boolean;
 }
 
-const SaveMessage = (props: SaveMessageProps, error = false) => {
+const SaveMessage = (props: SaveMessageProps) => {
+	let dynamicName = "";
+	if (props.saveMessage?.includes("Error")) {
+		dynamicName = "save-message--error";
+	} else {
+		dynamicName = "save-message--success";
+	}
+
 	return (
 		<div
 			className={`save-message
@@ -12,12 +19,7 @@ const SaveMessage = (props: SaveMessageProps, error = false) => {
 									? "save-message--visible"
 									: "save-message--hidden"
 							}
-              ${
-								props.saveMessage?.includes("error") || error
-									? "save-message--error"
-									: "save-message--success"
-							}
-            `}
+              ${dynamicName}`}
 		>
 			{props.saveMessage}
 		</div>

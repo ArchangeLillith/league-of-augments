@@ -38,6 +38,7 @@ const AugSearchBar: React.FC<AugSearchBarProps> = ({
 		return (
 			<div className="selected-augment-panel">
 				<button
+					className="deselect-aug-button"
 					onClick={() => {
 						setInputValue("");
 						setPageData((prev) => ({
@@ -54,7 +55,7 @@ const AugSearchBar: React.FC<AugSearchBarProps> = ({
 					<div className="aug-gem-box">
 						{augment.tags.map((tag) => (
 							<>
-								<div className={`settings ${gemMap[tag as ETagNames] }`}>
+								<div className={`settings ${gemMap[tag as ETagNames]}`}>
 									{tag && (
 										<div className={`tinted-gem ${tag.replace(/\s+/g, "-")}`}>
 											<TooltipWrapper tooltipText={tag} gem={true}>
@@ -102,7 +103,7 @@ const AugSearchBar: React.FC<AugSearchBarProps> = ({
 				<ul className="augment-input-ul">
 					{filteredAugments.map((augment: Augment) => (
 						<li
-							className="augment-input-li"
+							className={`augment-input-li ${augment.tier}`}
 							key={augment.augment_id}
 							onClick={() => handleSelect(augment)}
 						>
