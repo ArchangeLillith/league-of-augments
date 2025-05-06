@@ -53,7 +53,6 @@ const ItemPage = () => {
 	//Zach let's fix this it's ugly lol
 	const filterItems = () => {
 		let newFiltered = [];
-		if (!filters) return items;
 		for (let tag of filters) {
 			for (let item of items) {
 				if (item.tags.includes(tag)) {
