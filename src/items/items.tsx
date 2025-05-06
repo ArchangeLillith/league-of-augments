@@ -87,6 +87,7 @@ const ItemPage = () => {
 							onClick={tagToggle}
 							key={tag.tag_id}
 							className={`${tag.tag_name}`}
+							value={tag.tag_name}
 						>
 							{tag.tag_name}
 						</button>
