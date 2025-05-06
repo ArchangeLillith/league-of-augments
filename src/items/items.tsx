@@ -66,7 +66,6 @@ const ItemPage = () => {
 	const tagToggle = (e: React.MouseEvent<HTMLButtonElement>) => {
 		e.preventDefault();
 		let newFilters = filters;
-		if (!newFilters) return;
 		const tagName = e.currentTarget.value;
 		console.log(e.currentTarget.value);
 		if (newFilters.has(tagName as ETagNames)) {
