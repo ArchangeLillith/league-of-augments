@@ -11,7 +11,7 @@ const ItemPage = () => {
 		[]
 	);
 	//The state that holds the tags we're filtering by
-	const [filters, setFilters] = useState<Set<ETagNames>>();
+	const [filters, setFilters] = useState<Set<ETagNames>>(new Set());
 	//The state that holds our filtered items
 	const [filteredItems, setFilteredItems] = useState<ItemType[]>([]);
 	const timeoutRef = useRef<number | null>(null);
