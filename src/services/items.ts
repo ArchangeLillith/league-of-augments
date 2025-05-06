@@ -30,7 +30,7 @@ const mockItems = [
 		health: 250,
 		magic_pen: 15,
 		heal_and_shield_power: 0,
-		tags: ["AP", "Ability Haste", "Max Health Scaling"],
+		tags: ["AP", "Ability Haste","Ability Haste","Ability Haste","Ability Haste","Ability Haste","Ability Haste","Ability Haste", "Max Health Scaling"],
 		url: "https://league-of-augments.s3.ca-central-1.amazonaws.com/item-icons/Kinkou_Jitte_item.webp",
 	},
 	{

@@ -1,4 +1,3 @@
-import TooltipWrapper from "../componenets/TooltipWrapper";
 import { gemMap, ETagNames, ItemType } from "../utils/types";
 import ItemBody from "./ItemBody";
 
@@ -20,14 +19,15 @@ const ItemCard = ({ item }: ItemCardProps) => {
 	);
 
 	return (
-    <div className="item-card-background">
-		<div className="item-card">
-			<div className="item-card-frame">
-				<img src={item.url} className="item-img" />
+		<div className="item-card-background">
+			<div className="item-card">
+				<div className="item-card-frame">
+					<img src={item.url} className="item-img" />
+				</div>
+				{item !== null && <ItemBody item={item} />}
+				<div className="item-gem-box">{item.tags.map(renderGem)}</div>
 			</div>
-			{item !== null && <ItemBody item={item} />}
-			<div className="item-gem-box">{item.tags.map(renderGem)}</div>
-		</div></div>
+		</div>
 	);
 };
 

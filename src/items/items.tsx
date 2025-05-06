@@ -3,6 +3,8 @@ import { fetchItems } from "../services/items";
 import { ETagNames, ItemType } from "../utils/types";
 import { fetchTags } from "../services/fetchTags";
 import ItemCard from "./ItemCard";
+import { useNavigate } from "react-router-dom";
+import { FaHome } from "react-icons/fa";
 
 const ItemPage = () => {
 	//Two states that hold data we only set once
@@ -15,11 +17,12 @@ const ItemPage = () => {
 	//The state that holds our filtered items
 	const [filteredItems, setFilteredItems] = useState<ItemType[]>([]);
 	const timeoutRef = useRef<number | null>(null);
+	const navigate = useNavigate();
 
 	useEffect(() => {
 		const setup = async () => {
-			const items = await fetchItems(true);
-			const tags = await fetchTags();
+			const items = await fetchItems(true, true);
+			const tags = await fetchTags(true);
 			setItems(items);
 			setTags(tags);
 		};
@@ -82,7 +85,12 @@ const ItemPage = () => {
 		<div className="item-page">
 			<h3 className="items-title">Item Search</h3>
 			<div className="top-box">
-				<button>Home</button>
+				<button
+					className="gold-button champ-page"
+					onClick={() => navigate("/home")}
+				>
+					<FaHome className="btn-icon" />
+				</button>
 				<div className="tag-box">
 					{tags.map((tag) => (
 						<button
