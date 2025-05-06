@@ -7,7 +7,9 @@ import { fetchTags } from "../services/fetchTags";
 const ItemPage = () => {
 	//Two states that hold data we only set once
 	const [items, setItems] = useState<ItemType[]>([]);
-	const [tags, setTags] = useState<ItemType[]>([]);
+	const [tags, setTags] = useState<{ tag_id: number; tag_name: ETagNames }[]>(
+		[]
+	);
 	//The state that holds the tags we're filtering by
 	const [filters, setFilters] = useState<Set<ETagNames>>();
 	//The state that holds our filtered items
@@ -80,8 +82,8 @@ const ItemPage = () => {
 			<div className="top-box">
 				<div className="tag-toggle">
 					{tags.map((tag) => (
-						<button onClick={tagToggle} className={`${tag.name}`}>
-							{tag.name}
+						<button onClick={tagToggle} className={`${tag.tag_name}`}>
+							{tag.tag_name}
 						</button>
 					))}
 				</div>
