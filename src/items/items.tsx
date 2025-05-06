@@ -82,18 +82,31 @@ const ItemPage = () => {
 			<div className="top-box">
 				<div className="tag-toggle">
 					{tags.map((tag) => (
-						<button onClick={tagToggle} className={`${tag.tag_name}`}>
+						<button
+							onClick={tagToggle}
+							key={tag.tag_id}
+							className={`${tag.tag_name}`}
+						>
 							{tag.tag_name}
 						</button>
 					))}
 				</div>
 				<button className="gold-button">Reset</button>
 			</div>
-			<div className="item-container">
-				{items.map((item) => (
-					<ItemIcon item={item} augment={null} itemPage={true} />
-				))}
-			</div>
+			{filters ? (
+				<>
+					{filteredItems.map((item) => (
+						<ItemIcon item={item} augment={null} itemPage={true} />
+					))}
+				</>
+			) : (
+				<>
+					{items.map((item) => (
+						<ItemIcon item={item} augment={null} itemPage={true} />
+					))}
+				</>
+			)}
+			<div className="item-container"></div>
 		</div>
 	);
 };
