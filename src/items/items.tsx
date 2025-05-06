@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { fetchItems } from "../services/items";
 import ItemIcon from "../componenets/ItemIcon";
 import { ETagNames, ItemType } from "../utils/types";
+import { fetchTags } from "../services/fetchTags";
 
 const ItemPage = () => {
 	//Two states that hold data we only set once
@@ -16,7 +17,7 @@ const ItemPage = () => {
 	useEffect(() => {
 		const setup = async () => {
 			const items = await fetchItems(true);
-			const tags = await fetchItems(true);
+			const tags = await fetchTags(true);
 			setItems(items);
 			setTags(tags);
 		};
@@ -62,7 +63,7 @@ const ItemPage = () => {
 	const tagToggle = (e: React.MouseEvent<HTMLButtonElement>) => {
 		e.preventDefault();
 		const tagName = e.currentTarget.value;
-
+		console.log(e.currentTarget.value);
 		if (filters?.has(tagName as ETagNames)) {
 			filters.delete(tagName as ETagNames);
 		} else {
