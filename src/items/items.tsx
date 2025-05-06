@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import { fetchItems } from "../services/items";
-import ItemIcon from "../componenets/ItemIcon";
 import { ETagNames, ItemType } from "../utils/types";
 import { fetchTags } from "../services/fetchTags";
+import ItemCard from "./ItemCard";
 
 const ItemPage = () => {
 	//Two states that hold data we only set once
@@ -18,8 +18,8 @@ const ItemPage = () => {
 
 	useEffect(() => {
 		const setup = async () => {
-			const items = await fetchItems(true);
-			const tags = await fetchTags();
+			const items = await fetchItems(true, true);
+			const tags = await fetchTags(true);
 			setItems(items);
 			setTags(tags);
 		};
@@ -80,8 +80,10 @@ const ItemPage = () => {
 
 	return (
 		<div className="item-page">
+			<h3 className="items-title">Item Search</h3>
 			<div className="top-box">
-				<div className="tag-toggle">
+				<button>Home</button>
+				<div className="tag-box">
 					{tags.map((tag) => (
 						<button
 							onClick={tagToggle}
@@ -97,20 +99,21 @@ const ItemPage = () => {
 					Reset
 				</button>
 			</div>
-			{filters.size > 0 ? (
-				<>
-					{filteredItems.map((item) => (
-						<ItemIcon item={item} augment={null} itemPage={true} />
-					))}
-				</>
-			) : (
-				<>
-					{items.map((item) => (
-						<ItemIcon item={item} augment={null} itemPage={true} />
-					))}
-				</>
-			)}
-			<div className="item-container"></div>
+			<div className="item-container">
+				{filters.size > 0 ? (
+					<>
+						{filteredItems.map((item) => (
+							<ItemCard item={item} />
+						))}
+					</>
+				) : (
+					<>
+						{items.map((item) => (
+							<ItemCard item={item} />
+						))}
+					</>
+				)}
+			</div>
 		</div>
 	);
 };
