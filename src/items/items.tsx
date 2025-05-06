@@ -28,9 +28,9 @@ const ItemPage = () => {
 	}, []);
 
 	useEffect(() => {
-
-			const newFiltered = filterItems();
-			setFilteredItems(newFiltered);
+		console.log(`in useeffect`);
+		const newFiltered = filterItems();
+		setFilteredItems(newFiltered);
 		// //Debounce for like .5 sec
 
 		// //We remove the current timeout if there is one
