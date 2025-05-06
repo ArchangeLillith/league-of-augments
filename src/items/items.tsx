@@ -46,8 +46,18 @@ const ItemPage = () => {
 		//Watches the filters to ensure we refilter on change
 	}, [filters]);
 
+	//Zach let's fix this it's ugly lol
 	const filterItems = () => {
-		return [];
+		let newFiltered = [];
+		if (!filters) return items;
+		for (let tag of filters) {
+			for (let item of items) {
+				if (item.tags.includes(tag)) {
+					newFiltered.push(item);
+				}
+			}
+		}
+		return newFiltered;
 	};
 	const tagToggle = (e: React.MouseEvent<HTMLButtonElement>) => {
 		e.preventDefault();
