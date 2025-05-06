@@ -652,9 +652,11 @@ input:focus {
 }
 
 .tag-box {
-	background-color: red;
+	background-color: rgba(0, 0, 0, 0.351);
 	display: flex;
 	flex-wrap: wrap;
+	padding: 20px;
+	border-radius: 20px;
 }
 .items-title {
 	font-size: 4rem;
@@ -679,6 +681,7 @@ input:focus {
 	justify-content: center;
 	min-height: 300px;
 }
+
 .item-card {
 	background: rgb(19, 19, 19);
 	border-radius: 15px;
@@ -689,6 +692,25 @@ input:focus {
 	align-items: center;
 	justify-content: center;
 	min-height: 300px;
+}
+
+.tag-button {
+	font-family: "Cinzel", serif;
+	padding: 5px;
+	background: var(--gold-border-text);
+	border-radius: 12px;
+	height: fit-content;
+	border: none;
+	margin: 4px;
+}
+.tag-button.selected-tag {
+	background: var(--gold-border);
+	color: white;
+	padding: 5px;
+	border-radius: 12px;
+	height: fit-content;
+	border: none;
+	margin: 4px;
 }
 
 .item-card {

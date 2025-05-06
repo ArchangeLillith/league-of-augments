@@ -96,7 +96,11 @@ const ItemPage = () => {
 						<button
 							onClick={tagToggle}
 							key={tag.tag_id}
-							className={`${tag.tag_name}`}
+							className={
+								filters.has(tag.tag_name)
+									? "tag-button selected-tag"
+									: "tag-button"
+							}
 							value={tag.tag_name}
 						>
 							{tag.tag_name}
