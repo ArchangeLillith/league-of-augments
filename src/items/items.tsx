@@ -54,8 +54,11 @@ const ItemPage = () => {
 	const filterItems = () => {
 		let newFiltered = [];
 		for (let tag of filters) {
+			console.log(`tag`, tag);
 			for (let item of items) {
+				console.log(`item`, item);
 				if (item.tags.includes(tag)) {
+					console.log(`has tag`, item);
 					newFiltered.push(item);
 				}
 			}
@@ -95,7 +98,7 @@ const ItemPage = () => {
 				</div>
 				<button className="gold-button">Reset</button>
 			</div>
-			{filters ? (
+			{filters.size > 0 ? (
 				<>
 					{filteredItems.map((item) => (
 						<ItemIcon item={item} augment={null} itemPage={true} />
