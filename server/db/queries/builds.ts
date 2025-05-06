@@ -12,7 +12,7 @@ const saveExistingBuild = async (
 	build_id: number,
 	name: string,
 	augmentIds: number[]
-): Promise<{ success: boolean; error?: string }> => {
+): Promise<any> => {
 	try {
 		//Update build name
 		await Query<any>(`UPDATE loa_builds SET name = ? WHERE build_id = ?`, [
