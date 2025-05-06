@@ -28,25 +28,28 @@ const ItemPage = () => {
 	}, []);
 
 	useEffect(() => {
-		//Debounce for like .5 sec
 
-		//We remove the current timeout if there is one
-		if (timeoutRef.current) {
-			clearTimeout(timeoutRef.current);
-		}
-
-		timeoutRef.current = setTimeout(() => {
-			// The call that we're debouncing
 			const newFiltered = filterItems();
 			setFilteredItems(newFiltered);
-		}, 500); // The timing handler for the debouncer
+		// //Debounce for like .5 sec
 
-		// Cleanup the timeout
-		return () => {
-			if (timeoutRef.current) {
-				clearTimeout(timeoutRef.current);
-			}
-		};
+		// //We remove the current timeout if there is one
+		// if (timeoutRef.current) {
+		// 	clearTimeout(timeoutRef.current);
+		// }
+
+		// timeoutRef.current = setTimeout(() => {
+		// 	// The call that we're debouncing
+		// 	const newFiltered = filterItems();
+		// 	setFilteredItems(newFiltered);
+		// }, 500); // The timing handler for the debouncer
+
+		// // Cleanup the timeout
+		// return () => {
+		// 	if (timeoutRef.current) {
+		// 		clearTimeout(timeoutRef.current);
+		// 	}
+		// };
 		//Watches the filters to ensure we refilter on change
 	}, [filters]);
 
