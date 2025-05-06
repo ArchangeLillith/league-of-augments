@@ -10,8 +10,11 @@ import {
 	ETagNames,
 } from "../utils/types";
 
-// Section metadata
-
+/**
+ * The GemGlossary modal. This handles opening and closing the modal as well as it's content
+ * @param showModal - the call to show the modal, comes from the modalContext
+ * @param hideModal - the call to hide the modal, comes from the modalContext
+ */
 export function gemGlossary(
 	showModal: (content: React.ReactNode) => void,
 	hideModal: () => void
@@ -74,7 +77,11 @@ export function gemGlossary(
 	);
 }
 
-//Tag glossary parent
+/**
+ * The TagGlossary modal. This handles opening and closing the modal as well as it's content
+ * @param showModal - the call to show the modal, comes from the modalContext
+ * @param hideModal - the call to hide the modal, comes from the modalContext
+ */
 export function tagGlossary(
 	showModal: (content: React.ReactNode) => void,
 	hideModal: () => void
@@ -92,6 +99,10 @@ export function tagGlossary(
 	);
 }
 
+/**
+ * The extracted function that's a helper for the Tag Glossary. This calculates and returns the body of that modal
+ * @returns the body of the TagGlossary modal
+ */
 const TagGlossaryDisplay = () => {
 	//States
 	const [searchTerm, setSearchTerm] = useState<string>("");
@@ -194,6 +205,12 @@ const TagGlossaryDisplay = () => {
 	);
 };
 
+/**
+ * Further extracted, this returns an accordian for the sections of the Tag Glossary modal. It takes in data from it's parent and returns html to be displayed
+ * @param sectionName - the name opf the section, ie playstyle, role ect. 
+ * @param  meta - the meta datas attatched to that section, such as the title or subtitle
+ * @returns display content for the Tag  Glossary
+ */
 const Accordion = ({
 	sectionName,
 	meta,
@@ -217,6 +234,13 @@ const Accordion = ({
 	</div>
 );
 
+/**
+ * An accordian item for the Tag Glossary
+ * @param tag - the tag name
+ * @param description - the description of the tag
+ * @param stats - a boolean, if it's true the stlying is different as stats are self explanitory.
+ * @returns an accordian item to be displayed
+ */
 const AccordionItem = ({
 	tag,
 	description,

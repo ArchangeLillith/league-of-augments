@@ -203,6 +203,38 @@ export type SettingsTable = {
 	user_id: number;
 	settings: {};
 };
+export type ItemsTable = {
+	item_id: number;
+	name: string;
+	tier: "starting" | "prismatic" | "legendary" | "boot";
+	cost: number;
+	sell: number;
+	url: string;
+	//Stats below
+	ability_power: number;
+	ability_haste: number;
+	omnivamp: number;
+	adaptive_force: number;
+	attack_damage: number;
+	crit_chance: number;
+	crit_damage: number;
+	attack_speed: number;
+	lethality: number;
+	lifesteal: number;
+	move_speed: number;
+	armour_pen: number;
+	magic_pen: number;
+	health: number;
+	mana: number;
+	mana_regen: number;
+	health_regen: number;
+	heal_and_shield_power: number;
+	armour: number;
+	magic_resist: number;
+	tenacity: number;
+	percent_armour_pen: number;
+	percent_magic_pen: number;
+};
 
 export type UserTable = {
 	username: string;
@@ -213,4 +245,9 @@ export type UserTable = {
 	champs_wanted: {};
 	created_at: any;
 	password: string;
+};
+
+export type TagTable = {
+	tag_name: string;
+	tag_id: number;
 };

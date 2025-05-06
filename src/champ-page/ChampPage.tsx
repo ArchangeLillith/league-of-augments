@@ -19,12 +19,12 @@ const ChampPage = () => {
 	const { state } = useLocation();
 	const navigate = useNavigate();
 	const titleRef = useRef<HTMLInputElement>(null);
-	//Guard to ensure no one gets here that shouldn't
-	// useEffect(() => {
-	// 	if (authState.userData === null || !authState.authenticated) {
-	// 		navigate("/");
-	// 	}
-	// }, []);
+	// Guard to ensure no one gets here that shouldn't
+	useEffect(() => {
+		if (authState.userData === null || !authState.authenticated) {
+			navigate("/");
+		}
+	}, []);
 
 	// Guard: return if state is invalid
 	const championName = state?.name;

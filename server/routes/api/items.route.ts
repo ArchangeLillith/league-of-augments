@@ -13,6 +13,7 @@ router.get("/", async (req, res) => {
 		console.error(error);
 	}
 });
+
 //GET api/items/tags
 router.get("/tags", async (req, res) => {
 	try {

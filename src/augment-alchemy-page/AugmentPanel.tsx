@@ -1,14 +1,6 @@
-import { SetStateAction } from "react";
 import AugSearchBar from "./AugSearchBar";
-
 import ItemIcon from "../componenets/ItemIcon";
-import { PageDataType } from "../utils/types";
-
-interface AugmentPanelProps {
-	pageData: PageDataType;
-	setPageData: React.Dispatch<SetStateAction<PageDataType>>;
-	childKey: keyof PageDataType["selectedAugments"];
-}
+import { AugmentPanelProps } from "../utils/types";
 
 const AugmentPanel: React.FC<AugmentPanelProps> = ({
 	pageData,

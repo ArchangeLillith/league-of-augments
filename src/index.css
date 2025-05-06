@@ -206,6 +206,8 @@ input:focus {
 	margin-bottom: 5px;
 }
 .tooltip-box {
+	font-family: "Cinzel", serif;
+
 	position: absolute;
 	top: 100%;
 	left: 50%;

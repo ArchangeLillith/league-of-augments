@@ -1,3 +1,5 @@
+import { SetStateAction } from "react";
+
 export type user = {
 	id: number;
 	username: string;
@@ -742,3 +744,25 @@ export const tagDescriptions: Record<ETagNames, string> = {
 		"Items that do better or promote a longer range playtsyle",
 	[ETagNames.Juice]: "Juices! A tag for augments to group juice augs together",
 };
+
+export type AdvancedOptionsModalProps = {
+	advancedOptionChoices: AdvancedOptionChoices;
+	setAdvancedOptionChoices: React.Dispatch<
+		React.SetStateAction<AdvancedOptionChoices>
+	>;
+	pageData: PageDataType;
+	setPageData: React.Dispatch<SetStateAction<PageDataType>>;
+	onClose: () => void;
+};
+
+export interface AugmentPanelProps {
+	pageData: PageDataType;
+	setPageData: React.Dispatch<SetStateAction<PageDataType>>;
+	childKey: keyof PageDataType["selectedAugments"];
+}
+
+export interface AugSearchBarProps {
+	pageData: PageDataType;
+	setPageData: React.Dispatch<SetStateAction<PageDataType>>;
+	childKey: keyof PageDataType["selectedAugments"];
+}

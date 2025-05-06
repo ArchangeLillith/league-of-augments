@@ -4,18 +4,18 @@ import db from "../../db";
 
 const router = express.Router();
 
-//POST /api/users/
-router.get("/settings/:user_id", async (req, res) => {
-	const user_id = Number(req.params.user_id);
-	try {
-		const result = await db.users.userSettings(user_id);
-		res.json(result);
-	} catch (error) {
-		console.error(error);
-	}
-});
+// 	//Refactor: When we introduce settings this is a piece of it
+// router.get("/settings/:user_id", async (req, res) => {
+// 	const user_id = Number(req.params.user_id);
+// 	try {
+// 		const result = await db.users.userSettings(user_id);
+// 		res.json(result);
+// 	} catch (error) {
+// 		console.error(error);
+// 	}
+// });
 
-//GET /api/users/
+//GET /api/users/:username
 router.get("/:username", async (req, res) => {
 	const username = req.params.username;
 	try {
@@ -25,7 +25,8 @@ router.get("/:username", async (req, res) => {
 		console.error(error);
 	}
 });
-//GET /api/users/
+
+//POST /api/users/save
 router.post("/save", async (req, res) => {
 	console.log("body", req.body);
 	const user_id = req.body.user_id;

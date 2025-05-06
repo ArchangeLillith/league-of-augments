@@ -24,11 +24,13 @@ const loginUser = async (token: string): Promise<UserLoginObject> => {
 		const userId: number = decoded.id;
 		const username: string = decoded.username;
 
-		const settingsReturn = await baseService.get(
-			`/api/users/settings/${userId}`
-		);
+		//Refactor: When we introduce settings this is a piece of it
+		// const settingsReturn = await baseService.get(
+		// 	`/api/users/settings/${userId}`
+		// );
+		// const settings: any = settingsReturn[0].settings;
 		const userReturn = await baseService.get(`/api/users/${username}`);
-		const settings: any = settingsReturn[0].settings;
+
 		return {
 			userData: {
 				username,
@@ -38,7 +40,8 @@ const loginUser = async (token: string): Promise<UserLoginObject> => {
 			champsFirstPlace: userReturn[0].champs_first_place,
 			champsPlayed: userReturn[0].champs_played,
 			champsWanted: userReturn[0].champs_wanted,
-			settings,
+			//Refactor: When we introduce settings this is a piece of it, un-hard-code this
+			settings: {},
 		};
 	} catch (error) {
 		console.error(`ERROR in auth.ts in services:`, error);

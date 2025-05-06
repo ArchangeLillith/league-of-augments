@@ -29,21 +29,27 @@ const AugmentAlchemy = () => {
 	const navigate = useNavigate();
 	const { showModal, hideModal } = useModal();
 
+	/**
+	 * Initial data load with the guard to ensure only users get to this page
+	 */
 	useEffect(() => {
-		// //Guard to ensure no one gets here that shouldn't, even though it wont' break anyhting I'd rather a user register to use this service
-		// if (authState.userData === null || !authState.authenticated) {
-		// 	navigate("/");
-		// }
-		//! PUT THIS BACK AFTER DEVWORK!!!!!!!!!!!!!!!!!!!!!!
+		//Guard to ensure no one gets here that shouldn't, even though it wont' break anyhting I'd rather a user register to use this service
+		if (authState.userData === null || !authState.authenticated) {
+			navigate("/");
+		}
+
 		const fetchData = async () => {
-			const items = await fetchItems(true, true);
-			const augments = await fetchAugments(true, true);
+			const items = await fetchItems(true);
+			const augments = await fetchAugments(true);
 			setPageData((prev) => ({ ...prev, augments }));
 			setAllItems(items);
 		};
 		fetchData();
 	}, []);
 
+	/**
+	 * Listens to the augment selection and the show prismatics and re-renders when one of them changes
+	 */
 	useEffect(() => {
 		//We'll make a copy of the current items to modify
 		const newSuggestedItems = { ...pageData.suggestedItems };
@@ -82,6 +88,9 @@ const AugmentAlchemy = () => {
 		//This runs when we select augs and also when we change the prismatic selection state to ensure that on that click the items reflect the new selection
 	}, [pageData.selectedAugments, pageData.showPrismatics]);
 
+	/**
+	 * Removes any chosen options from the advanced options state
+	 */
 	const removeAdvancedOptions = () => {
 		setPageData((prev) => ({
 			...prev,
@@ -92,13 +101,25 @@ const AugmentAlchemy = () => {
 		}));
 		setAdvancedOptionsChoices(advancedOptionChoicesInitializer);
 	};
+
+	/**
+	 * Changes the amount of items shown to the user, runs onChange on the select
+	 * @param e - the select element that has the value the user wants
+	 */
 	const changeDisplayNumber = (e: React.ChangeEvent<HTMLSelectElement>) => {
 		let chosenNumber = e.target.value;
 		setPageData((prev) => ({ ...prev, displayNumber: Number(chosenNumber) }));
 	};
 
+	/**
+	 * Govern the state of the modal
+	 */
 	const openModal = () => setIsModalOpen(true);
 	const closeModal = () => setIsModalOpen(false);
+
+	/**
+	 * Handles the show prismatic input box
+	 */
 	function togglePrismatics() {
 		setPageData((prev) => ({
 			...prev,

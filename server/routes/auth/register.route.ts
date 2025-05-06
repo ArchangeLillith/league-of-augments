@@ -27,9 +27,10 @@ router.post("/", async (req, res, next) => {
 		const user_id = await db.users.insertUser(username, hash);
 
 		//Create settings for new user
-		await db.users.updateSettings(user_id, {});
+		//Refactor: When we add user settings, this need to be uncommented
+		// await db.users.updateSettings(user_id, {});
 		const token = createJWT(user_id, username);
-	
+
 		res.json({ token });
 	} catch (error) {
 		next(error);
@@ -40,8 +41,6 @@ function isValidUsername(username: string) {
 	return username.match(/^(?!.*\.\.)(?!.*\.$)[a-zA-Z0-9_.]{2,32}$/);
 }
 
-const DefaultSettings = {
-  
-}
+const DefaultSettings = {};
 
 export default router;

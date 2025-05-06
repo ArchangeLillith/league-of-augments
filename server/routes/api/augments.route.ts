@@ -4,6 +4,7 @@ import db from "../../db";
 
 const router = express.Router();
 
+//GET /api/augments/
 router.get("/", async (req, res) => {
 	try {
 		const result = await db.augments.getAllAugs();
@@ -12,6 +13,8 @@ router.get("/", async (req, res) => {
 		console.error(error);
 	}
 });
+
+//GET /api/augments/includeTags
 router.get("/includeTags", async (req, res) => {
 	try {
 		const result = await db.augments.getAllAugsWithTags();

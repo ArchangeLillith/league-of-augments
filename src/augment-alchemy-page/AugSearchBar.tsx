@@ -1,29 +1,33 @@
-import { SetStateAction, useState } from "react";
-import { Augment, ETagNames, gemMap, PageDataType } from "../utils/types";
-
+import { useState } from "react";
+import { Augment, AugSearchBarProps, ETagNames, gemMap } from "../utils/types";
 import AugmentTile from "../componenets/AugmentTile";
 import TooltipWrapper from "../componenets/TooltipWrapper";
 
-interface AugSearchBarProps {
-	pageData: PageDataType;
-	setPageData: React.Dispatch<SetStateAction<PageDataType>>;
-	childKey: keyof PageDataType["selectedAugments"];
-}
 
 const AugSearchBar: React.FC<AugSearchBarProps> = ({
 	pageData,
 	setPageData,
 	childKey,
 }) => {
+	//Search bar handle
 	const [inputValue, setInputValue] = useState("");
+	//Dropdown of augments handle
 	const [showDropdown, setShowDropdown] = useState(false);
 
+	//Handle on all the augments for ssimplicity
 	const augments = pageData.augments;
 
+	/**
+	 * Filters the augments in the dropdown list as the user is typing
+	 */
 	const filteredAugments = augments.filter((augment: Augment) =>
 		augment.name.toLowerCase().includes(inputValue.toLowerCase())
 	);
 
+	/**
+	 * Sets the chosen augment to state and flips the panel from search to show the augment therefore
+	 * @param augment - the augment that's being chosen
+	 */
 	const handleSelect = (augment: Augment) => {
 		setInputValue(augment.name);
 		setPageData((prev) => ({
@@ -33,8 +37,13 @@ const AugSearchBar: React.FC<AugSearchBarProps> = ({
 		setShowDropdown(false);
 	};
 
+	/**
+	 * This is our return if we have a selected autgment. It shows the augment and the items in the panel
+	 */
 	if (pageData.selectedAugments[childKey]?.name) {
+		//Augment handle for simplicity
 		const augment = pageData.selectedAugments[childKey];
+
 		return (
 			<div className="selected-augment-panel">
 				<button
@@ -78,13 +87,15 @@ const AugSearchBar: React.FC<AugSearchBarProps> = ({
 						console.warn("Unexpected tag value at index", i, tag);
 						return null;
 					}
-
 					return <div className={`${tag.replace(/\s+/g, "-")}`}></div>;
 				})}
 			</div>
 		);
 	}
 
+	/**
+	 * Our return if there's no augment selected, we display the input box for the user to search for an augment to select
+	 */
 	return (
 		<div className="augment-selector-panel">
 			<input

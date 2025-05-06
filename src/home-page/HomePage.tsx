@@ -24,12 +24,12 @@ const HomePage = () => {
 	const [hasSavedOnce, setHasSavedOnce] = useState(false);
 	const [showTooltip, setShowTooltip] = useState(false);
 
-	// //Guard to ensure no one gets here that shouldn't
-	// useEffect(() => {
-	// 	if (authState.userData === null || !authState.authenticated) {
-	// 		navigate("/");
-	// 	}
-	// }, []);
+	//Guard to ensure no one gets here that shouldn't
+	useEffect(() => {
+		if (authState.userData === null || !authState.authenticated) {
+			navigate("/");
+		}
+	}, []);
 
 	//A hackey way to make sure we don't accidentally overwrite the database with the initilization blank values
 	useEffect(() => {
@@ -259,6 +259,9 @@ const HomePage = () => {
 						</div>
 						<button className="gold-button" onClick={sortChamps}>
 							Alphebetize!
+						</button>
+						<button className="gold-button" onClick={() => navigate("/items")}>
+							Item Search
 						</button>
 						<button
 							className="gold-button"

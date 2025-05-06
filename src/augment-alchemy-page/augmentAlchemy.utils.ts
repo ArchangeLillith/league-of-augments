@@ -12,15 +12,21 @@ import {
 
 /*
 
-We need to filter by the highest number we cna pull out first!
--excluded list gets kicked
+We need to filter by the highest number of items we can kick out first!
 -prismatics go
--then we can see if it;s a sort by champ, that will be it's own util
+-excluded list gets kicked
+-then we can see if it's a sort by champ, that will be it's own util
 -run the loop
 -We'll increase the weight to 1+index, that'll track the weight of the tags with no omre logic!!
--then we'll grab the top 4 and return~
+-then we'll return the list!
 */
-
+/**
+ * Takes in an augment and filters the items based on the augment tags. The filter takes into account the amount of tags in common an item has and adds points for each tag in common to a map, then calculates ties based on the highest, if any, stat tag the augment has. The items are returned form highest to lowest, all items having at least one tag in common with the augment. 
+ * @param selectedAugment - The augment that is populated into this slot
+ * @param allItems - All items from the database
+ * @param showPrismatics - True if we want to return prismatics, false if we want to exclude them
+ * @returns A filtered list of items per augment 
+ */
 export function filterItems(
 	selectedAugment: Augment,
 	allItems: ItemType[],
@@ -158,7 +164,13 @@ export function filterItems(
 	// 	suggestedItems = suggestedItems.filter((item) => item.tags.includes(tag));
 	// }
 }
-
+/**
+ * Takes in the page state and filters the items tied to each augment based on the user's advanced option preferences
+ * @param advancedOptionChoices - The options that are in state, this is a list of tag names as a string[]
+ * @param pageData - the parent state
+ * @param setPageData - parent state setter
+ * @param setAdvancedOptionChoices - Advanced option state setter
+ */
 export const applyUserFilters = (
 	advancedOptionChoices: AdvancedOptionChoices,
 	pageData: PageDataType,
@@ -174,6 +186,7 @@ export const applyUserFilters = (
 		"effects",
 		"misc",
 	] as const;
+	//Convert the state into an array so it's easier to use
 	for (let i = 0; i < advancedKey.length; i++) {
 		let key = advancedKey[i];
 		let optionGroup = advancedOptionChoices[key];
@@ -184,6 +197,7 @@ export const applyUserFilters = (
 			}
 		}
 	}
+	//If we have no chosen options, there's no need to run the rest of this as there are no chosen filters
 	if (chosenOptions.length === 0) {
 		setAdvancedOptionChoices(advancedOptionChoicesInitializer);
 		setPageData((prev) => ({
@@ -217,13 +231,8 @@ export const applyUserFilters = (
 					return item.tags.includes(chosenOptions[j] as ETagNames);
 				});
 			}
-			console.log(`current panle items after for filter:`, currentPanelItems);
 		}
 		//Set the state!
-		console.log(
-			`current panel items right before setstate:`,
-			currentPanelItems
-		);
 		setPageData((prev) => ({
 			...prev,
 			advancedOptions: true,

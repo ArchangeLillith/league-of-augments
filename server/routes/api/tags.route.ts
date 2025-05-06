@@ -4,7 +4,7 @@ import db from "../../db";
 
 const router = express.Router();
 
-//GET api/items/
+//GET api/tags/
 router.get("/", async (req, res) => {
 	try {
 		const result = await db.tags.getTags();

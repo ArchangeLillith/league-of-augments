@@ -5,7 +5,7 @@ import { ChampionName } from "../../utils/types";
 
 const router = express.Router();
 
-//POST api/builds/save
+//POST /api/builds/save
 router.post("/save", async (req, res) => {
 	console.log("Body:", req.body);
 	const build_id: number = req.body.build_id;
