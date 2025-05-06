@@ -18,6 +18,7 @@ const ItemPage = () => {
 		const setup = async () => {
 			const items = await fetchItems(true);
 			const tags = await fetchTags();
+			console.log(`Tags`, tags);
 			setItems(items);
 			setTags(tags);
 		};
