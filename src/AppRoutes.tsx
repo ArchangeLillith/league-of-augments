@@ -2,7 +2,7 @@ import { useRoutes } from "react-router-dom";
 import ChampPage from "./champ-page/ChampPage";
 import Login from "./login-page/Login";
 import HomePage from "./home-page/HomePage";
-import ItemPage from "./items/Items";
+import ItemPage from "./items/items"
 import AugmentAlchemy from "./augment-alchemy-page/AugmentAlchemy";
 import NotFoundPage from "./not-found-page/NotFoundPage";
 
