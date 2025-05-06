@@ -15,8 +15,8 @@ const ItemPage = () => {
 
 	useEffect(() => {
 		const setup = async () => {
-			const items = await fetchItems(true, true);
-			const tags = await fetchItems(true, true);
+			const items = await fetchItems(true);
+			const tags = await fetchItems(true);
 			setItems(items);
 			setTags(tags);
 		};
