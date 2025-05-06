@@ -17,7 +17,7 @@ const ItemPage = () => {
 	useEffect(() => {
 		const setup = async () => {
 			const items = await fetchItems(true);
-			const tags = await fetchTags(true);
+			const tags = await fetchTags();
 			setItems(items);
 			setTags(tags);
 		};
@@ -62,13 +62,16 @@ const ItemPage = () => {
 	};
 	const tagToggle = (e: React.MouseEvent<HTMLButtonElement>) => {
 		e.preventDefault();
+		let newFilters = filters;
+		if (!newFilters) return;
 		const tagName = e.currentTarget.value;
 		console.log(e.currentTarget.value);
-		if (filters?.has(tagName as ETagNames)) {
-			filters.delete(tagName as ETagNames);
+		if (newFilters.has(tagName as ETagNames)) {
+			newFilters.delete(tagName as ETagNames);
 		} else {
-			filters?.add(tagName as ETagNames);
+			newFilters.add(tagName as ETagNames);
 		}
+		setFilters(newFilters);
 	};
 
 	return (
