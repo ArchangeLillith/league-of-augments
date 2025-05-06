@@ -20,7 +20,6 @@ const ItemPage = () => {
 		const setup = async () => {
 			const items = await fetchItems(true);
 			const tags = await fetchTags();
-			console.log(`Tags`, tags);
 			setItems(items);
 			setTags(tags);
 		};
@@ -28,40 +27,34 @@ const ItemPage = () => {
 	}, []);
 
 	useEffect(() => {
-		console.log(`in useeffect`);
-		const newFiltered = filterItems();
-		setFilteredItems(newFiltered);
-		// //Debounce for like .5 sec
+		//Debounce for like .5 sec
 
-		// //We remove the current timeout if there is one
-		// if (timeoutRef.current) {
-		// 	clearTimeout(timeoutRef.current);
-		// }
+		//We remove the current timeout if there is one
+		if (timeoutRef.current) {
+			clearTimeout(timeoutRef.current);
+		}
 
-		// timeoutRef.current = setTimeout(() => {
-		// 	// The call that we're debouncing
-		// 	const newFiltered = filterItems();
-		// 	setFilteredItems(newFiltered);
-		// }, 500); // The timing handler for the debouncer
+		timeoutRef.current = setTimeout(() => {
+			// The call that we're debouncing
+			const newFiltered = filterItems();
+			setFilteredItems(newFiltered);
+		}, 500); // The timing handler for the debouncer
 
-		// // Cleanup the timeout
-		// return () => {
-		// 	if (timeoutRef.current) {
-		// 		clearTimeout(timeoutRef.current);
-		// 	}
-		// };
-		//Watches the filters to ensure we refilter on change
+		// Cleanup the timeout
+		return () => {
+			if (timeoutRef.current) {
+				clearTimeout(timeoutRef.current);
+			}
+		};
+		// Watches the filters to ensure we refilter on change
 	}, [filters]);
 
 	//Zach let's fix this it's ugly lol
 	const filterItems = () => {
 		let newFiltered = [];
 		for (let tag of filters) {
-			console.log(`tag`, tag);
 			for (let item of items) {
-				console.log(`item`, item);
 				if (item.tags.includes(tag)) {
-					console.log(`has tag`, item);
 					newFiltered.push(item);
 				}
 			}
@@ -75,13 +68,13 @@ const ItemPage = () => {
 		const tagName = e.currentTarget.value;
 		console.log(e.currentTarget.value);
 		if (newFilters.has(tagName as ETagNames)) {
-			setFilters(prev => {
+			setFilters((prev) => {
 				const newSet = new Set(prev);
 				newSet.delete(tagName as ETagNames);
 				return newSet;
 			});
 		} else {
-			setFilters(prev => new Set(prev).add(tagName as ETagNames));
+			setFilters((prev) => new Set(prev).add(tagName as ETagNames));
 		}
 	};
 
@@ -100,7 +93,9 @@ const ItemPage = () => {
 						</button>
 					))}
 				</div>
-				<button className="gold-button">Reset</button>
+				<button onClick={() => setFilters(new Set())} className="gold-button">
+					Reset
+				</button>
 			</div>
 			{filters.size > 0 ? (
 				<>
