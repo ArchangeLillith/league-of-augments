@@ -63,6 +63,7 @@ const ItemPage = () => {
 		}
 		return newFiltered;
 	};
+
 	const tagToggle = (e: React.MouseEvent<HTMLButtonElement>) => {
 		e.preventDefault();
 		let newFilters = filters;
@@ -74,6 +75,8 @@ const ItemPage = () => {
 		} else {
 			newFilters.add(tagName as ETagNames);
 		}
+		console.log(`oldFilters`, filters);
+		console.log(`newFilters`, newFilters);
 		setFilters(newFilters);
 	};
 
