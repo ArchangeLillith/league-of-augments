@@ -75,13 +75,14 @@ const ItemPage = () => {
 		const tagName = e.currentTarget.value;
 		console.log(e.currentTarget.value);
 		if (newFilters.has(tagName as ETagNames)) {
-			newFilters.delete(tagName as ETagNames);
+			setFilters(prev => {
+				const newSet = new Set(prev);
+				newSet.delete(tagName as ETagNames);
+				return newSet;
+			});
 		} else {
-			newFilters.add(tagName as ETagNames);
+			setFilters(prev => new Set(prev).add(tagName as ETagNames));
 		}
-		console.log(`oldFilters`, filters);
-		console.log(`newFilters`, newFilters);
-		setFilters(newFilters);
 	};
 
 	return (
