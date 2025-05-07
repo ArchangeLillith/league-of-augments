@@ -43,8 +43,6 @@ const ChampPage = () => {
 	if (!championName || !champImage) {
 		return <div>Error: Missing champion data</div>;
 	}
-	//We're loading
-	if (champPageState.pageLoading) return <div>Loading...</div>;
 
 	// Initial data fetch
 	useEffect(() => {
@@ -150,7 +148,8 @@ const ChampPage = () => {
 			selectedAugs: [],
 		}));
 	};
-
+	//We're loading
+	if (champPageState.pageLoading) return <div>Loading...</div>;
 	return (
 		<div className="champ-page">
 			<SaveMessage saveMessage={champPageState.saveMessage} />
