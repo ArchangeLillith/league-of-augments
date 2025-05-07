@@ -36,9 +36,9 @@ const ChampPage = () => {
 	// Guards for non user and if we're missing data
 	useEffect(() => {
 		if (authState.userData === null || !authState.authenticated) {
-			navigate("/");
+			<div>You need to be logged in to see this page~</div>;
 		}
-	}, []);
+	}, [authState]);
 	//We're missing info
 	if (!championName || !champImage) {
 		return <div>Error: Missing champion data</div>;
