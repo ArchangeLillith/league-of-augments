@@ -24,12 +24,12 @@ const HomePage = () => {
 	const [hasSavedOnce, setHasSavedOnce] = useState(false);
 	const [showTooltip, setShowTooltip] = useState(false);
 
-	//Guard to ensure no one gets here that shouldn't
+	// Guards for non user and if we're missing data
 	useEffect(() => {
 		if (authState.userData === null || !authState.authenticated) {
-			navigate("/");
+			<div>You need to be logged in to see this page~</div>;
 		}
-	}, []);
+	}, [authState]);
 
 	//A hackey way to make sure we don't accidentally overwrite the database with the initilization blank values
 	useEffect(() => {
