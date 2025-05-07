@@ -1,7 +1,4 @@
-interface SaveMessageProps {
-	saveMessage: string | null;
-	error?: boolean;
-}
+import { SaveMessageProps } from "../utils/interfaces";
 
 const SaveMessage = (props: SaveMessageProps) => {
 	let dynamicName = "";

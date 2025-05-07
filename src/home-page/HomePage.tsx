@@ -222,10 +222,7 @@ const HomePage = () => {
 			</Droppable>
 		);
 	};
-	//Guard
-	if (authState.userData === null || !authState.authenticated) {
-		return <div>You need to be logged in to see this page~</div>;
-	}
+
 	//Our body of the page!
 	return (
 		<div className={`home-page-container ${searchTerm ? "no-drag" : ""}`}>

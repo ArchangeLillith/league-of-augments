@@ -1,12 +1,7 @@
-import React, { SetStateAction } from "react";
-import { ChampPageState } from "../../utils/types";
+import React from "react";
 import { toggleAug } from "../champPage.utils";
-import TooltipWrapper from "../../componenets/TooltipWrapper";
-
-interface SelectedAugmentPanelProps {
-	state: ChampPageState;
-	setState: React.Dispatch<SetStateAction<ChampPageState>>;
-}
+import TooltipWrapper from "../../components/TooltipWrapper";
+import { SelectedAugmentPanelProps } from "../../utils/interfaces";
 
 const SelectedAugmentPanel: React.FC<SelectedAugmentPanelProps> = ({
 	state,

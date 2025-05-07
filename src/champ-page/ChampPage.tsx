@@ -1,18 +1,19 @@
 import { useContext, useEffect, useRef, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { FaHome } from "react-icons/fa";
-import { Augment, ChampPageInitilizer, ChampPageState } from "../utils/types";
+import { Augment, ChampPageState } from "../utils/types";
 import { fetchAugments } from "../services/fetchAugments";
 import { Build } from "../utils/types";
 import { AuthContext } from "../context/AuthProvider";
 import { fetchBuilds, writeNewBuild } from "../services/fetchBuilds";
 
-import SaveMessage from "../componenets/SaveMessage";
+import SaveMessage from "../components/SaveMessage";
 import { changeBuild, resetSelected } from "./champPage.utils";
 import { showSaveMessage } from "../utils/saveMessage";
 import { AugmentHTML } from "./componenets/AugmentHtml";
 import { TitleBox } from "./componenets/TitleBox";
 import SelectedAugmentPanel from "./componenets/SelectedAugmentPanel";
+import { ChampPageInitilizer } from "../utils/initializers";
 
 const ChampPage = () => {
 	// Context & routing
@@ -142,12 +143,10 @@ const ChampPage = () => {
 			selectedAugs: [],
 		}));
 	};
-	//Guard
-	if (authState.userData === null || !authState.authenticated) {
-		return <div>You need to be logged in to see this page~</div>;
-	}
+
 	//We're loading
 	if (champPageState.pageLoading) return <div>Loading...</div>;
+	//Full body if we're not loading
 	return (
 		<div className="champ-page">
 			<SaveMessage saveMessage={champPageState.saveMessage} />
@@ -172,7 +171,7 @@ const ChampPage = () => {
 					state={champPageState}
 					setState={setChampPageState}
 				/>
-
+				{/* Select if the user has more than one build */}
 				{champPageState.allBuilds.length > 1 && (
 					<select
 						onChange={(e) => changeBuild(e, champPageState, setChampPageState)}
@@ -184,6 +183,7 @@ const ChampPage = () => {
 						))}
 					</select>
 				)}
+
 				<div>
 					<button className="gold-button" onClick={addBuild}>
 						Add Build

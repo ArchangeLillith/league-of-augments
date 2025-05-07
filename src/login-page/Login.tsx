@@ -3,8 +3,9 @@ import { AuthContext } from "../context/AuthProvider";
 import loginService from "./login.api";
 import registerService from "../services/register";
 import { useNavigate } from "react-router-dom";
-import SaveMessage from "../componenets/SaveMessage";
 import { showSaveMessage } from "../utils/saveMessage";
+import LoginHtml from "./components/LoginHtml";
+import RegisterHtml from "./components/RegisterHtml";
 
 const Login = () => {
 	const { loginToAuthState } = useContext(AuthContext);
@@ -15,6 +16,10 @@ const Login = () => {
 	const [state, setState] = useState<"login" | "register">("login");
 	const navigate = useNavigate();
 
+	/**
+	 * Handler that toggles state from login to register and back
+	 * @param e - buttone that toggles the state
+	 */
 	const toggleState = (e: React.MouseEvent<HTMLButtonElement>) => {
 		e.preventDefault();
 		if (state === "login") {
@@ -24,13 +29,17 @@ const Login = () => {
 		}
 	};
 
+	/**
+	 * Attempts to register the user using the data in state
+	 * @param e - The button that's click got us here
+	 * @returns nothing if we don't get a token as a release
+	 */
 	const register = async (e: React.MouseEvent<HTMLButtonElement>) => {
 		e.preventDefault();
 		if (password !== confirmPass) {
 			showSaveMessage("Error: Passwords don't match!", null, setError);
 			return;
 		}
-
 		try {
 			const token = await registerService.registerUserAndStoreToken({
 				username,
@@ -43,9 +52,15 @@ const Login = () => {
 			showSaveMessage("Error: Incorrect username or password!", null, setError);
 		}
 	};
+
+
+	/**
+	 * Attemps to log in the user against the DB
+	 * @param e - the button that triggered this function
+	 * @returns nothing if we don't get a token as a release
+	 */
 	const login = async (e: React.MouseEvent<HTMLButtonElement>) => {
 		e.preventDefault();
-
 		try {
 			const token = await loginService.authenticateUserAndStoreToken({
 				username,
@@ -59,70 +74,28 @@ const Login = () => {
 		}
 	};
 
-	const loginHtml = (
-		<div className="login-html">
-			<SaveMessage saveMessage={error} error={true} />
-			<input
-				placeholder="Username"
-				className="login-input"
-				type="text"
-				onChange={(e) => {
-					setUsername(e.currentTarget.value);
-				}}
-			></input>
-			<input
-				placeholder="Password"
-				className="login-input"
-				type="password"
-				onChange={(e) => {
-					setPassword(e.currentTarget.value);
-				}}
-			></input>
-			<button className="gold-button" type="submit" onClick={login}>
-				Log in
-			</button>
-		</div>
-	);
-	const registerHtml = (
-		<div className="register-html">
-			<SaveMessage saveMessage={error} error={true} />
-			<input
-				placeholder="Username"
-				type="text"
-				className="login-input"
-				onChange={(e) => {
-					setUsername(e.currentTarget.value);
-				}}
-			></input>
-			<input
-				placeholder="Password"
-				type="password"
-				className="login-input"
-				onChange={(e) => {
-					setPassword(e.currentTarget.value);
-				}}
-			></input>
-			<input
-				placeholder="Confirm password"
-				type="password"
-				className="login-input"
-				onChange={(e) => {
-					setConfirmPass(e.currentTarget.value);
-				}}
-			></input>
-			<button type="submit" className="login-submit-button" onClick={register}>
-				Register
-			</button>
-		</div>
-	);
-
 	return (
 		<div className="login-page">
 			<div className="login-section-border">
 				<div className="login-section">
 					<form className="login-form">
 						<h2 className="login-title"> Welcome to League of Augments~</h2>
-						{state === "login" ? loginHtml : registerHtml}
+						{state === "login" ? (
+							<LoginHtml
+								setPassword={setPassword}
+								setUsername={setUsername}
+								login={login}
+								error={error}
+							/>
+						) : (
+							<RegisterHtml
+								setPassword={setPassword}
+								setUsername={setUsername}
+								setConfirmPass={setConfirmPass}
+								register={register}
+								error={error}
+							/>
+						)}
 					</form>
 					<button onClick={toggleState} className="login-toggle-button">
 						{state === "login" ? "Register  →" : "Login  →"}

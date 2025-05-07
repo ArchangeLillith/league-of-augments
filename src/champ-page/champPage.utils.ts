@@ -2,7 +2,11 @@ import { SetStateAction } from "react";
 import { Augment, Build, ChampPageState } from "../utils/types";
 import { fetchOneBuild } from "../services/fetchBuilds";
 
-//Resets handler for selected augs
+/**
+ * Resets the selected augments to an empty array
+ * @param setChampPageState - the setter for the parent state
+ * @returns 
+ */
 export const resetSelected = (
 	setChampPageState: React.Dispatch<SetStateAction<ChampPageState>>
 ) =>
@@ -11,7 +15,11 @@ export const resetSelected = (
 		selectedAugs: [],
 	}));
 
-//onclick save handler
+/**
+ * Saves the title of the build, only does so in local memory, NOT db!
+ * @param champPageState - the parent state
+ * @param setChampPageState - the setter for the parent state
+ */
 export const saveTitle = (
 	champPageState: ChampPageState,
 	setChampPageState: React.Dispatch<SetStateAction<ChampPageState>>
@@ -31,7 +39,12 @@ export const saveTitle = (
 	}));
 };
 
-//The onchange handler for swapping builds
+/**
+ * Handles changing the build when the user chooses another build to edit from the select in a champ page. Fetches the build chosen from the database so it's fresh, updates state for the chosen build as well as overwrites the old data in allBuilds with the fresh DB copy - likely the same, but prevents stale data.
+ * @param e - the option that has data tied to the build the user would like to edit
+ * @param champPageState - parent state
+ * @param setChampPageState - parent state setter
+ */
 export const changeBuild = async (
 	e: React.ChangeEvent<HTMLSelectElement>,
 	champPageState: ChampPageState,

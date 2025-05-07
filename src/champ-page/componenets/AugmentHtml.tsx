@@ -1,5 +1,5 @@
 import { SetStateAction, useMemo } from "react";
-import AugmentTile from "../../componenets/AugmentTile";
+import AugmentTile from "../../components/AugmentTile";
 import { Augment, ChampPageState } from "../../utils/types";
 
 export const AugmentHTML = ({
@@ -24,11 +24,13 @@ export const AugmentHTML = ({
 		() => allAugs.filter((aug) => aug.tier === "Prismatic"),
 		[allAugs]
 	);
+
 	const augmentTiers = {
 		silver: silverAugs,
 		gold: goldAugs,
 		prismatric: prismaticAugs,
 	};
+
 	return (
 		<div>
 			{Object.entries(augmentTiers).map(([key, augArr]) => (

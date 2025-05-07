@@ -1,14 +1,9 @@
 import { SetStateAction } from "react";
-import {
-	AdvancedOptionChoices,
-	advancedOptionChoicesInitializer,
-	Augment,
-	ETagNames,
-	ItemType,
-	PageDataType,
-	statPropertyMap,
-	statTags,
-} from "../utils/types";
+import { statTags, statPropertyMap } from "../utils/constants";
+import { ETagNames } from "../utils/enums";
+import { advancedOptionChoicesInitializer } from "../utils/initializers";
+import { Augment, ItemType, AdvancedOptionChoices, PageDataType } from "../utils/types";
+
 
 /*
 

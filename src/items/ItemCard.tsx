@@ -1,9 +1,7 @@
-import { gemMap, ETagNames, ItemType } from "../utils/types";
 import ItemBody from "./ItemBody";
-
-interface ItemCardProps {
-	item: ItemType;
-}
+import { gemMap } from "../utils/constants";
+import { ETagNames } from "../utils/enums";
+import { ItemCardProps } from "../utils/interfaces";
 
 const ItemCard = ({ item }: ItemCardProps) => {
 	//Renders the gem so we don't bog down our actual return, haha

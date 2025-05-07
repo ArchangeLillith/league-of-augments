@@ -1,14 +1,6 @@
 import { useEffect, useState } from "react";
-import {
-	statTags,
-	playstyleTags,
-	effectsTags,
-	scalingsTags,
-	roleTags,
-	miscTags,
-	tagDescriptions,
-	ETagNames,
-} from "../utils/types";
+import { statTags, effectsTags, miscTags, roleTags, playstyleTags, scalingsTags, tagDescriptions } from "../utils/constants";
+import { ETagNames } from "../utils/enums";
 
 /**
  * The GemGlossary modal. This handles opening and closing the modal as well as it's content

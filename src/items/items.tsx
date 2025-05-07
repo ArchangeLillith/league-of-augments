@@ -1,10 +1,11 @@
-import { useEffect, useRef, useState } from "react";
-import { fetchItems } from "../services/items";
-import { ETagNames, ItemType } from "../utils/types";
+import { useEffect, useState } from "react";
+import { fetchItems } from "../services/fetchItems";
+import { ItemType } from "../utils/types";
 import { fetchTags } from "../services/fetchTags";
 import ItemCard from "./ItemCard";
 import { useNavigate } from "react-router-dom";
 import { FaHome } from "react-icons/fa";
+import { ETagNames } from "../utils/enums";
 
 const ItemPage = () => {
 	//Two states that hold data we only set once
@@ -21,6 +22,7 @@ const ItemPage = () => {
 	const [filteredItems, setFilteredItems] = useState<ItemType[]>([]);
 	const navigate = useNavigate();
 
+	//Initial data load and map make
 	useEffect(() => {
 		const setup = async () => {
 			const items = await fetchItems(true);
@@ -32,6 +34,7 @@ const ItemPage = () => {
 		setup();
 	}, []);
 
+	//Filter listener
 	useEffect(() => {
 		const newFiltered: ItemType[] = [];
 		for (let filter of filters) {
@@ -41,6 +44,10 @@ const ItemPage = () => {
 		// Watches the filters to ensure we refilter on change
 	}, [filters]);
 
+	/**
+	 * Runs once on load, makes a map that we can index at ETagName to return an array of items with that tag
+	 * @param items - the list of all the items from the DB
+	 */
 	const makeMap = (items: ItemType[]) => {
 		const newMap: Partial<Record<ETagNames, ItemType[]>> = {};
 		for (let item of items) {
@@ -54,6 +61,10 @@ const ItemPage = () => {
 		setItemMap(newMap);
 	};
 
+	/**
+	 * Toggles the tag that the user clicks
+	 * @param e - the button cooresponding to a tag
+	 */
 	const tagToggle = (e: React.MouseEvent<HTMLButtonElement>) => {
 		e.preventDefault();
 		let newFilters = filters;

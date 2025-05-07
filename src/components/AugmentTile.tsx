@@ -1,13 +1,6 @@
-import { SetStateAction } from "react";
 import { toggleAug } from "../champ-page/champPage.utils";
-import { Augment, ChampPageState } from "../utils/types";
+import { AugmentTileProps } from "../utils/interfaces";
 import TooltipWrapper from "./TooltipWrapper";
-
-interface AugmentTileProps {
-	aug: Augment;
-	state: ChampPageState | null;
-	setState: React.Dispatch<SetStateAction<ChampPageState>> | null;
-}
 
 const AugmentTile: React.FC<AugmentTileProps> = ({ aug, state, setState }) => {
 	return (

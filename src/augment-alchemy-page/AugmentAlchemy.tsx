@@ -1,25 +1,19 @@
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect } from "react";
 import AugmentPanel from "./AugmentPanel";
 import { fetchAugments } from "../services/fetchAugments";
 import { filterItems } from "./augmentAlchemy.utils";
 
 import { useNavigate } from "react-router-dom";
-import { fetchItems } from "../services/items";
-import {
-	AdvancedOptionChoices,
-	advancedOptionChoicesInitializer,
-	initializePageData,
-	ItemType,
-	PageDataType,
-} from "../utils/types";
+import { fetchItems } from "../services/fetchItems";
+
 import { useModal } from "../modalContext/ModalContext";
 import { gemGlossary, tagGlossary } from "./ModalUtils";
-import { AuthContext } from "../context/AuthProvider";
 import { FaHome } from "react-icons/fa";
 import AdvancedOptionsModal from "./AdvancedOptionsModal";
+import { initializePageData, advancedOptionChoicesInitializer } from "../utils/initializers";
+import { PageDataType, AdvancedOptionChoices, ItemType } from "../utils/types";
 
 const AugmentAlchemy = () => {
-	const { authState } = useContext(AuthContext);
 	const [pageData, setPageData] = useState<PageDataType>(initializePageData);
 	const [advancedOptionChoices, setAdvancedOptionsChoices] =
 		useState<AdvancedOptionChoices>(advancedOptionChoicesInitializer);
@@ -33,11 +27,6 @@ const AugmentAlchemy = () => {
 	 * Initial data load with the guard to ensure only users get to this page
 	 */
 	useEffect(() => {
-		//Guard to ensure no one gets here that shouldn't, even though it wont' break anyhting I'd rather a user register to use this service
-		if (authState.userData === null || !authState.authenticated) {
-			navigate("/");
-		}
-
 		const fetchData = async () => {
 			const items = await fetchItems(true);
 			const augments = await fetchAugments(true);

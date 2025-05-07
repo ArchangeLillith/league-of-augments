@@ -1,9 +1,6 @@
-import {
-	AdvancedOptionChoices,
-	advancedOptionChoicesInitializer,
-	AdvancedOptionsModalProps,
-	ETagNames,
-} from "../utils/types";
+import { ETagNames } from "../utils/enums";
+import { advancedOptionChoicesInitializer } from "../utils/initializers";
+import { AdvancedOptionsModalProps, AdvancedOptionChoices } from "../utils/types";
 import { applyUserFilters } from "./augmentAlchemy.utils";
 
 const AdvancedOptionsModal: React.FC<AdvancedOptionsModalProps> = ({

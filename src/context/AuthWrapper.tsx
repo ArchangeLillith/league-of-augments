@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { Navigate } from "react-router-dom";
 
 import { AuthContext } from "./AuthProvider";
-import { WrapperProps } from "../utils/types";
+import { WrapperProps } from "../utils/interfaces";
 
 const AuthWrapper: React.FC<WrapperProps> = ({ children }) => {
 	const { authState } = useContext(AuthContext);

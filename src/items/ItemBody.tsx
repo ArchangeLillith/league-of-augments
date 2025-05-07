@@ -6,7 +6,6 @@ const ItemBody = ({ item }: { item: ItemType }) => {
 			<div className="item-name">{item.name}</div>
 			<div className={`item-tier ${item.tier}`}>{item.tier}</div>
 			<div className="item-stat-box">
-				{" "}
 				{item.ability_haste > 0 && (
 					<div className="item-stat">Ability Haste: {item.ability_haste}</div>
 				)}

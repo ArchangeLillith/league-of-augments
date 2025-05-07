@@ -1,6 +1,6 @@
 import AugSearchBar from "./AugSearchBar";
-import ItemIcon from "../componenets/ItemIcon";
-import { AugmentPanelProps } from "../utils/types";
+import ItemIcon from "../components/ItemIcon";
+import { AugmentPanelProps } from "../utils/interfaces";
 
 const AugmentPanel: React.FC<AugmentPanelProps> = ({
 	pageData,

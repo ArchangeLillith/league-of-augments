@@ -1,13 +1,6 @@
-import { SetStateAction } from "react";
 import { RiQuillPenAiFill } from "react-icons/ri";
-import { ChampPageState } from "../../utils/types";
 import { saveTitle } from "../champPage.utils";
-
-interface TitleBoxProps {
-	titleRef: React.RefObject<HTMLInputElement | null>;
-	state: ChampPageState;
-	setState: React.Dispatch<SetStateAction<ChampPageState>>;
-}
+import { TitleBoxProps } from "../../utils/interfaces";
 
 export const TitleBox: React.FC<TitleBoxProps> = ({
 	titleRef,

@@ -1,7 +1,10 @@
 import { useState } from "react";
-import { Augment, AugSearchBarProps, ETagNames, gemMap } from "../utils/types";
-import AugmentTile from "../componenets/AugmentTile";
-import TooltipWrapper from "../componenets/TooltipWrapper";
+import AugmentTile from "../components/AugmentTile";
+import TooltipWrapper from "../components/TooltipWrapper";
+import { gemMap } from "../utils/constants";
+import { ETagNames } from "../utils/enums";
+import { AugSearchBarProps } from "../utils/interfaces";
+import { Augment } from "../utils/types";
 
 const AugSearchBar: React.FC<AugSearchBarProps> = ({
 	pageData,
