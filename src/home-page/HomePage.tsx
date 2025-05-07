@@ -24,13 +24,6 @@ const HomePage = () => {
 	const [hasSavedOnce, setHasSavedOnce] = useState(false);
 	const [showTooltip, setShowTooltip] = useState(false);
 
-	// Guards for non user and if we're missing data
-	useEffect(() => {
-		if (authState.userData === null || !authState.authenticated) {
-			<div>You need to be logged in to see this page~</div>;
-		}
-	}, [authState]);
-
 	//A hackey way to make sure we don't accidentally overwrite the database with the initilization blank values
 	useEffect(() => {
 		if (ready && !hasSavedOnce) {
@@ -229,7 +222,10 @@ const HomePage = () => {
 			</Droppable>
 		);
 	};
-
+	//Guard
+	if (authState.userData === null || !authState.authenticated) {
+		return <div>You need to be logged in to see this page~</div>;
+	}
 	//Our body of the page!
 	return (
 		<div className={`home-page-container ${searchTerm ? "no-drag" : ""}`}>

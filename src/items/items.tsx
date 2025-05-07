@@ -9,6 +9,9 @@ import { FaHome } from "react-icons/fa";
 const ItemPage = () => {
 	//Two states that hold data we only set once
 	const [items, setItems] = useState<ItemType[]>([]);
+	const [itemMap, setItemMap] = useState<
+		Partial<Record<ETagNames, ItemType[]>>
+	>({});
 	const [tags, setTags] = useState<{ tag_id: number; tag_name: ETagNames }[]>(
 		[]
 	);
@@ -22,6 +25,7 @@ const ItemPage = () => {
 		const setup = async () => {
 			const items = await fetchItems(true);
 			const tags = await fetchTags();
+			makeMap(items);
 			setItems(items);
 			setTags(tags);
 		};
@@ -29,22 +33,25 @@ const ItemPage = () => {
 	}, []);
 
 	useEffect(() => {
-		const newFiltered = filterItems();
+		const newFiltered: ItemType[] = [];
+		for (let filter of filters) {
+			itemMap[filter]?.map((item) => newFiltered.push(item));
+		}
 		setFilteredItems(newFiltered);
 		// Watches the filters to ensure we refilter on change
 	}, [filters]);
 
-	//Zach let's fix this it's ugly lol
-	const filterItems = () => {
-		let newFiltered = [];
-		for (let tag of filters) {
-			for (let item of items) {
-				if (item.tags.includes(tag)) {
-					newFiltered.push(item);
+	const makeMap = (items: ItemType[]) => {
+		const newMap: Partial<Record<ETagNames, ItemType[]>> = {};
+		for (let item of items) {
+			for (let tag of item.tags) {
+				if (!newMap[tag]) {
+					newMap[tag] = [];
 				}
+				newMap[tag].push(item);
 			}
 		}
-		return newFiltered;
+		setItemMap(newMap);
 	};
 
 	const tagToggle = (e: React.MouseEvent<HTMLButtonElement>) => {

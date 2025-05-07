@@ -33,12 +33,6 @@ const ChampPage = () => {
 	const [champPageState, setChampPageState] =
 		useState<ChampPageState>(ChampPageInitilizer);
 
-	// Guards for non user and if we're missing data
-	useEffect(() => {
-		if (authState.userData === null || !authState.authenticated) {
-			<div>You need to be logged in to see this page~</div>;
-		}
-	}, [authState]);
 	//We're missing info
 	if (!championName || !champImage) {
 		return <div>Error: Missing champion data</div>;
@@ -148,6 +142,10 @@ const ChampPage = () => {
 			selectedAugs: [],
 		}));
 	};
+	//Guard
+	if (authState.userData === null || !authState.authenticated) {
+		return <div>You need to be logged in to see this page~</div>;
+	}
 	//We're loading
 	if (champPageState.pageLoading) return <div>Loading...</div>;
 	return (
