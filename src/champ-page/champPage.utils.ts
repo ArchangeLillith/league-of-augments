@@ -1,5 +1,5 @@
 import { SetStateAction } from "react";
-import { Build, ChampPageState } from "../utils/types";
+import { Augment, Build, ChampPageState } from "../utils/types";
 import { fetchOneBuild } from "../services/fetchBuilds";
 
 //Resets handler for selected augs
@@ -67,4 +67,25 @@ export const changeBuild = async (
 	});
 };
 
+/**
+ * Adds or removes an augment from the selectedAugs based on if it's there already
+ * @param aug - the selected augment we're toggling
+ */
+export const toggleAug = (
+	aug: Augment,
+	champPageState: ChampPageState,
+	setChampPageState: React.Dispatch<SetStateAction<ChampPageState>>
+) => {
+	//Get a handle on the old augs if there are any
+	const oldAugs = champPageState.selectedAugs;
+	//Filter through and either remove or add the aug depending on if it's there
+	const newAugs = oldAugs.some((a) => a.augment_id === aug.augment_id)
+		? oldAugs.filter((a) => a.augment_id !== aug.augment_id)
+		: [...oldAugs, aug];
 
+	//Set the new augs to the currently selected build
+	setChampPageState((prev) => ({
+		...prev,
+		selectedAugs: newAugs,
+	}));
+};

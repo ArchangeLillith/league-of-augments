@@ -1,4 +1,4 @@
-import { useContext, useEffect, useMemo, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { FaHome } from "react-icons/fa";
 import { Augment, ChampPageInitilizer, ChampPageState } from "../utils/types";
@@ -6,59 +6,51 @@ import { fetchAugments } from "../services/fetchAugments";
 import { Build } from "../utils/types";
 import { AuthContext } from "../context/AuthProvider";
 import { fetchBuilds, writeNewBuild } from "../services/fetchBuilds";
-import TooltipWrapper from "../componenets/TooltipWrapper";
-import AugmentTile from "../componenets/AugmentTile";
-import { RiQuillPenAiFill } from "react-icons/ri";
+
 import SaveMessage from "../componenets/SaveMessage";
-import { changeBuild, resetSelected, saveTitle } from "./champPage.utils";
+import { changeBuild, resetSelected } from "./champPage.utils";
 import { showSaveMessage } from "../utils/saveMessage";
+import { AugmentHTML } from "./componenets/AugmentHtml";
+import { TitleBox } from "./componenets/TitleBox";
+import SelectedAugmentPanel from "./componenets/SelectedAugmentPanel";
 
 const ChampPage = () => {
 	// Context & routing
 	const { authState } = useContext(AuthContext);
 	const { state } = useLocation();
 	const navigate = useNavigate();
-	const titleRef = useRef<HTMLInputElement>(null);
-	// Guard to ensure no one gets here that shouldn't
-	useEffect(() => {
-		if (authState.userData === null || !authState.authenticated) {
-			navigate("/");
-		}
-	}, []);
 
-	// Guard: return if state is invalid
+	// Refs and constants
+	const titleRef = useRef<HTMLInputElement>(null);
+	const hasFetched = useRef(false);
 	const championName = state?.name;
 	const champImage = state?.image?.full;
-	if (!championName || !champImage) {
-		return <div>Error: Missing champion data</div>;
-	}
 
+	//States
 	//We only use references, we never need this to change except for the initial set
 	const [allAugs, setAllAugs] = useState<Augment[]>([]);
 	//A state for the page, toggles for visibility and controls for the UI as well as houses the data behind the page
 	const [champPageState, setChampPageState] =
 		useState<ChampPageState>(ChampPageInitilizer);
 
-	// Refs
-	const hasFetched = useRef(false);
-
-	// Derived aug lists
-	const goldAugs = useMemo(
-		() => allAugs.filter((aug) => aug.tier === "Gold"),
-		[allAugs]
-	);
-	const silverAugs = useMemo(
-		() => allAugs.filter((aug) => aug.tier === "Silver"),
-		[allAugs]
-	);
-	const prismaticAugs = useMemo(
-		() => allAugs.filter((aug) => aug.tier === "Prismatic"),
-		[allAugs]
-	);
+	// Guards for non user and if we're missing data
+	useEffect(() => {
+		if (authState.userData === null || !authState.authenticated) {
+			navigate("/");
+		}
+	}, []);
+	//We're missing info
+	if (!championName || !champImage) {
+		return <div>Error: Missing champion data</div>;
+	}
+	//We're loading
+	if (champPageState.pageLoading) return <div>Loading...</div>;
 
 	// Initial data fetch
 	useEffect(() => {
+		//If we have fetched or if we don't have a userId we don't run this
 		if (hasFetched.current || !authState.userData?.id) return;
+		//Set the fetch ref to true so we dknow we don't need to run this again
 		hasFetched.current = true;
 
 		const getInitialData = async () => {
@@ -93,7 +85,7 @@ const ChampPage = () => {
 		}
 	}, [champPageState.isEditing]);
 
-	//The save effect that runs when a current build changes or when the selected augs change. This was debounced but we had some issueed so I just pulled that off, knowing that there are going to be a LOT more db calls, but in the grand scheme of things not many people are going to be using this page. This ALSO notably runs after the title is updated as the currentBuild is updated with the new title, meaning this is the only place saveBuild is called other than creating a new build, where we call and save the build before  creating the new one
+	//The save effect that runs when a current build changes or when the selected augs change. This was debounced but we had some issueed so I just pulled that off, knowing that there are going to be a LOT more db calls, but in the grand scheme of things not many people are going to be using this page. This ALSO notably runs after the title is updated as the currentBuild is updated with the new title, meaning this is the only place saveBuild is called other than creating a new build, where we call and save the build before creating the new one
 	useEffect(() => {
 		saveBuild();
 	}, [champPageState.currentBuild, champPageState.selectedAugs]);
@@ -126,23 +118,10 @@ const ChampPage = () => {
 		}
 	};
 
-	//The aug handler for adding an augment to the selectedAugs
-	const toggleAug = (aug: Augment) => {
-		//Get a handle on the old augs if there are any
-		const oldAugs = champPageState.selectedAugs;
-		//Filter through and either remove or add the aug depending on if it's there
-		const newAugs = oldAugs.some((a) => a.augment_id === aug.augment_id)
-			? oldAugs.filter((a) => a.augment_id !== aug.augment_id)
-			: [...oldAugs, aug];
-
-		//Set the new augs to the currently selected build
-		setChampPageState((prev) => ({
-			...prev,
-			selectedAugs: newAugs,
-		}));
-	};
-
-	//Add build function that runs onclick
+	/**
+	 * Runs onclick and creates a new build in the database
+	 * @returns the new build object for the user to modify
+	 */
 	const addBuild = async () => {
 		//Save the current build
 		const buildSave = await saveBuild();
@@ -172,8 +151,6 @@ const ChampPage = () => {
 		}));
 	};
 
-	if (champPageState.pageLoading) return <div>Loading...</div>;
-
 	return (
 		<div className="champ-page">
 			<SaveMessage saveMessage={champPageState.saveMessage} />
@@ -193,45 +170,11 @@ const ChampPage = () => {
 						className="champ-icon"
 					/>
 				</div>
-				{champPageState.currentBuild && !champPageState.isEditing ? (
-					<div className="title-box">
-						<h1>{champPageState.currentBuild.name}</h1>
-						<button
-							onClick={() => {
-								setChampPageState((prev) => ({
-									...prev,
-									isEditing: true,
-								}));
-							}}
-							className="gold-button"
-						>
-							<RiQuillPenAiFill />
-						</button>
-					</div>
-				) : (
-					<form
-						className="title-box"
-						onSubmit={(e) => {
-							e.preventDefault();
-							saveTitle(champPageState, setChampPageState);
-						}}
-					>
-						<input
-							value={champPageState.title}
-							ref={titleRef}
-							className="login-input"
-							onChange={(e) =>
-								setChampPageState((prev) => ({
-									...prev,
-									title: e.target.value,
-								}))
-							}
-						/>
-						<button type="submit" className="gold-button">
-							<RiQuillPenAiFill />
-						</button>
-					</form>
-				)}
+				<TitleBox
+					titleRef={titleRef}
+					state={champPageState}
+					setState={setChampPageState}
+				/>
 
 				{champPageState.allBuilds.length > 1 && (
 					<select
@@ -262,59 +205,18 @@ const ChampPage = () => {
 						Reset Augments
 					</button>
 				</div>
-				{champPageState.selectedAugs.length > 0 ? (
-					<div className="selected-augs">
-						{champPageState.selectedAugs.map((aug) => (
-							<div
-								className={`selected-aug-background ${aug.tier}`}
-								key={aug.augment_id}
-							>
-								<TooltipWrapper tooltipText={`${aug.description}`}>
-									<button
-										className="btn-aug selected"
-										onClick={() => toggleAug(aug)}
-										id={aug.name}
-									>
-										<img
-											className="aug-icon"
-											src={aug.url!}
-											alt={aug.name}
-											width={20}
-											height={20}
-										/>
-										{aug.name}
-									</button>
-								</TooltipWrapper>
-							</div>
-						))}
-					</div>
-				) : (
-					<div className="selected-augs color-muted">
-						Click an augment to add it!
-					</div>
-				)}
+				<SelectedAugmentPanel
+					state={champPageState}
+					setState={setChampPageState}
+				/>
 			</div>
 
 			{/* Available Augments */}
-			<div>
-				<div className="container-prismatic">
-					{prismaticAugs.map((aug) => (
-						<AugmentTile aug={aug} toggleAug={toggleAug} />
-					))}
-				</div>
-
-				<div className="container-gold">
-					{goldAugs.map((aug) => (
-						<AugmentTile aug={aug} toggleAug={toggleAug} />
-					))}
-				</div>
-
-				<div className="container-silver">
-					{silverAugs.map((aug) => (
-						<AugmentTile aug={aug} toggleAug={toggleAug} />
-					))}
-				</div>
-			</div>
+			<AugmentHTML
+				allAugs={allAugs}
+				state={champPageState}
+				setState={setChampPageState}
+			/>
 		</div>
 	);
 };

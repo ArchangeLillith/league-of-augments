@@ -3,7 +3,6 @@ import { Augment, AugSearchBarProps, ETagNames, gemMap } from "../utils/types";
 import AugmentTile from "../componenets/AugmentTile";
 import TooltipWrapper from "../componenets/TooltipWrapper";
 
-
 const AugSearchBar: React.FC<AugSearchBarProps> = ({
 	pageData,
 	setPageData,
@@ -60,7 +59,7 @@ const AugSearchBar: React.FC<AugSearchBarProps> = ({
 					X
 				</button>
 				<div className="augment-alchemy-tile">
-					<AugmentTile aug={augment} toggleAug={() => {}} />
+					<AugmentTile aug={augment} state={null} setState={null} />
 					<div className="aug-gem-box">
 						{augment.tags.map((tag) => (
 							<>
